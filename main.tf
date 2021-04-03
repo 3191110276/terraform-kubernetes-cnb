@@ -38,7 +38,7 @@ module "appd_config" {
 
 
 module "orderfile" {
-  depends_on = [module.main_sa]
+  depends_on = [module.main_sa, module.appd_config]
   
   source  = "./modules/orderfile"
 
