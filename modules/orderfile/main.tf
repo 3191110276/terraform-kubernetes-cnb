@@ -44,7 +44,7 @@ resource "kubernetes_deployment" "orderfile" {
   }
 
   spec {
-    replicas = 2
+    replicas = var.replicas
 
     selector {
       match_labels = {
@@ -89,14 +89,13 @@ resource "kubernetes_deployment" "orderfile" {
 
           resources {
             requests = {
-              cpu    = "20m"
-              memory = "32Mi"
+              cpu    = var.cpu_request
+              memory = var.memory_request
             }
             limits = {
-              cpu    = "50m"
-              memory = "32Mi"
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
             }
-
           }
         }
       }
