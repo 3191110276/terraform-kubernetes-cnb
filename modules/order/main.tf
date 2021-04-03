@@ -130,8 +130,8 @@ resource "kubernetes_deployment" "order" {
               port = 80
             }
 
-            period_seconds        = 5
-            failure_threshold     = 40
+            period_seconds    = 5
+            failure_threshold = 40
           }
           
           liveness_probe {
