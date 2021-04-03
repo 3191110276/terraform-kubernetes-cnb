@@ -1,0 +1,27 @@
+
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: test
+  name: test
+  namespace: {{ .Release.Namespace }}
+spec:
+  containers:
+  - name: test
+    image: busybox
+    command:
+      - sleep
+      - "9999999999d"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 8Mi
+      limits:
+        cpu: 50m
+        memory: 32Mi
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
