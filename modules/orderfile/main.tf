@@ -1,3 +1,19 @@
+############################################################
+# REQUIRED PROVIDERS
+############################################################
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.2"
+    }
+  }
+}
+
+
+############################################################
+# CREATE ORDERFILE DEPLOYMENT
+############################################################
 resource "kubernetes_service" "orderfile" {
   metadata {
     name      = "${var.app_name}-${var.orderfile_name}"
