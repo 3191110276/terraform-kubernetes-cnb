@@ -9,7 +9,7 @@ variable "namespace" {
 
 variable "app_name" {
   type        = string
-  default     = "brewery"
+  default     = "cnb"
   description = "The name of the application that this submodule is part of."
 }
 
