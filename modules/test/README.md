@@ -1,1 +1,1 @@
-# Submodule for deploying a test Pod
+# Submodule for deploying a Testing Pod
