@@ -68,7 +68,7 @@ resource "kubernetes_deployment" "orderfile" {
         container {
           name  = "fileserver"
           
-          image = {{ .Values.registry }}/orderfile-{{ .Values.orderfile_tech }}:{{ .Values.orderfile_version }}
+          image = "${var.registry}/orderfile-${var.orderfile_tech}:${var.orderfile_version}"
           
           port {
             name           = "http"
