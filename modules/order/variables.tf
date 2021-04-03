@@ -15,8 +15,14 @@ variable "app_name" {
 
 variable "order_name" {
   type        = string
-  default     = "orderfile"
-  description = "The name of the application component deployed through this submodule. Changing this value will change how the application component is called in various UIs."
+  default     = "order"
+  description = "The name of the application component deployed through this submodule. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "order_appd" {
+  type        = string
+  default     = "Order"
+  description = "The name of the application component deployed through this submodule. Changing this value will change how the application component is called in AppDynamics."
 }
 
 variable "replicas" {
