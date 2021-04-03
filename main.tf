@@ -23,15 +23,15 @@ module "appd_config" {
   
   app_name = var.app_name
   
-  appd_browserapp_key = var.
+  appd_browserapp_key       = var.appd_browserapp_key
   appd_browserapp_beaconurl = var.appd_browserapp_beaconurl
   
-  appd_account_name = var.appd_account_name
+  appd_account_name        = var.appd_account_name
   appd_controller_hostname = var.appd_controller_hostname
-  appd_controller_port = var.appd_controller_port
-  appd_controller_key = var.appd_controller_key
+  appd_controller_port     = var.appd_controller_port
+  appd_controller_key      = var.appd_controller_key
   
-  use_proxy = var.use_proxy
+  use_proxy  = var.use_proxy
   proxy_host = var.proxy_host
   proxy_port = var.proxy_port
 }
