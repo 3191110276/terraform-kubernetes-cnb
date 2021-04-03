@@ -37,6 +37,7 @@ resource "kubernetes_pod" "test" {
           memory = "32Mi"
         }
       }
+    }
 
     restart_policy = "Always"
     dns_policy     = "ClusterFirst"
