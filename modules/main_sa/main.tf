@@ -1,10 +1,11 @@
-
-
-
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: no-priv
-  namespace: {{ .Release.Namespace }}
-automountServiceAccountToken: false
+############################################################
+# CREATE MAIN SERVICE ACCOUNT
+############################################################
+resource "kubernetes_service_account" "no-priv" {
+  metadata {
+    name      = "no-priv"
+    namespace = var.namespace
+  }
+  
+  automount_service_account_token = false
+}
