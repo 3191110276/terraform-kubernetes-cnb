@@ -5,8 +5,17 @@ resource "kubernetes_namespace" "main" {
 }
 
 
-module "orderfile" {
+module "main_sa" {
   depends_on = [kubernetes_namespace.main]
+  
+  source  = "./modules/main_sa"
+
+  namespace = var.namespace
+}
+
+
+module "orderfile" {
+  depends_on = [module.main_sa]
   
   source  = "./modules/orderfile"
 
