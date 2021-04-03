@@ -9,7 +9,7 @@ variable "namespace" {
 
 variable "app_name" {
   type        = string
-  default     = "brewery"
+  default     = "cnb"
   description = "The name of the application that this submodule is part of."
 }
 
@@ -58,7 +58,7 @@ variable "registry" {
 variable "orderfile_tech" {
   type        = string
   default     = "apache"
-  description = "The value for limits.memory."
+  description = "The image technology."
 }
 
 variable "orderfile_version" {
