@@ -25,12 +25,6 @@ variable "replicas" {
   description = "The number of replicas that should initially be deployed for this component."
 }
 
-variable "replicas" {
-  type        = number
-  default     = 2
-  description = "The number of replicas that should initially be deployed for this component."
-}
-
 variable "cpu_request" {
   type        = string
   default     = "20m"
@@ -55,7 +49,7 @@ variable "memory_limit" {
   description = "The value for limits.memory."
 }
 
-variable "regitry" {
+variable "registry" {
   type        = string
   default     = "mimaurer"
   description = "The registry from which the application image is pulled."
