@@ -10,8 +10,8 @@ resource "kubernetes_config_map" "without-proxy" {
   }
 
   data = {
-    APP_NAME                           = var.appname
-    APPDYNAMICS_AGENT_APPLICATION_NAME = var.appname #NodeJS
+    APP_NAME                           = var.app_name
+    APPDYNAMICS_AGENT_APPLICATION_NAME = var.app_name #NodeJS
     
     BROWSERAPP_KEY       = var.appd_browserapp_key
     BROWSERAPP_BEACONURL = var.appd_browserapp_beaconurl
