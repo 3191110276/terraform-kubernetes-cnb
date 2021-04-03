@@ -63,6 +63,6 @@ variable "proxy_host" {
 
 variable "proxy_port" {
   type        = string
-  default     = ""
+  default     = "443"
   description = "Proxy port for connections to the AppDynamics controller. Only needed if the connection uses proxy."
 }
