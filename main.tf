@@ -8,6 +8,8 @@ resource "kubernetes_namespace" "main" {
 
 
 module "orderfile" {
+  depends_on = [kubernetes_namespace.main]
+  
   source  = "./modules/orderfile"
 
   app_name  = var.app_name
