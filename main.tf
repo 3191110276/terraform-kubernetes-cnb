@@ -45,6 +45,15 @@ module "orderfile" {
   app_name  = var.app_name
   namespace = var.namespace
 }
+    
+module "order" {
+  depends_on = [module.main_sa, module.appd_config]
+  
+  source  = "./modules/order"
+
+  app_name  = var.app_name
+  namespace = var.namespace
+}
 
 
 module "test" {
