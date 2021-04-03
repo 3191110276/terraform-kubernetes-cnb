@@ -148,7 +148,7 @@ resource "kubernetes_deployment" "order" {
         
         volume {
           name = "customization"
-          config_map = {
+          config_map {
             name = "customization"
           }
         }
