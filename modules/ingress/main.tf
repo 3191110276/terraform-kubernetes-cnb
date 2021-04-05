@@ -1,6 +1,8 @@
 resource "kubernetes_ingress" "ingress" {
   metadata {
-    name = "${var.app_name}-ingress"
+    name      = "${var.app_name}-ingress"
+    namespace = var.namespace
+    
     annotations = {
       "nginx.ingress.kubernetes.io/rewrite-target" = "/$2$3"
     }
