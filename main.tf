@@ -89,7 +89,7 @@ module "order" {
 }
     
 
-module "trafficgen {
+module "trafficgen" {
   depends_on = [module.orderfile, module.order]
   
   source  = "./modules/trafficgen"
