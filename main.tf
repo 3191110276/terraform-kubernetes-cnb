@@ -1,6 +1,6 @@
 resource "kubernetes_namespace" "main" {
   metadata {
-    name = var.namespace
+    name = var.main_namespace
   }
 }
 
@@ -10,7 +10,7 @@ module "main_sa" {
   
   source  = "./modules/main_sa"
 
-  namespace = var.namespace
+  namespace = var.main_namespace
 }
 
 
@@ -19,7 +19,7 @@ module "appd_config" {
   
   source  = "./modules/appd_config"
 
-  namespace = var.namespace
+  namespace = var.main_namespace
   
   app_name = var.app_name
   
@@ -42,7 +42,7 @@ module "customization" {
   
   source  = "./modules/customization"
 
-  namespace = var.namespace
+  namespace = var.main_namespace
   
   inventorydb_service     = var.inventorydb_service
   payment_service         = var.payment_service
@@ -61,7 +61,7 @@ module "orderfile" {
   source  = "./modules/orderfile"
 
   app_name  = var.app_name
-  namespace = var.namespace
+  namespace = var.main_namespace
     
   orderfile_name = var.orderfile_name
   replicas       = var.orderfile_replicas
@@ -77,7 +77,7 @@ module "order" {
   source  = "./modules/order"
 
   app_name  = var.app_name
-  namespace = var.namespace
+  namespace = var.main_namespace
     
   order_name     = var.order_name
   order_appd     = var.order_appd
@@ -94,5 +94,5 @@ module "test" {
   
   source  = "./modules/test"
 
-  namespace = var.namespace
+  namespace = var.main_namespace
 }
