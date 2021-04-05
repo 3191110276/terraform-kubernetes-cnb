@@ -60,6 +60,16 @@ module "customization" {
   extprod_service         = var.extprod_service
   fulfilment_service      = var.fulfilment_service
 }
+  
+  
+module "ingress" {
+  depends_on = [kubernetes_namespace.main]
+  
+  source  = "./modules/ingress"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+}
 
 
 module "orderfile" {
