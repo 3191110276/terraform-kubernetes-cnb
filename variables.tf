@@ -160,6 +160,35 @@ variable "adminfile_name" {
   description = "The name of the AdminFile application component. Changing this value will change how the application component is called in various UIs."
 }
 
+variable "adminfile_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the OrderFile component."
+}
+
+variable "adminfile_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The OrderFile value for requests.cpu."
+}
+
+variable "adminfile_memory_request" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for requests.memory."
+}
+
+variable "adminfile_cpu_limit" {
+  type        = string
+  default     = "50m"
+  description = "The OrderFile value for limits.cpu."
+}
+
+variable "adminfile_memory_limit" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for limits.memory."
+}
 
 ############################################################
 # ORDER
