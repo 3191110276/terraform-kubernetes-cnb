@@ -1,0 +1,17 @@
+
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: customization
+  namespace: {{ .Release.Namespace }}
+data:
+  INVENTORYDB_SVC: "{{ .Values.appname }}-{{ .Values.inventorydb_name }}-service"
+  PAYMENT_SVC: "{{ .Values.appname }}-{{ .Values.payment_name }}"
+  EXTPAYMENT_SVC: "{{ .Values.extpayment_svc }}"
+  INITQUEUE_SVC: "{{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq"
+  ORDERPROCESSING_SVC: "{{ .Values.appname }}-{{ .Values.orderprocessing_name }}"
+  PRODUCTION_SVC: "{{ .Values.appname }}-{{ .Values.production_name }}"
+  EXTPROD_SVC: "{{ .Values.extprod_svc }}"
+  FULFILMENT_SVC: "{{ .Values.appname }}-{{ .Values.fulfilment_name }}"
