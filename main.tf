@@ -69,6 +69,11 @@ module "ingress" {
 
   app_name  = var.app_name
   namespace = var.main_namespace
+  
+  order_name     = var.order_name
+  orderfile_name = var.orderfile_name
+  adminfile_name = var.adminfile_name
+  initqueue_name = var.initqueue_name
 }
 
 
