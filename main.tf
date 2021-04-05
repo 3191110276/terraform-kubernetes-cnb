@@ -87,6 +87,22 @@ module "order" {
   cpu_limit      = var.order_cpu_limit
   memory_limit   = var.order_memory_limit
 }
+    
+
+module "trafficgen {
+  depends_on = [module.orderfile, module.order]
+  
+  source  = "./modules/trafficgen"
+
+  namespace = var.trafficgen_namespace
+
+  trafficgen_name                = var.trafficgen_name
+  trafficgen_replicas            = var.trafficgen_replicas
+  trafficgen_min_random_delay    = var.trafficgen_min_random_delay
+  trafficgen_max_random_delay    = var.trafficgen_max_random_delay
+  trafficgen_lagspike_percentage = var.trafficgen_lagspike_percentage
+  trafficgen_app_endpoint        = var.trafficgen_app_endpoint
+}
 
 
 module "test" {
