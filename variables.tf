@@ -7,6 +7,11 @@ variable "main_namespace" {
   description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
 }
 
+variable "trafficgen_namespace" {
+  type    = string
+  default = "trafficgen"
+}
+
 variable "app_name" {
   type        = string
   default     = "cnb"
@@ -69,6 +74,40 @@ variable "proxy_port" {
   type        = string
   default     = "443"
   description = "Proxy port for connections to the AppDynamics controller. Only needed if the connection uses proxy."
+}
+
+
+############################################################
+# TRAFFICGEN
+############################################################
+variable "trafficgen_name" {
+  type    = string
+  default = "trafficgen"
+}
+
+variable "trafficgen_replicas" {
+  type    = number
+  default = 10
+}
+
+variable "trafficgen_min_random_delay" {
+  type    = number
+  default = 0
+}
+
+variable "trafficgen_max_random_delay" {
+  type    = number
+  default = 60
+}
+
+variable "trafficgen_lagspike_percentage" {
+  type    = string
+  default = ""
+}
+
+variable "trafficgen_app_endpoint" {
+  type    = string
+  default = "essential-nginx-ingress-ingress-nginx-controller.iks"
 }
 
 
