@@ -102,6 +102,23 @@ module "orderfile" {
   memory_limit   = var.orderfile_memory_limit
 }
     
+    
+module "adminfile" {
+  depends_on = [module.main_sa, module.appd_config]
+  
+  source  = "./modules/adminfile"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  orderfile_name = var.adminfile_name
+  replicas       = var.adminfile_replicas
+  cpu_request    = var.adminfile_cpu_request
+  memory_request = var.adminfile_memory_request
+  cpu_limit      = var.adminfile_cpu_limit
+  memory_limit   = var.adminfile_memory_limit
+}
+    
 module "order" {
   depends_on = [module.main_sa, module.appd_config, module.customization]
   
