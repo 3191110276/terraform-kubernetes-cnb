@@ -62,6 +62,13 @@ module "orderfile" {
 
   app_name  = var.app_name
   namespace = var.namespace
+    
+  orderfile_name = var.orderfile_name
+  replicas       = var.orderfile_replicas
+  cpu_request    = var.orderfile_cpu_request
+  memory_request = var.orderfile_memory_request
+  cpu_limit      = var.orderfile_cpu_limit
+  memory_limit   = var.orderfile_memory_limit
 }
     
 module "order" {
