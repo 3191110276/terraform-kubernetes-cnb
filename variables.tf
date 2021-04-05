@@ -73,6 +73,92 @@ variable "proxy_port" {
 
 
 ############################################################
+# ORDERFILE
+############################################################
+variable "orderfile_name" {
+  type        = string
+  default     = "orderfile"
+  description = "The name of the OrderFile application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "orderfile_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the OrderFile component."
+}
+
+variable "orderfile_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The OrderFile value for requests.cpu."
+}
+
+variable "orderfile_memory_request" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for requests.memory."
+}
+
+variable "orderfile_cpu_limit" {
+  type        = string
+  default     = "50m"
+  description = "The OrderFile value for limits.cpu."
+}
+
+variable "orderfile_memory_limit" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for limits.memory."
+}
+
+
+############################################################
+# ORDER
+############################################################
+variable "order_name" {
+  type        = string
+  default     = "order"
+  description = "The name of the Order application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "order_appd" {
+  type        = string
+  default     = "Order"
+  description = "The name of the Order application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "order_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Order component."
+}
+
+variable "order_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The Order value for requests.cpu."
+}
+
+variable "order_memory_request" {
+  type        = string
+  default     = "128Mi"
+  description = "The Order value for requests.memory."
+}
+
+variable "order_cpu_limit" {
+  type        = string
+  default     = "400m"
+  description = "The Order value for limits.cpu."
+}
+
+variable "order_memory_limit" {
+  type        = string
+  default     = "512Mi"
+  description = "The Order value for limits.memory."
+}
+
+
+############################################################
 # CUSTOMIZATION
 ############################################################
 variable "inventorydb_service" {
