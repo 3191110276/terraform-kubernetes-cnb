@@ -11,7 +11,7 @@ resource "kubernetes_config_map" "trafficgen" {
   data = {
     MIN_RANDOM_DELAY    = var.trafficgen_min_random_delay
     MAX_RANDOM_DELAY    = var.trafficgen_max_random_delay
-    LAGSPIKE_PERCENTAGE = ""
+    LAGSPIKE_PERCENTAGE = var.trafficgen_lagspike_percentage
     APP_ENDPOINT        = var.trafficgen_app_endpoint
   }
 }
@@ -57,7 +57,7 @@ resource "kubernetes_cluster_role_binding" "trafficgen" {
   }
 }
 
-resource "kubernetes_cron_job" "demo" {
+resource "kubernetes_cron_job" "trafficgen" {
   depends_on = [kubernetes_config_map.trafficgen,kubernetes_cluster_role_binding.trafficgen]
   
   metadata {
