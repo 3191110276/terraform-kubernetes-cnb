@@ -35,6 +35,15 @@ module "appd_config" {
   proxy_host = var.proxy_host
   proxy_port = var.proxy_port
 }
+  
+
+module "customization" {
+  depends_on = [kubernetes_namespace.main]
+  
+  source  = "./modules/customization"
+
+  namespace = var.namespace
+}
 
 
 module "orderfile" {
@@ -47,7 +56,7 @@ module "orderfile" {
 }
     
 module "order" {
-  depends_on = [module.main_sa, module.appd_config]
+  depends_on = [module.main_sa, module.appd_config, module.customization]
   
   source  = "./modules/order"
 
