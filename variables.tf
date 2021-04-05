@@ -152,6 +152,16 @@ variable "orderfile_memory_limit" {
 
 
 ############################################################
+# ADMINFILE
+############################################################
+variable "adminfile_name" {
+  type        = string
+  default     = "adminfile"
+  description = "The name of the AdminFile application component. Changing this value will change how the application component is called in various UIs."
+}
+
+
+############################################################
 # ORDER
 ############################################################
 variable "order_name" {
@@ -194,6 +204,16 @@ variable "order_memory_limit" {
   type        = string
   default     = "512Mi"
   description = "The Order value for limits.memory."
+}
+
+
+############################################################
+# INITQUEUE
+############################################################
+variable "initqueue_name" {
+  type        = string
+  default     = "initqueue"
+  description = "The name of the InitQueue application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
 
