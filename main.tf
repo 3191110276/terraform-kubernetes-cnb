@@ -12,8 +12,17 @@ resource "kubernetes_namespace" "trafficgen" {
 }
 
 
-module "main_sa" {
+module "quota" {
   depends_on = [kubernetes_namespace.main]
+  
+  source  = "./modules/quota"
+
+  namespace = var.main_namespace
+}
+
+
+module "main_sa" {
+  depends_on = [module.quota]
   
   source  = "./modules/main_sa"
 
@@ -22,7 +31,7 @@ module "main_sa" {
 
 
 module "appd_config" {
-  depends_on = [kubernetes_namespace.main]
+  depends_on = [module.quota]
   
   source  = "./modules/appd_config"
 
@@ -45,7 +54,7 @@ module "appd_config" {
   
 
 module "customization" {
-  depends_on = [kubernetes_namespace.main]
+  depends_on = [module.quota]
   
   source  = "./modules/customization"
 
@@ -63,7 +72,7 @@ module "customization" {
   
   
 module "ingress" {
-  depends_on = [kubernetes_namespace.main]
+  depends_on = [module.quota]
   
   source  = "./modules/ingress"
 
