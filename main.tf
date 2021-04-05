@@ -5,6 +5,13 @@ resource "kubernetes_namespace" "main" {
 }
 
 
+resource "kubernetes_namespace" "trafficgen" {
+  metadata {
+    name = var.trafficgen_namespace
+  }
+}
+
+
 module "main_sa" {
   depends_on = [kubernetes_namespace.main]
   
@@ -90,7 +97,7 @@ module "order" {
     
 
 module "trafficgen" {
-  depends_on = [module.orderfile, module.order]
+  depends_on = [kubernetes_namespace.trafficgen, module.orderfile, module.order]
   
   source  = "./modules/trafficgen"
 
