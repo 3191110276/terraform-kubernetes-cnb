@@ -15,7 +15,7 @@ variable "app_name" {
 
 variable "adminfile_name" {
   type        = string
-  default     = "orderfile"
+  default     = "adminfile"
   description = "The name of the application component deployed through this submodule. Changing this value will change how the application component is called in various UIs."
 }
 
