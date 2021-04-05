@@ -12,7 +12,7 @@ terraform {
 
 
 ############################################################
-# CREATE ORDERFILE DEPLOYMENT
+# CREATE ADMINFILE DEPLOYMENT
 ############################################################
 resource "kubernetes_service" "orderfile" {
   metadata {
