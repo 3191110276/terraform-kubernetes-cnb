@@ -184,7 +184,7 @@ module "fulfilment" {
   fulfilment_name = var.fulfilment_name
   fulfilment_appd = var.fulfilment_appd
   replicas        = var.fulfilment_replicas
-  cpu_request     = var.fulfilmentcpu_request
+  cpu_request     = var.fulfilment_cpu_request
   memory_request  = var.fulfilment_memory_request
   cpu_limit       = var.fulfilment_cpu_limit
   memory_limit    = var.fulfilment_memory_limit
