@@ -347,12 +347,6 @@ variable "inventorydb_service" {
   description = "Service for the InventoryDB application component."
 }
 
-variable "payment_service" {
-  type        = string
-  default     = "cnb-payment"
-  description = "Service for the Payment application component."
-}
-
 variable "extpayment_service" {
   type        = string
   default     = "payment.ext"
@@ -369,12 +363,6 @@ variable "orderprocessing_service" {
   type        = string
   default     = "cnb-orderprocessing"
   description = "Service for the Orderprocessing application component."
-}
-
-variable "production_service" {
-  type        = string
-  default     = "cnb-production"
-  description = "Service for the Production application component."
 }
 
 variable "extprod_service" {
