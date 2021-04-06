@@ -12,7 +12,7 @@ terraform {
 
 
 ############################################################
-# CREATE ORDER DEPLOYMENT
+# CREATE PAYMENT DEPLOYMENT
 ############################################################
 resource "kubernetes_service" "payment" {
   metadata {
@@ -84,7 +84,7 @@ resource "kubernetes_deployment" "payment" {
         container {
           name  = var.payment_name
           
-          image = "${var.registry}/order-${var.payment_tech}:${var.payment_version}"
+          image = "${var.registry}/payment-${var.payment_tech}:${var.payment_version}"
           
           port {
             name           = "http"
