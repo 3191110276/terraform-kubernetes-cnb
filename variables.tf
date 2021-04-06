@@ -283,6 +283,52 @@ variable "payment_memory_limit" {
 
 
 ############################################################
+# PRODUCTION
+############################################################
+variable "production_name" {
+  type        = string
+  default     = "production"
+  description = "The name of the Production application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "production_appd" {
+  type        = string
+  default     = "Production"
+  description = "The name of the Order application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "production_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Production component."
+}
+
+variable "production_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The Production value for requests.cpu."
+}
+
+variable "production_memory_request" {
+  type        = string
+  default     = "200Mi"
+  description = "The Production value for requests.memory."
+}
+
+variable "production_cpu_limit" {
+  type        = string
+  default     = "400m"
+  description = "The Production value for limits.cpu."
+}
+
+variable "production_memory_limit" {
+  type        = string
+  default     = "800Mi"
+  description = "The Production value for limits.memory."
+}
+
+
+############################################################
 # INITQUEUE
 ############################################################
 variable "initqueue_name" {
