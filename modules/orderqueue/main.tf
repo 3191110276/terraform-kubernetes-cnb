@@ -77,7 +77,9 @@ resource "kubernetes_role" "orderqueue" {
 }
 
 
-resource "kubernetes_role_binding" "example" {
+resource "kubernetes_role_binding" "orderqueue" {
+  depends_on = [kubernetes_service_account.orderqueue, kubernetes_role.orderqueue]
+  
   metadata {
     name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
     namespace = var.namespace
@@ -94,20 +96,23 @@ resource "kubernetes_role_binding" "example" {
 }
 
 
+resource "kubernetes_config_map" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-config"
+    namespace = var.namespace
+  }
 
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-config
-  namespace: {{ .Release.Namespace }}
+  data = {
+    
+  }
+}
+
+
 data:
   rabbitmq.conf: |-
     ## Username and password
     default_user = guest
     default_pass = guest
-    #default_user = user
-    #default_pass = user
     ## Clustering
     cluster_formation.peer_discovery_backend  = rabbit_peer_discovery_k8s
     cluster_formation.k8s.host = kubernetes.default.svc.cluster.local
@@ -118,10 +123,6 @@ data:
     queue_master_locator = min-masters
     # enable guest user
     loopback_users.guest = false
-    #default_vhost = {{ .Values.appname }}-{{ .Values.initqueue_name }}-vhost
-    #disk_free_limit.absolute = 50MB
-    #load_definitions = /app/load_definition.json
----
 ---
 apiVersion: v1
 kind: Service
