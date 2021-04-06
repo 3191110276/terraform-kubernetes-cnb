@@ -1,1 +1,1 @@
-# Submodule for deploying the Order application component
+# Submodule for deploying the Payment application component
