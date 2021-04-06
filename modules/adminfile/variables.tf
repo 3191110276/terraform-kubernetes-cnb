@@ -57,7 +57,7 @@ variable "registry" {
 
 variable "adminfile_tech" {
   type        = string
-  default     = "apache"
+  default     = "nginx"
   description = "The image technology."
 }
 
