@@ -14,6 +14,83 @@ terraform {
 ############################################################
 # CREATE ORDERQUEUE DEPLOYMENT
 ############################################################
+resource "kubernetes_service" "example" {
+  metadata {
+    name = "${var.app_name}-${var.initqueue_name}-rabbitmq-headless"
+    namespace = var.namespace
+  }
+  spec {
+    selector = {
+      tier = var.oderqueue_name
+    }
+    port {
+      name        = "epmd"
+      port        = 4369
+      target_port = "epmd"
+    }
+
+    port {
+      name        = "amqp"
+      port        = 5672
+      target_port = "amqp"
+    }
+
+    port {
+      name        = "dist"
+      port        = 25672
+      target_port = "dist"
+    }
+
+    port {
+      name        = "http-stats"
+      port        = 15672
+      target_port = "http-stats"
+    }
+
+    type = "ClusterIP"
+    cluster_ip = "None"
+  }
+}
+
+
+resource "kubernetes_service" "example" {
+  metadata {
+    name = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+  spec {
+    selector = {
+      tier = var.oderqueue_name
+    }
+    port {
+      name        = "epmd"
+      port        = 4369
+      target_port = "epmd"
+    }
+
+    port {
+      name        = "amqp"
+      port        = 5672
+      target_port = "amqp"
+    }
+
+    port {
+      name        = "dist"
+      port        = 25672
+      target_port = "dist"
+    }
+
+    port {
+      name        = "http-stats"
+      port        = 15672
+      target_port = "http-stats"
+    }
+
+    type = "ClusterIP"
+  }
+}
+
+
 resource "kubernetes_pod_disruption_budget" "orderqueue" {
   metadata {
     name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
@@ -123,55 +200,6 @@ resource "kubernetes_config_map" "orderqueue" {
 
 
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-headless
-  namespace: {{ .Release.Namespace }}
-spec:
-  clusterIP: None
-  ports:
-    - name: epmd
-      port: 4369
-      targetPort: epmd
-    - name: amqp
-      port: 5672
-      targetPort: amqp
-    - name: dist
-      port: 25672
-      targetPort: dist
-    - name: http-stats
-      port: 15672
-      targetPort: stats
-  selector: 
-    tier: {{ .Values.initqueue_name }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-spec:
-  type: ClusterIP
-  ports:
-    - name: amqp
-      port: 5672
-      targetPort: amqp
-      nodePort: null
-    - name: epmd
-      port: 4369
-      targetPort: epmd
-      nodePort: null
-    - name: dist
-      port: 25672
-      targetPort: dist
-      nodePort: null
-    - name: http-stats
-      port: 15672
-      targetPort: stats
-      nodePort: null
-  selector: 
-    tier: {{ .Values.initqueue_name }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
