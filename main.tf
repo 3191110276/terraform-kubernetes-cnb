@@ -154,6 +154,24 @@ module "payment" {
   memory_limit     = var.payment_memory_limit
 }
     
+    
+module "production" {
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
+  
+  source  = "./modules/production"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  production_name = var.production_name
+  production_appd = var.production_appd
+  replicas        = var.production_replicas
+  cpu_request     = var.production_cpu_request
+  memory_request  = var.production_memory_request
+  cpu_limit       = var.production_cpu_limit
+  memory_limit    = var.production_memory_limit
+}
+    
 
 module "trafficgen" {
   depends_on = [module.orderfile, module.order, module.payment]
