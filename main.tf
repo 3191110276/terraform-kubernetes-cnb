@@ -111,7 +111,7 @@ module "adminfile" {
   app_name  = var.app_name
   namespace = var.main_namespace
     
-  orderfile_name = var.adminfile_name
+  adminfile_name = var.adminfile_name
   replicas       = var.adminfile_replicas
   cpu_request    = var.adminfile_cpu_request
   memory_request = var.adminfile_memory_request
