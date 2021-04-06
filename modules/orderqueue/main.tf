@@ -12,52 +12,89 @@ terraform {
 
 
 ############################################################
-# CREATE ORDER DEPLOYMENT
+# CREATE ORDERQUEUE DEPLOYMENT
 ############################################################
+resource "kubernetes_pod_disruption_budget" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+  spec {
+    min_available = "1"
+    selector {
+      match_labels = {
+        test = var.initqueue_name
+      }
+    }
+  }
+}
+
+
+resource "kubernetes_secret" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+
+  data = {
+    "rabbitmq-password" = "Z3Vlc3QK"
+    "rabbitmq-erlang-cookie" = "OWU2SE1ZMTRwa2NMTVZIQjhiUnlmNzFPempwSnBRSDE="
+  }
+
+  type = "Opqaue"
+}
+
+
+resource "kubernetes_service_account" "orderqueue" {
+  depends_on = [kubernetes_secret.orderqueue]
+  
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+  secret {
+    name = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+  }
+}
+
+
+resource "kubernetes_role" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["endpoints"]
+    verbs          = ["get"]
+  }
+  rule {
+    api_groups = [""]
+    resources  = ["events"]
+    verbs      = ["create"]
+  }
+}
+
+
+resource "kubernetes_role_binding" "example" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+  }
+}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
----
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels: 
-      tier: {{ .Values.initqueue_name }}
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-secrets:
-  - name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-type: Opaque
-data:
-  rabbitmq-password: "Z3Vlc3QK" # guest
-#  rabbitmq-password: "dXNlcgo=" # user
-  rabbitmq-erlang-cookie: "OWU2SE1ZMTRwa2NMTVZIQjhiUnlmNzFPempwSnBRSDE="
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -85,31 +122,6 @@ data:
     #disk_free_limit.absolute = 50MB
     #load_definitions = /app/load_definition.json
 ---
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
-  namespace: {{ .Release.Namespace }}
-rules:
-  - apiGroups: [""]
-    resources: ["endpoints"]
-    verbs: ["get"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["create"]
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
-  namespace: {{ .Release.Namespace }}
-subjects:
-  - kind: ServiceAccount
-    name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
 ---
 apiVersion: v1
 kind: Service
