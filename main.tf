@@ -137,6 +137,24 @@ module "order" {
 }
     
 
+module "payment" {
+  depends_on = [module.main_sa, module.appd_config, module.customization]
+  
+  source  = "./modules/payment"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  payment_name     = var.payment_name
+  payment_appd     = var.payment_appd
+  replicas         = var.payment_replicas
+  cpu_request      = var.payment_cpu_request
+  memory_request   = var.payment_memory_request
+  cpu_limit        = var.payment_cpu_limit
+  memory_limit     = var.payment_memory_limit
+}
+    
+
 module "trafficgen" {
   depends_on = [kubernetes_namespace.trafficgen, module.orderfile, module.order]
   
