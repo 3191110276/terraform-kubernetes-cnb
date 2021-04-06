@@ -87,7 +87,7 @@ module "ingress" {
 
 
 module "orderfile" {
-  depends_on = [module.main_sa, module.appd_config]
+  depends_on = [module.main_sa, module.appd_config, module.ingress]
   
   source  = "./modules/orderfile"
 
@@ -104,7 +104,7 @@ module "orderfile" {
     
     
 module "adminfile" {
-  depends_on = [module.main_sa, module.appd_config]
+  depends_on = [module.main_sa, module.appd_config, module.ingress]
   
   source  = "./modules/adminfile"
 
@@ -120,7 +120,7 @@ module "adminfile" {
 }
     
 module "order" {
-  depends_on = [module.main_sa, module.appd_config, module.customization]
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
   
   source  = "./modules/order"
 
@@ -138,7 +138,7 @@ module "order" {
     
 
 module "payment" {
-  depends_on = [module.main_sa, module.appd_config, module.customization]
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
   
   source  = "./modules/payment"
 
@@ -156,7 +156,7 @@ module "payment" {
     
 
 module "trafficgen" {
-  depends_on = [kubernetes_namespace.trafficgen, module.orderfile, module.order]
+  depends_on = [module.orderfile, module.order, module.payment]
   
   source  = "./modules/trafficgen"
 
