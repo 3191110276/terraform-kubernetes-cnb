@@ -172,9 +172,27 @@ module "production" {
   memory_limit    = var.production_memory_limit
 }
     
+    
+module "fulfilment" {
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
+  
+  source  = "./modules/fulfilment"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  fulfilment_name = var.fulfilment_name
+  fulfilment_appd = var.fulfilment_appd
+  replicas        = var.fulfilment_replicas
+  cpu_request     = var.fulfilmentcpu_request
+  memory_request  = var.fulfilment_memory_request
+  cpu_limit       = var.fulfilment_cpu_limit
+  memory_limit    = var.fulfilment_memory_limit
+}
+    
 
 module "trafficgen" {
-  depends_on = [module.orderfile, module.order, module.payment]
+  depends_on = [module.orderfile, module.order, module.payment, module.fulfilment]
   
   source  = "./modules/trafficgen"
 
