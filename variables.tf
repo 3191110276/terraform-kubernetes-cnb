@@ -237,6 +237,52 @@ variable "order_memory_limit" {
 
 
 ############################################################
+# PAYMENT
+############################################################
+variable "payment_name" {
+  type        = string
+  default     = "payment"
+  description = "The name of the Payment application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "payment_appd" {
+  type        = string
+  default     = "Payment"
+  description = "The name of the Payment application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "payment_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Payment component."
+}
+
+variable "payment_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The Payment value for requests.cpu."
+}
+
+variable "payment_memory_request" {
+  type        = string
+  default     = "64Mi"
+  description = "The Payment value for requests.memory."
+}
+
+variable "payment_cpu_limit" {
+  type        = string
+  default     = "250m"
+  description = "The Payment value for limits.cpu."
+}
+
+variable "payment_memory_limit" {
+  type        = string
+  default     = "256Mi"
+  description = "The Payment value for limits.memory."
+}
+
+
+############################################################
 # INITQUEUE
 ############################################################
 variable "initqueue_name" {
