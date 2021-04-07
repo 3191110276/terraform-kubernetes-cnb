@@ -229,11 +229,11 @@ module "prodrequest" {
   app_name  = var.app_name
   namespace = var.main_namespace
     
-  prodrequest_name = var.prodrequest_name
-  prodrequest_appd = var.prodrequest_appd
+  prodrequest_name  = var.prodrequest_name
+  prodrequest_appd  = var.prodrequest_appd
   replicas          = var.prodrequest_replicas
   cpu_request       = var.prodrequest_cpu_request
-  memory_request    = var.nprodrequest_memory_request
+  memory_request    = var.prodrequest_memory_request
   cpu_limit         = var.prodrequest_cpu_limit
   memory_limit      = var.prodrequest_memory_limit
   
