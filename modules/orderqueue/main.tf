@@ -245,9 +245,9 @@ resource "kubernetes_stateful_set" "orderqueue" {
             required_during_scheduling_ignored_during_execution {
               weight = 1
               
-              pod_affinity_term = {
-               label_selector = {
-                 match_expressions = {
+              pod_affinity_term {
+               label_selector {
+                 match_expressions {
                    key = "tier"
                    operator = "In"
                    values = [var.initqueue_name]
