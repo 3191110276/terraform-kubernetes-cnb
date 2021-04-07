@@ -409,29 +409,29 @@ resource "kubernetes_stateful_set" "orderqueue" {
             }
           }
 
-          readiness_probe {
-            exec {
-              command = ["/bin/bash", "-ec", "rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms"]
-            }
+          #readiness_probe {
+          #  exec {
+          #    command = ["/bin/bash", "-ec", "rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms"]
+          #  }
 
-            initial_delay_seconds = 10
-            period_seconds        = 30
-            timeout_seconds       = 20
-            success_threshold     = 1
-            failure_threshold     = 3
-          }
+          #  initial_delay_seconds = 10
+          #  period_seconds        = 30
+          #  timeout_seconds       = 20
+          #  success_threshold     = 1
+          #  failure_threshold     = 3
+          #}
           
-          liveness_probe {
-            exec {
-              command = ["/bin/bash", "-ec", "rabbitmq-diagnostics -q ping"]
-            }
+          #liveness_probe {
+          #  exec {
+          #    command = ["/bin/bash", "-ec", "rabbitmq-diagnostics -q ping"]
+          #  }
 
-            initial_delay_seconds = 120
-            period_seconds        = 30
-            timeout_seconds       = 20
-            success_threshold     = 1
-            failure_threshold     = 3
-          }
+          #  initial_delay_seconds = 120
+          #  period_seconds        = 30
+          #  timeout_seconds       = 20
+          #  success_threshold     = 1
+          #  failure_threshold     = 3
+          #}
           
           lifecycle {
             pre_stop {
