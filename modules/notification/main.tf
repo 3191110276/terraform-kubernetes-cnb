@@ -95,8 +95,8 @@ resource "kubernetes_deployment" "notification" {
           
           env {
             name  = "APPDYNAMICS_NETVIZ_AGENT_HOST"
-            value_from = {
-              field_ref = {
+            value_from {
+              field_ref {
                 field_path = "status.hostIP"
               }
             }
