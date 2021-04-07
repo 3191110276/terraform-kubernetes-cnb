@@ -331,17 +331,29 @@ resource "kubernetes_stateful_set" "orderqueue" {
             failure_threshold     = 3
           }
           
-          
-          
-          
-          
+          lifecycle {
+            pre_stop {
+              exec {
+                command = ["/bin/bash", "-ec", "- |\nif [[ -f /opt/bitnami/scripts/rabbitmq/nodeshutdown.sh ]]; then\n/opt/bitnami/scripts/rabbitmq/nodeshutdown.sh -t "120" -d  "false"\nelse\nrabbitmqctl stop_app\nfi\n"] 
+              }
+            }
+          }
+
+          volume_mount {
+            name       = "configuration"
+            mount_path = "/bitnami/rabbitmq/conf"
+          }
           
           volume_mount {
-            name       = "config-volume"
-            mount_path = "/etc/config"
+            name       = "data"
+            mount_path = "/bitnami/rabbitmq/mnesia"
           }
         }
 
+        
+        
+        
+        
         volume {
           name = "config-volume"
 
