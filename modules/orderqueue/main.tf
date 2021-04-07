@@ -91,11 +91,112 @@ resource "kubernetes_service" "orderqueue" {
 }
 
 
+resource "kubernetes_pod_disruption_budget" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+  spec {
+    min_available = "1"
+    selector {
+      match_labels = {
+        test = var.initqueue_name
+      }
+    }
+  }
+}
 
 
+resource "kubernetes_secret" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+
+  data = {
+    "rabbitmq-password" = "Z3Vlc3QK"
+    "rabbitmq-erlang-cookie" = "OWU2SE1ZMTRwa2NMTVZIQjhiUnlmNzFPempwSnBRSDE="
+  }
+
+  type = "Opqaue"
+}
 
 
+resource "kubernetes_service_account" "orderqueue" {
+  depends_on = [kubernetes_secret.orderqueue]
+  
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+  secret {
+    name = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+  }
+}
 
+
+resource "kubernetes_role" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["endpoints"]
+    verbs          = ["get"]
+  }
+  rule {
+    api_groups = [""]
+    resources  = ["events"]
+    verbs      = ["create"]
+  }
+}
+
+
+resource "kubernetes_role_binding" "orderqueue" {
+  depends_on = [kubernetes_service_account.orderqueue, kubernetes_role.orderqueue]
+  
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+  }
+}
+
+
+resource "kubernetes_config_map" "orderqueue" {
+  metadata {
+    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-config"
+    namespace = var.namespace
+  }
+
+  data = {
+    "rabbitmq.conf" = <<EOT
+      ## Username and password
+      default_user = guest
+      default_pass = guest
+      ## Clustering
+      cluster_formation.peer_discovery_backend  = rabbit_peer_discovery_k8s
+      cluster_formation.k8s.host = kubernetes.default.svc.cluster.local
+      cluster_formation.node_cleanup.interval = 10
+      cluster_formation.node_cleanup.only_log_warning = true
+      cluster_partition_handling = autoheal
+      # queue master locator
+      queue_master_locator = min-masters
+      # enable guest user
+      loopback_users.guest = false
+    EOT
+  }
+}
 
 
 resource "kubernetes_stateful_set" "orderqueue" {
@@ -350,25 +451,20 @@ resource "kubernetes_stateful_set" "orderqueue" {
           }
         }
 
-        
-        
-        
-        
         volume {
-          name = "config-volume"
+          name = "configuration"
 
           config_map {
-            name = "prometheus-config"
+            name = "${var.app_name}-${var.initqueue_name}-rabbitmq-config"
+            items {
+              key  = "rabbitmq.conf"
+              path = "rabbitmq.conf"
+            }
           }
         }
       }
     }
 
-    
-    
-    
-    
-    
     volume_claim_template {
       metadata {
         name = "data"
@@ -391,136 +487,3 @@ resource "kubernetes_stateful_set" "orderqueue" {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-resource "kubernetes_pod_disruption_budget" "orderqueue" {
-  metadata {
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
-    namespace = var.namespace
-  }
-  spec {
-    min_available = "1"
-    selector {
-      match_labels = {
-        test = var.initqueue_name
-      }
-    }
-  }
-}
-
-
-resource "kubernetes_secret" "orderqueue" {
-  metadata {
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
-    namespace = var.namespace
-  }
-
-  data = {
-    "rabbitmq-password" = "Z3Vlc3QK"
-    "rabbitmq-erlang-cookie" = "OWU2SE1ZMTRwa2NMTVZIQjhiUnlmNzFPempwSnBRSDE="
-  }
-
-  type = "Opqaue"
-}
-
-
-resource "kubernetes_service_account" "orderqueue" {
-  depends_on = [kubernetes_secret.orderqueue]
-  
-  metadata {
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
-    namespace = var.namespace
-  }
-  secret {
-    name = "${var.app_name}-${var.initqueue_name}-rabbitmq"
-  }
-}
-
-
-resource "kubernetes_role" "orderqueue" {
-  metadata {
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
-    namespace = var.namespace
-  }
-
-  rule {
-    api_groups     = [""]
-    resources      = ["endpoints"]
-    verbs          = ["get"]
-  }
-  rule {
-    api_groups = [""]
-    resources  = ["events"]
-    verbs      = ["create"]
-  }
-}
-
-
-resource "kubernetes_role_binding" "orderqueue" {
-  depends_on = [kubernetes_service_account.orderqueue, kubernetes_role.orderqueue]
-  
-  metadata {
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
-    namespace = var.namespace
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "Role"
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-endpoint-reader"
-  }
-  subject {
-    kind      = "ServiceAccount"
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq"
-  }
-}
-
-
-resource "kubernetes_config_map" "orderqueue" {
-  metadata {
-    name      = "${var.app_name}-${var.initqueue_name}-rabbitmq-config"
-    namespace = var.namespace
-  }
-
-  data = {
-    "rabbitmq.conf" = <<EOT
-      ## Username and password
-      default_user = guest
-      default_pass = guest
-      ## Clustering
-      cluster_formation.peer_discovery_backend  = rabbit_peer_discovery_k8s
-      cluster_formation.k8s.host = kubernetes.default.svc.cluster.local
-      cluster_formation.node_cleanup.interval = 10
-      cluster_formation.node_cleanup.only_log_warning = true
-      cluster_partition_handling = autoheal
-      # queue master locator
-      queue_master_locator = min-masters
-      # enable guest user
-      loopback_users.guest = false
-    EOT
-  }
-}
-
-
-
