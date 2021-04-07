@@ -139,70 +139,206 @@ resource "kubernetes_stateful_set" "orderqueue" {
         
         termination_grace_period_seconds = 120
 
+        affinity {
+          pod_anti_affinity {
+            required_during_scheduling_ignored_during_execution {
+              weight = 1
+              
+              pod_affinity_term {
+               label_selector {
+                 match_expressions {
+                   key = "tier"
+                   operator = "In"
+                   values = [var.initqueue_name]
+                 }
+               }
+              }
+            }
+          }
+        }
         
-        
-        
+        security_context = {
+          fs_group    = 1001
+          run_as_user = 1001
+        }
         
         
         container {
-          name              = "prometheus-server"
-          image             = "prom/prometheus:v2.2.1"
+          name              = "rabbitmq"
+          image             = "docker.io/bitnami/rabbitmq:3.8.9-debian-10-r64"
           image_pull_policy = "IfNotPresent"
 
-          args = [
-            "--config.file=/etc/config/prometheus.yml",
-            "--storage.tsdb.path=/data",
-            "--web.console.libraries=/etc/prometheus/console_libraries",
-            "--web.console.templates=/etc/prometheus/consoles",
-            "--web.enable-lifecycle",
-          ]
-
-          port {
-            container_port = 9090
+          env {
+            name  = "BITNAMI_DEBUG"
+            value = "false"
           }
-
+          
+          env {
+            name = "MY_POD_IP"
+            value_from {
+              field_ref {
+                field_path = "status.podIP"  
+              }  
+            }
+          }
+          
+          env {
+            name = "MY_POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"  
+              }  
+            }
+          }
+          
+          env {
+            name = "MY_POD_NAMESPACE"
+            value_from {
+              field_ref {
+                field_path = "metadata.namespace"  
+              }  
+            }
+          }
+          
+          env {
+            name  = "K8S_SERVICE_NAME"
+            value = "${var.app_name}-${var.initqueue_name}-rabbitmq-headless"
+          }
+          
+          env {
+            name  = "K8S_ADDRESS_TYPE"
+            value = "hostname"
+          }
+          
+          env {
+            name  = "RABBITMQ_FORCE_BOOT"
+            value = "no"
+          }
+          
+          env {
+            name  = "RABBITMQ_NODE_NAME"
+            value = "rabbit@$(MY_POD_NAME).$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local"
+          }
+          
+          env {
+            name  = "K8S_HOSTNAME_SUFFIX"
+            value = ".$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local"
+          }
+          
+          env {
+            name  = "RABBITMQ_MNESIA_DIR"
+            value = "/bitnami/rabbitmq/mnesia/$(RABBITMQ_NODE_NAME)"
+          }
+          
+          env {
+            name  = "RABBITMQ_LDAP_ENABLE"
+            value = "no"
+          }
+          
+          env {
+            name  = "RABBITMQ_LOGS"
+            value = "-"
+          }
+          
+          env {
+            name  = "RABBITMQ_ULIMIT_NOFILES"
+            value = "65536"
+          }
+          
+          env {
+            name  = "RABBITMQ_USE_LONGNAME"
+            value = "true"
+          }
+          
+          env {
+            name = "RABBITMQ_ERL_COOKIE"
+            value_from {
+              secret_key_ref {
+                name = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+                key  = "rabbitmq-erlang-cookie"
+              }  
+            }
+          }
+          
+          env {
+            name  = "RABBITMQ_USERNAME"
+            value = "guest"
+          }
+          
+          env {
+            name  = "RABBITMQ_PASSWORD"
+            value = "guest"
+          }
+          
+          env {
+            name  = "RABBITMQ_PLUGINS"
+            value = "rabbitmq_management, rabbitmq_peer_discovery_k8s, rabbitmq_auth_backend_ldap"
+          }
+          
+          port {
+            name           = "amqp"
+            container_port = 5672
+          }
+          
+          port {
+            name           = "dist"
+            container_port = 25672
+          }
+          
+          port {
+            name           = "stats"
+            container_port = 15672
+          }
+          
+          port {
+            name           = "epmd"
+            container_port = 4369
+          }
+          
           resources {
             limits = {
-              cpu    = "200m"
-              memory = "1000Mi"
+              cpu    = "1000m"
+              memory = "2Gi"
             }
 
             requests = {
-              cpu    = "200m"
-              memory = "1000Mi"
+              cpu    = "1000m"
+              memory = "2Gi"
             }
-          }
-
-          volume_mount {
-            name       = "config-volume"
-            mount_path = "/etc/config"
-          }
-
-          volume_mount {
-            name       = "prometheus-data"
-            mount_path = "/data"
-            sub_path   = ""
           }
 
           readiness_probe {
-            http_get {
-              path = "/-/ready"
-              port = 9090
+            exec {
+              command = ["/bin/bash", "-ec", "rabbitmq-diagnostics -q check_running && rabbitmq-diagnostics -q check_local_alarms"]
             }
 
-            initial_delay_seconds = 30
-            timeout_seconds       = 30
+            initial_delay_seconds = 10
+            period_seconds        = 30
+            timeout_seconds       = 20
+            success_threshold     = 1
+            failure_threshold     = 3
           }
-
+          
           liveness_probe {
-            http_get {
-              path   = "/-/healthy"
-              port   = 9090
-              scheme = "HTTPS"
+            exec {
+              command = ["/bin/bash", "-ec", "rabbitmq-diagnostics -q ping"]
             }
 
-            initial_delay_seconds = 30
-            timeout_seconds       = 30
+            initial_delay_seconds = 120
+            period_seconds        = 30
+            timeout_seconds       = 20
+            success_threshold     = 1
+            failure_threshold     = 3
+          }
+          
+          
+          
+          
+          
+          
+          volume_mount {
+            name       = "config-volume"
+            mount_path = "/etc/config"
           }
         }
 
