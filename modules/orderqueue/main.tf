@@ -60,7 +60,7 @@ resource "kubernetes_service" "orderqueue" {
   }
   spec {
     selector = {
-      tier = var.oderqueue_name
+      tier = var.initqueue_name
     }
     port {
       name        = "epmd"
