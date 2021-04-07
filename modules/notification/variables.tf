@@ -63,7 +63,7 @@ variable "registry" {
 
 variable "notification_tech" {
   type        = string
-  default     = "python"
+  default     = "java"
   description = "The image technology."
 }
 
