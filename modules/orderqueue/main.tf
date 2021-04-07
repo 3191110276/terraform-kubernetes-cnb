@@ -435,7 +435,7 @@ resource "kubernetes_stateful_set" "orderqueue" {
           lifecycle {
             pre_stop {
               exec {
-                command = ["/bin/bash", "-ec", "- |\nif [[ -f /opt/bitnami/scripts/rabbitmq/nodeshutdown.sh ]]; then\n/opt/bitnami/scripts/rabbitmq/nodeshutdown.sh -t "120" -d  "false"\nelse\nrabbitmqctl stop_app\nfi\n"] 
+                command = ["/bin/bash", "-ec", "- |\nif [[ -f /opt/bitnami/scripts/rabbitmq/nodeshutdown.sh ]]; then\n/opt/bitnami/scripts/rabbitmq/nodeshutdown.sh -t \"120\" -d  \"false\"\nelse\nrabbitmqctl stop_app\nfi\n"] 
               }
             }
           }
