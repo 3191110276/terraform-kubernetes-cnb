@@ -246,7 +246,7 @@ resource "kubernetes_stateful_set" "orderqueue" {
               weight = 1
               
               pod_affinity_term = {
-               label_selector {
+               label_selector = {
                  match_expressions {
                    key = "tier"
                    operator = "In"
