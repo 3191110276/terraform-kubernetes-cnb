@@ -245,7 +245,7 @@ resource "kubernetes_stateful_set" "orderqueue" {
             required_during_scheduling_ignored_during_execution {
               weight = 1
               
-              pod_affinity_term {
+              pod_affinity_term = {
                label_selector {
                  match_expressions {
                    key = "tier"
@@ -258,7 +258,7 @@ resource "kubernetes_stateful_set" "orderqueue" {
           }
         }
         
-        security_context = {
+        security_context {
           fs_group    = 1001
           run_as_user = 1001
         }
