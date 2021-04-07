@@ -190,6 +190,16 @@ module "fulfilment" {
   memory_limit    = var.fulfilment_memory_limit
 }
     
+    
+module "orderqueue" {
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
+  
+  source  = "./modules/orderqueue"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+}
+    
 
 module "trafficgen" {
   depends_on = [module.orderfile, module.order, module.payment, module.fulfilment]
