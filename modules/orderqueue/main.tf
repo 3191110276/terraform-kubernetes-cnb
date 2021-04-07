@@ -240,23 +240,24 @@ resource "kubernetes_stateful_set" "orderqueue" {
         
         termination_grace_period_seconds = 120
 
-        affinity {
-          pod_anti_affinity {
-            required_during_scheduling_ignored_during_execution {
-              weight = 1
-              
-              pod_affinity_term {
-               label_selector {
-                 match_expressions {
-                   key = "tier"
-                   operator = "In"
-                   values = [var.initqueue_name]
-                 }
-               }
-              }
-            }
-          }
-        }
+        #affinity {
+        #  pod_anti_affinity {
+        #    required_during_scheduling_ignored_during_execution {
+        #      weight = 1
+        #      
+        #      pod_affinity_term {
+        #        topology_key = "kubernetes.io/hostname"
+        #        label_selector {
+        #          match_expressions {
+        #            key = "tier"
+        #            operator = "In"
+        #            values = [var.initqueue_name]
+        #          }
+        #        }
+        #      }
+        #    }
+        #  }
+        #}
         
         security_context {
           fs_group    = 1001
