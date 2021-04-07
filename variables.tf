@@ -431,6 +431,52 @@ variable "notification_memory_limit" {
 
 
 ############################################################
+# PRODREQUEST
+############################################################
+variable "prodrequest_name" {
+  type        = string
+  default     = "prodrequest"
+  description = "The name of the ProdRequest application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "prodrequest_appd" {
+  type        = string
+  default     = "ProdRequest"
+  description = "The name of the ProdRequest application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "prodrequest_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ProdRequest component."
+}
+
+variable "prodrequest_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The ProdRequest value for requests.cpu."
+}
+
+variable "prodrequest_memory_request" {
+  type        = string
+  default     = "80Mi"
+  description = "The ProdRequest value for requests.memory."
+}
+
+variable "prodrequest_cpu_limit" {
+  type        = string
+  default     = "250m"
+  description = "The ProdRequest value for limits.cpu."
+}
+
+variable "prodrequest_memory_limit" {
+  type        = string
+  default     = "280Mi"
+  description = "The ProdRequest value for limits.memory."
+}
+
+
+############################################################
 # CUSTOMIZATION
 ############################################################
 variable "inventorydb_service" {
