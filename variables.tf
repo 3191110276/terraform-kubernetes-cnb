@@ -385,6 +385,52 @@ variable "initqueue_name" {
 
 
 ############################################################
+# NOTIFICATION
+############################################################
+variable "notification_name" {
+  type        = string
+  default     = "notification"
+  description = "The name of the Notification application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "notification_appd" {
+  type        = string
+  default     = "Fulfilment"
+  description = "The name of the Notification application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "notification_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Notification component."
+}
+
+variable "notification_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The Notification value for requests.cpu."
+}
+
+variable "notification_memory_request" {
+  type        = string
+  default     = "80Mi"
+  description = "The Notification value for requests.memory."
+}
+
+variable "notification_cpu_limit" {
+  type        = string
+  default     = "250m"
+  description = "The Notification value for limits.cpu."
+}
+
+variable "notification_memory_limit" {
+  type        = string
+  default     = "280Mi"
+  description = "The Notification value for limits.memory."
+}
+
+
+############################################################
 # CUSTOMIZATION
 ############################################################
 variable "inventorydb_service" {
