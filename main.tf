@@ -200,6 +200,26 @@ module "orderqueue" {
   namespace = var.main_namespace
 }
     
+    
+module "notification" {
+  depends_on = [module.orderqueue]
+  
+  source  = "./modules/notification"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  notification_name = var.notification_name
+  notification_appd = var.notification_appd
+  replicas          = var.notification_replicas
+  cpu_request       = var.notification_cpu_request
+  memory_request    = var.notification_memory_request
+  cpu_limit         = var.notification_cpu_limit
+  memory_limit      = var.notification_memory_limit
+  
+  initqueue_name = var.initqueue_name
+}
+    
 
 module "trafficgen" {
   depends_on = [module.orderfile, module.order, module.payment, module.fulfilment]
