@@ -12,6 +12,13 @@ resource "kubernetes_namespace" "trafficgen" {
 }
 
 
+resource "kubernetes_namespace" "extprod" {
+  metadata {
+    name = var.extprod_namespace
+  }
+}
+
+
 module "quota" {
   depends_on = [kubernetes_namespace.main]
   
