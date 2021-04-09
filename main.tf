@@ -161,25 +161,7 @@ module "payment" {
   memory_limit     = var.payment_memory_limit
 }
     
-    
-module "production" {
-  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
-  
-  source  = "./modules/production"
 
-  app_name  = var.app_name
-  namespace = var.main_namespace
-    
-  production_name = var.production_name
-  production_appd = var.production_appd
-  replicas        = var.production_replicas
-  cpu_request     = var.production_cpu_request
-  memory_request  = var.production_memory_request
-  cpu_limit       = var.production_cpu_limit
-  memory_limit    = var.production_memory_limit
-}
-    
-    
 module "fulfilment" {
   depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
   
@@ -195,6 +177,46 @@ module "fulfilment" {
   memory_request  = var.fulfilment_memory_request
   cpu_limit       = var.fulfilment_cpu_limit
   memory_limit    = var.fulfilment_memory_limit
+}
+    
+    
+module "extprod" {
+  depends_on = [kubernetes_namespace.extprod, module.fulfilment]
+  
+  source  = "./modules/extprod"
+
+  app_name  = var.app_name
+  namespace = var.extprod_namespace
+    
+  extprod_name   = var.extprod_name
+  replicas       = var.extprod_replicas
+  cpu_request    = var.extprod_cpu_request
+  memory_request = var.extprod_memory_request
+  cpu_limit      = var.extprod_cpu_limit
+  memory_limit   = var.extprod_memory_limit
+  min_delay      = var.extprod_min_delay
+  max_delay      = var.extprod_max_delay
+  job_min_delay  = var.extprod_job_min_delay
+  job_max_delay  = var.extprod_job_max_delay
+  production_svc = "${var.extprod_name}.${var.extprod_namespace}.svc"
+}
+    
+    
+module "production" {
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress, module.extprod]
+  
+  source  = "./modules/production"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  production_name = var.production_name
+  production_appd = var.production_appd
+  replicas        = var.production_replicas
+  cpu_request     = var.production_cpu_request
+  memory_request  = var.production_memory_request
+  cpu_limit       = var.production_cpu_limit
+  memory_limit    = var.production_memory_limit
 }
     
     
