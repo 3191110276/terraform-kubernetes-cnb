@@ -342,37 +342,31 @@ variable "extprod_name" {
   description = "The name of the ExtProd application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
-variable "production_appd" {
-  type        = string
-  default     = "Production"
-  description = "The name of the ExtProd application component. Changing this value will change how the application component is called in AppDynamics."
-}
-
-variable "production_replicas" {
+variable "extprod_replicas" {
   type        = number
   default     = 2
   description = "The number of replicas that should initially be deployed for the ExtProd component."
 }
 
-variable "production_cpu_request" {
+variable "extprod_cpu_request" {
   type        = string
   default     = "100m"
   description = "The ExtProd value for requests.cpu."
 }
 
-variable "production_memory_request" {
+variable "extprod_memory_request" {
   type        = string
   default     = "128Mi"
   description = "The ExtProd value for requests.memory."
 }
 
-variable "production_cpu_limit" {
+variable "extprod_cpu_limit" {
   type        = string
   default     = "400m"
   description = "The ExtProd value for limits.cpu."
 }
 
-variable "production_memory_limit" {
+variable "extprod_memory_limit" {
   type        = string
   default     = "512Mi"
   description = "The ExtProd value for limits.memory."
