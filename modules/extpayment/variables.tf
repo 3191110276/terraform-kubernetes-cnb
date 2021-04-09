@@ -55,13 +55,13 @@ variable "registry" {
   description = "The registry from which the application image is pulled."
 }
 
-variable "extprod_tech" {
+variable "extpayment_tech" {
   type        = string
   default     = "python"
   description = "The image technology."
 }
 
-variable "extprod_version" {
+variable "extpayment_version" {
   type        = string
   default     = "master"
   description = "The version tag referencing the image that will be pulled from the registry"
