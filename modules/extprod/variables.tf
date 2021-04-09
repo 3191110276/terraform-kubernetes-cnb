@@ -55,7 +55,7 @@ variable "registry" {
   description = "The registry from which the application image is pulled."
 }
 
-variable "order_tech" {
+variable "extprod_tech" {
   type        = string
   default     = "python"
   description = "The image technology."
