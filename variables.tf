@@ -247,6 +247,64 @@ variable "order_memory_limit" {
 
 
 ############################################################
+# EXTPAYMENT
+############################################################
+variable "extpayment_name" {
+  type        = string
+  default     = "payment"
+  description = "The name of the ExtPayment application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "extpayment_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ExtPayment component."
+}
+
+variable "extpayment_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The ExtPayment value for requests.cpu."
+}
+
+variable "extpayment_memory_request" {
+  type        = string
+  default     = "128Mi"
+  description = "The ExtPayment value for requests.memory."
+}
+
+variable "extpayment_cpu_limit" {
+  type        = string
+  default     = "400m"
+  description = "The ExtPayment value for limits.cpu."
+}
+
+variable "extpayment_memory_limit" {
+  type        = string
+  default     = "512Mi"
+  description = "The ExtPayment value for limits.memory."
+}
+
+variable "extpayment_min_random_delay" {
+  type        = string
+  default     = "0"
+  description = "The minimum processing time requests to ExtPayment."
+}
+
+variable "extpayment_max_random_delay" {
+  type        = string
+  default     = "1000"
+  description = "The maximum processing time requests to ExtPayment."
+}
+
+variable "extpayment_lagspike_percentage" {
+  type        = string
+  default     = "0.01"
+  description = "The service name for ExtPayment."
+}
+
+
+############################################################
 # PAYMENT
 ############################################################
 variable "payment_name" {
