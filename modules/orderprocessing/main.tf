@@ -76,7 +76,7 @@ resource "kubernetes_deployment" "orderprocessing" {
         automount_service_account_token = false
         
         container {
-          name  = var.order_name
+          name  = var.orderprocessing_name
           
           image = "${var.registry}/orderprocessing-${var.orderprocessing_tech}:${var.orderprocessing_version}"
           
