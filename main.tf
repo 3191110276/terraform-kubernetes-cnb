@@ -19,6 +19,13 @@ resource "kubernetes_namespace" "extprod" {
 }
 
 
+resource "kubernetes_namespace" "extpayment" {
+  metadata {
+    name = var.extpayment_namespace
+  }
+}
+
+
 module "quota" {
   depends_on = [kubernetes_namespace.main]
   
@@ -142,7 +149,27 @@ module "order" {
   cpu_limit      = var.order_cpu_limit
   memory_limit   = var.order_memory_limit
 }
+
     
+module "extpayment" {
+  depends_on = [kubernetes_namespace.extpayment]
+  
+  source  = "./modules/extpayment"
+
+  app_name  = var.app_name
+  namespace = var.extpayment_namespace
+    
+  extpayment_name     = var.extpayment_name
+  replicas            = var.extpayment_replicas
+  cpu_request         = var.extpayment_cpu_request
+  memory_request      = var.extpayment_memory_request
+  cpu_limit           = var.extpayment_cpu_limit
+  memory_limit        = var.extpayment_memory_limit
+  min_random_delay    = var.extpayment_min_random_delay
+  max_random_delay    = var.extpayment_max_random_delay
+  lagspike_percentage = var.extpayment_lagspike_percentage
+}
+
 
 module "payment" {
   depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
