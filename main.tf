@@ -239,6 +239,24 @@ module "prodrequest" {
   
   initqueue_name = var.initqueue_name
 }
+  
+  
+module "orderprocessing" {
+  depends_on = [module.notification, module.prodrequest]
+  
+  source  = "./modules/orderprocessing"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  orderprocessing_name = var.orderprocessing_name
+  orderprocessing_appd = var.orderprocessing_appd
+  replicas             = var.orderprocessing_replicas
+  cpu_request          = var.orderprocessing_cpu_request
+  memory_request       = var.orderprocessing_memory_request
+  cpu_limit            = var.orderprocessing_cpu_limit
+  memory_limit         = var.orderprocessing_memory_limit
+}
     
 
 module "trafficgen" {
