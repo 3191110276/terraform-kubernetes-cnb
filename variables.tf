@@ -334,6 +334,76 @@ variable "production_memory_limit" {
 
 
 ############################################################
+# EXTPROD
+############################################################
+variable "extprod_name" {
+  type        = string
+  default     = "production"
+  description = "The name of the ExtProd application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "production_appd" {
+  type        = string
+  default     = "Production"
+  description = "The name of the ExtProd application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "production_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ExtProd component."
+}
+
+variable "production_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The ExtProd value for requests.cpu."
+}
+
+variable "production_memory_request" {
+  type        = string
+  default     = "128Mi"
+  description = "The ExtProd value for requests.memory."
+}
+
+variable "production_cpu_limit" {
+  type        = string
+  default     = "400m"
+  description = "The ExtProd value for limits.cpu."
+}
+
+variable "production_memory_limit" {
+  type        = string
+  default     = "512Mi"
+  description = "The ExtProd value for limits.memory."
+}
+
+variable "extprod_min_delay" {
+  type        = string
+  default     = "0"
+  description = "The minimum amount of artificial delay for requests to ExtProd."
+}
+
+variable "extprod_max_delay" {
+  type        = string
+  default     = "1000"
+  description = "The maximum amount of artificial delay for requests to ExtProd."
+}
+
+variable "extprod_job_min_delay" {
+  type        = string
+  default     = "240"
+  description = "The minimum processing time requests to ExtProd."
+}
+
+variable "extprod_job_max_delay" {
+  type        = string
+  default     = "360"
+  description = "The maximum processing time requests to ExtProd."
+}
+
+
+############################################################
 # FULFILMENT
 ############################################################
 variable "fulfilment_name" {
