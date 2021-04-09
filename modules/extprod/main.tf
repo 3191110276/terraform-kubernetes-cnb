@@ -31,7 +31,7 @@ resource "kubernetes_config_map" "extprod" {
 }
 
 
-resource "kubernetes_service_account" "example" {
+resource "kubernetes_service_account" "extprod" {
   metadata {
     name      = "factory"
     namespace = var.namespace
@@ -39,50 +39,73 @@ resource "kubernetes_service_account" "example" {
 }
 
 
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: Role
-metadata:
-  name: factory
-  namespace: {{ .Release.Namespace }}
-rules:
-- apiGroups:      ['']
-  resources:      ['pods']
-  verbs:          ['get','list','delete']
-- apiGroups:      ['batch']
-  resources:      ['jobs']
-  verbs:          ['get','list','create','delete']
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: RoleBinding
-metadata:
-  name: factory
-  namespace: {{ .Values.namespace | default "automation" }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: factory
-subjects:
-- kind: ServiceAccount
-  name: factory
-  namespace: {{ .Release.Namespace }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.name }}
-  namespace: {{ .Release.Namespace }}
-  labels:
-    tier: {{ .Values.name }}
-spec:
-  type: ClusterIP
-  selector:
-    tier: {{ .Values.name }}
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
----
+resource "kubernetes_role" "extprod" {
+  metadata {
+    name      = "factory"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods"]
+    verbs          = ["get", "list", "delete"]
+  }
+  rule {
+    api_groups = ["batch"]
+    resources  = ["jobs"]
+    verbs      = ["get", "list", "create", "delete"]
+  }
+}
+
+
+resource "kubernetes_role_binding" "extprod" {
+  depends_on = [kubernetes_service_account.extprod, kubernetes_role.extprod]
+  
+  metadata {
+    name      = "factory"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "factory"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "factory"
+    namespace = var.namespace
+  }
+}
+
+
+resource "kubernetes_service" "extprod" {
+  metadata {
+    name      = var.extprod_name
+    namespace = var.namespace
+    
+    labels = {
+      tier = var.extprod_name
+    }
+  }
+  spec {
+    type = "ClusterIP"
+    
+    selector = {
+      tier = var.extprod_name
+    }
+    
+    port {
+      name        = "http"
+      protocol    = "TCP"
+      port        = 80
+      target_port = 80
+    }
+  }
+}
+
+
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
