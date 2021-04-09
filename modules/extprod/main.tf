@@ -104,62 +104,91 @@ resource "kubernetes_service" "extprod" {
 }
 
 
+resource "kubernetes_deployment" "extprod" {
+  metadata {
+    name      = var.extprod_name
+    namespace = var.namespace
+    
+    labels = {
+      tier = var.extprod_name
+    }
+  }
 
+  spec {
+    replicas = var.replicas
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    tier: {{ .Values.name }}
-  name: {{ .Values.name }}
-  namespace: {{ .Release.Namespace }}
-spec:
-  replicas: {{ .Values.replicas }}
-  selector:
-    matchLabels:
-      tier: {{ .Values.name }}
-  strategy: {}
-  template:
-    metadata:
-      labels:
-        tier: {{ .Values.name }}
-    spec:
-      serviceAccountName: factory
-#      securityContext:
-#        runAsUser: 10000
-#        runAsGroup: 20000
-#        fsGroup: 30000
-      containers:
-      - name: order
-        image: {{ .Values.registry }}/extprod-{{ .Values.tech }}:{{ .Values.version }}
-        imagePullPolicy: Always
-#        securityContext:
-#          runAsUser: 10001
-#          allowPrivilegeEscalation: false
-        volumeMounts:
-        - name: customization
-          mountPath: /etc/customization
-        ports:
-        - name: http
-          containerPort: 80
-          protocol: TCP
-#        - name: https
-#          containerPort: 443
-#          protocol: TCP
-        startupProbe:
-          periodSeconds: 5
-          failureThreshold: 40
-          httpGet:
-            path: /healthz
-            port: http
-        livenessProbe:
-          initialDelaySeconds: 5
-          periodSeconds: 2
-          failureThreshold: 4
-          httpGet:
-            path: /healthz
-            port: http
-      volumes:
-      - name: customization
-        configMap:
-          name: customization
+    selector {
+      match_labels = {
+        tier = var.extprod_name
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          tier = var.extprod_name
+        }
+      }
+
+      spec {
+        service_account_name = "factory"
+        
+        container {
+          name  = var.extprod_name
+          
+          image = "${var.registry}/extprod-${var.extprod_tech}:${var.extprod_version}"
+          
+          port {
+            name           = "http"
+            protocol       = "TCP"
+            container_port = 80
+          }
+          
+          volume_mount {
+            name       = "customization"
+            mount_path = "/etc/customization"
+          }
+
+          resources {
+            requests = {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits = {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
+          
+          startup_probe {
+            http_get {
+              path = "/healthz"
+              port = 80
+            }
+
+            period_seconds    = 5
+            failure_threshold = 40
+          }
+          
+          liveness_probe {
+            http_get {
+              path = "/healthz"
+              port = 80
+            }
+
+            initial_delay_seconds = 5
+            period_seconds        = 2
+            failure_threshold     = 4
+          }
+        }
+        
+        volume {
+          name = "customization"
+          config_map {
+            name = "customization"
+          }
+        }
+      }
+    }
+  }
+}
