@@ -17,6 +17,11 @@ variable "extprod_namespace" {
   default = "automation"
 }
 
+variable "extpayment_namespace" {
+  type    = string
+  default = "ext"
+}
+
 variable "app_name" {
   type        = string
   default     = "cnb"
