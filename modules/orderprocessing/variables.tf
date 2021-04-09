@@ -63,7 +63,7 @@ variable "registry" {
 
 variable "orderprocessing_tech" {
   type        = string
-  default     = "python"
+  default     = "php"
   description = "The image technology."
 }
 
