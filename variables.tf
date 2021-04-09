@@ -12,6 +12,11 @@ variable "trafficgen_namespace" {
   default = "trafficgen"
 }
 
+variable "extprod_namespace" {
+  type    = string
+  default = "automation"
+}
+
 variable "app_name" {
   type        = string
   default     = "cnb"
