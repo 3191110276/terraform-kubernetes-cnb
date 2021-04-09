@@ -477,6 +477,52 @@ variable "prodrequest_memory_limit" {
 
 
 ############################################################
+# NOTIFICATION
+############################################################
+variable "orderprocessing_name" {
+  type        = string
+  default     = "orderprocessing"
+  description = "The name of the OrderProcessing application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "orderprocessing_appd" {
+  type        = string
+  default     = "OrderProcessing"
+  description = "The name of the OrderProcessing application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "orderprocessing_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the OrderProcessing component."
+}
+
+variable "orderprocessing_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The OrderProcessing value for requests.cpu."
+}
+
+variable "orderprocessing_memory_request" {
+  type        = string
+  default     = "80Mi"
+  description = "The OrderProcessing value for requests.memory."
+}
+
+variable "orderprocessing_cpu_limit" {
+  type        = string
+  default     = "250m"
+  description = "The OrderProcessing value for limits.cpu."
+}
+
+variable "orderprocessing_memory_limit" {
+  type        = string
+  default     = "280Mi"
+  description = "The OrderProcessing value for limits.memory."
+}
+
+
+############################################################
 # CUSTOMIZATION
 ############################################################
 variable "inventorydb_service" {
