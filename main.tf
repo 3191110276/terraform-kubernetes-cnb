@@ -98,6 +98,19 @@ module "ingress" {
   adminfile_name = var.adminfile_name
   initqueue_name = var.initqueue_name
 }
+  
+  
+
+module "inventorydb" {
+  depends_on = [module.main_sa, module.appd_config, module.ingress]
+  
+  source  = "./modules/inventorydb"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  inventorydb_name = var.inventorydb_name
+}
 
 
 module "orderfile" {
