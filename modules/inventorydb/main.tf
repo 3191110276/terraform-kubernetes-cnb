@@ -307,107 +307,63 @@ resource "kubernetes_service_account" "inventorydb" {
 }
 
 
+resource "kubernetes_role" "inventorydb" {
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods", "services", "services/finalizers", "endpoints", "persistentvolumeclaims", "events", "configmaps", "secrets"]
+    verbs          = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["deployments", "daemonsets", "replicasets", "statefulsets"]
+    verbs          = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  
+  rule {
+    api_groups     = ["monitoring.coreos.com"]
+    resources      = ["servicemonitors"]
+    verbs          = ["get", "create"]
+  }
+
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["deployments/finalizers"]
+    resource_names = ["mariadb-operator"]
+    verbs          = ["update"]
+  }
+  
+  rule {
+    api_groups     = [""]
+    resources      = ["pods"]
+    verbs          = ["get"]
+  }
+
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["replicasets", "deployments"]
+    verbs          = ["get"]
+  }
+  
+  rule {
+    api_groups     = ["mariadb.persistentsys"]
+    resources      = ["*", "backups"]
+    verbs          = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  
+  rule {
+    api_groups     = ["batch"]
+    resources      = ["cronjobs", "jobs"]
+    verbs          = ["create", "delete", "get", "list", "watch", "update"]
+  }
+}
 
 
-
-
-
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  creationTimestamp: null
-  name: mariadb-operator
-  namespace: {{ .Release.Namespace }}
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - services
-  - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
-  - events
-  - configmaps
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  - daemonsets
-  - replicasets
-  - statefulsets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - monitoring.coreos.com
-  resources:
-  - servicemonitors
-  verbs:
-  - get
-  - create
-- apiGroups:
-  - apps
-  resourceNames:
-  - mariadb-operator
-  resources:
-  - deployments/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-- apiGroups:
-  - apps
-  resources:
-  - replicasets
-  - deployments
-  verbs:
-  - get
-- apiGroups:
-  - mariadb.persistentsys
-  resources:
-  - '*'
-  - backups
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - batch
-  resources:
-  - cronjobs
-  - jobs
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - watch
-  - update
----
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
