@@ -122,6 +122,16 @@ variable "trafficgen_app_endpoint" {
 
 
 ############################################################
+# INVENTORYDB
+############################################################
+variable "inventorydb_name" {
+  type        = string
+  default     = "inventorydb"
+  description = "The name of the InventoryDB application component. Changing this value will change how the application component is called in various UIs."
+}
+
+
+############################################################
 # ORDERFILE
 ############################################################
 variable "orderfile_name" {
