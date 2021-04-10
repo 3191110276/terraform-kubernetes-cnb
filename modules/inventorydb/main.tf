@@ -19,6 +19,8 @@ terraform {
 # CREATE INVENTORYDB
 ############################################################
 resource "kubernetes_manifest" "customresourcedefinition_monitors_mariadb_persistentsys" {
+  provider = kubernetes-alpha
+  
   manifest = {
     "apiVersion" = "apiextensions.k8s.io/v1beta1"
     "kind" = "CustomResourceDefinition"
@@ -98,6 +100,8 @@ resource "kubernetes_manifest" "customresourcedefinition_monitors_mariadb_persis
 
 
 resource "kubernetes_manifest" "customresourcedefinition_mariadbs_mariadb_persistentsys" {
+  provider = kubernetes-alpha
+  
   manifest = {
     "apiVersion" = "apiextensions.k8s.io/v1beta1"
     "kind" = "CustomResourceDefinition"
@@ -217,6 +221,8 @@ resource "kubernetes_manifest" "customresourcedefinition_mariadbs_mariadb_persis
 
 
 resource "kubernetes_manifest" "customresourcedefinition_backups_mariadb_persistentsys" {
+  provider = kubernetes-alpha
+  
   manifest = {
     "apiVersion" = "apiextensions.k8s.io/v1beta1"
     "kind" = "CustomResourceDefinition"
