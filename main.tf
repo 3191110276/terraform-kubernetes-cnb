@@ -103,6 +103,8 @@ module "ingress" {
 
 module "inventorydb" {
   depends_on = [module.main_sa, module.appd_config, module.ingress]
+    
+  provider = kubernetes-alpha
   
   source  = "./modules/inventorydb"
 
