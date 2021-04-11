@@ -521,7 +521,7 @@ variable "fulfilment_memory_limit" {
 ############################################################
 variable "initqueue_name" {
   type        = string
-  default     = "initqueue"
+  default     = "orderqueue"
   description = "The name of the InitQueue application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
