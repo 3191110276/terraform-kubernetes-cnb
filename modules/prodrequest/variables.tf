@@ -78,3 +78,9 @@ variable "initqueue_name" {
   default     = "orderqueue"
   description = "The name of the InitQueue message queue that this component connects to."
 }
+
+variable "production_name" {
+  type        = string
+  default     = "production"
+  description = "The name of the Production service that this component connects to."
+}
