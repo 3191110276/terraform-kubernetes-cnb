@@ -77,7 +77,7 @@ module "customization" {
   inventorydb_service     = var.inventorydb_service
   payment_service         = "${var.app_name}-${var.payment_name}"
   extpayment_service      = var.extpayment_service
-  initqueue_service       = var.initqueue_service
+  initqueue_service       = "${var.app_name}-${var.initqueue_name}-rabbitmq"
   orderprocessing_service = var.orderprocessing_service
   production_service      = "${var.app_name}-${var.production_name}"
   extprod_service         = var.extprod_service
