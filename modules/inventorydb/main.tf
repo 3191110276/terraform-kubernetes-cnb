@@ -502,11 +502,11 @@ resource "kubernetes_deployment" "inventorydb" {
           
           resources {
             limits = {
-              cpu    = "10m"
+              cpu    = "50m"
               memory = "32Mi"
             }
             requests = {
-              cpu    = "50m"
+              cpu    = "10m"
               memory = "32Mi"
             }
           }
