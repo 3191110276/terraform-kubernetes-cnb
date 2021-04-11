@@ -3,8 +3,8 @@
 ############################################################
 terraform {
   required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
+    helm = {
+      source  = "hashicorp/helm"
       version = ">= 2.0.2"
     }
   }
@@ -20,24 +20,14 @@ resource "helm_release" "orderqueue" {
   chart      = "${path.module}/helm/"
 
   namespace  = var.namespace
+  
+  set {
+    name  = "appname"
+    value = var.app_name
+  }
 
   set {
-    name  = "orderqueue_name"
-    value = var.orderqueue_name
-  }
-  
-  set {
-    name  = "registry"
-    value = var.registry
-  }
-  
-  set {
-    name  = "orderqueue_tech"
-    value = var.inventorydb_tech
-  }
-  
-  set {
-    name  = "orderqueue_version"
-    value = var.inventorydb_version
+    name  = "initqueue_name"
+    value = var.initqueue_name
   }
 }
