@@ -75,6 +75,6 @@ variable "notification_version" {
 
 variable "initqueue_name" {
   type        = string
-  default     = "initqueue"
+  default     = "orderqueue"
   description = "The name of the InitQueue message queue that this component connects to."
 }
