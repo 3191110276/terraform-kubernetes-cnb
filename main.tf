@@ -74,14 +74,14 @@ module "customization" {
 
   namespace = var.main_namespace
   
-  inventorydb_service     = var.inventorydb_service
+  inventorydb_service     = "${var.inventorydb_name}-service"
   payment_service         = "${var.app_name}-${var.payment_name}"
-  extpayment_service      = var.extpayment_service
+  extpayment_service      = "${var.extpayment_name}.${var.extpayment_namespace}"
   initqueue_service       = "${var.app_name}-${var.initqueue_name}-rabbitmq"
-  orderprocessing_service = var.orderprocessing_service
+  orderprocessing_service = "${var.app_name}-${var.orderprocessing_name}"
   production_service      = "${var.app_name}-${var.production_name}"
-  extprod_service         = var.extprod_service
-  fulfilment_service      = var.fulfilment_service
+  extprod_service         = "${var.extprod_name}.${var.extprod_namespace}"
+  fulfilment_service      = "${var.app_name}-${var.fulfilment_name}"
 }
   
   
