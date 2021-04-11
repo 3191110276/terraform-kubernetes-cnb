@@ -88,36 +88,12 @@ variable "proxy_port" {
 
 
 ############################################################
-# TRAFFICGEN
+# ORDERQUEUE
 ############################################################
-variable "trafficgen_name" {
-  type    = string
-  default = "trafficgen"
-}
-
-variable "trafficgen_replicas" {
-  type    = number
-  default = 10
-}
-
-variable "trafficgen_min_random_delay" {
-  type    = number
-  default = 0
-}
-
-variable "trafficgen_max_random_delay" {
-  type    = number
-  default = 60
-}
-
-variable "trafficgen_lagspike_percentage" {
-  type    = string
-  default = ""
-}
-
-variable "trafficgen_app_endpoint" {
-  type    = string
-  default = "essential-nginx-ingress-ingress-nginx-controller.iks"
+variable "orderqueue_name" {
+  type        = string
+  default     = "orderqueue"
+  description = "The name of the OrderQueue application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
 
@@ -128,131 +104,6 @@ variable "inventorydb_name" {
   type        = string
   default     = "inventorydb"
   description = "The name of the InventoryDB application component. Changing this value will change how the application component is called in various UIs."
-}
-
-
-############################################################
-# ORDERFILE
-############################################################
-variable "orderfile_name" {
-  type        = string
-  default     = "orderfile"
-  description = "The name of the OrderFile application component. Changing this value will change how the application component is called in various UIs."
-}
-
-variable "orderfile_replicas" {
-  type        = number
-  default     = 2
-  description = "The number of replicas that should initially be deployed for the OrderFile component."
-}
-
-variable "orderfile_cpu_request" {
-  type        = string
-  default     = "20m"
-  description = "The OrderFile value for requests.cpu."
-}
-
-variable "orderfile_memory_request" {
-  type        = string
-  default     = "32Mi"
-  description = "The OrderFile value for requests.memory."
-}
-
-variable "orderfile_cpu_limit" {
-  type        = string
-  default     = "50m"
-  description = "The OrderFile value for limits.cpu."
-}
-
-variable "orderfile_memory_limit" {
-  type        = string
-  default     = "32Mi"
-  description = "The OrderFile value for limits.memory."
-}
-
-
-############################################################
-# ADMINFILE
-############################################################
-variable "adminfile_name" {
-  type        = string
-  default     = "adminfile"
-  description = "The name of the AdminFile application component. Changing this value will change how the application component is called in various UIs."
-}
-
-variable "adminfile_replicas" {
-  type        = number
-  default     = 2
-  description = "The number of replicas that should initially be deployed for the OrderFile component."
-}
-
-variable "adminfile_cpu_request" {
-  type        = string
-  default     = "20m"
-  description = "The OrderFile value for requests.cpu."
-}
-
-variable "adminfile_memory_request" {
-  type        = string
-  default     = "32Mi"
-  description = "The OrderFile value for requests.memory."
-}
-
-variable "adminfile_cpu_limit" {
-  type        = string
-  default     = "50m"
-  description = "The OrderFile value for limits.cpu."
-}
-
-variable "adminfile_memory_limit" {
-  type        = string
-  default     = "32Mi"
-  description = "The OrderFile value for limits.memory."
-}
-
-############################################################
-# ORDER
-############################################################
-variable "order_name" {
-  type        = string
-  default     = "order"
-  description = "The name of the Order application component. Changing this value will change how the application component is called in Kubernetes."
-}
-
-variable "order_appd" {
-  type        = string
-  default     = "Order"
-  description = "The name of the Order application component. Changing this value will change how the application component is called in AppDynamics."
-}
-
-variable "order_replicas" {
-  type        = number
-  default     = 2
-  description = "The number of replicas that should initially be deployed for the Order component."
-}
-
-variable "order_cpu_request" {
-  type        = string
-  default     = "100m"
-  description = "The Order value for requests.cpu."
-}
-
-variable "order_memory_request" {
-  type        = string
-  default     = "128Mi"
-  description = "The Order value for requests.memory."
-}
-
-variable "order_cpu_limit" {
-  type        = string
-  default     = "400m"
-  description = "The Order value for limits.cpu."
-}
-
-variable "order_memory_limit" {
-  type        = string
-  default     = "512Mi"
-  description = "The Order value for limits.memory."
 }
 
 
@@ -315,94 +166,48 @@ variable "extpayment_lagspike_percentage" {
 
 
 ############################################################
-# PAYMENT
+# FULFILMENT
 ############################################################
-variable "payment_name" {
+variable "fulfilment_name" {
   type        = string
-  default     = "payment"
-  description = "The name of the Payment application component. Changing this value will change how the application component is called in Kubernetes."
+  default     = "fulfilment"
+  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
-variable "payment_appd" {
+variable "fulfilment_appd" {
   type        = string
-  default     = "Payment"
-  description = "The name of the Payment application component. Changing this value will change how the application component is called in AppDynamics."
+  default     = "Fulfilment"
+  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in AppDynamics."
 }
 
-variable "payment_replicas" {
+variable "fulfilment_replicas" {
   type        = number
   default     = 2
-  description = "The number of replicas that should initially be deployed for the Payment component."
+  description = "The number of replicas that should initially be deployed for the Fulfilment component."
 }
 
-variable "payment_cpu_request" {
-  type        = string
-  default     = "20m"
-  description = "The Payment value for requests.cpu."
-}
-
-variable "payment_memory_request" {
-  type        = string
-  default     = "64Mi"
-  description = "The Payment value for requests.memory."
-}
-
-variable "payment_cpu_limit" {
-  type        = string
-  default     = "250m"
-  description = "The Payment value for limits.cpu."
-}
-
-variable "payment_memory_limit" {
-  type        = string
-  default     = "256Mi"
-  description = "The Payment value for limits.memory."
-}
-
-
-############################################################
-# PRODUCTION
-############################################################
-variable "production_name" {
-  type        = string
-  default     = "production"
-  description = "The name of the Production application component. Changing this value will change how the application component is called in Kubernetes."
-}
-
-variable "production_appd" {
-  type        = string
-  default     = "Production"
-  description = "The name of the Production application component. Changing this value will change how the application component is called in AppDynamics."
-}
-
-variable "production_replicas" {
-  type        = number
-  default     = 2
-  description = "The number of replicas that should initially be deployed for the Production component."
-}
-
-variable "production_cpu_request" {
+variable "fulfilment_cpu_request" {
   type        = string
   default     = "100m"
-  description = "The Production value for requests.cpu."
+  description = "The Fulfilment value for requests.cpu."
 }
 
-variable "production_memory_request" {
+variable "fulfilment_memory_request" {
   type        = string
   default     = "200Mi"
-  description = "The Production value for requests.memory."
+  description = "The Fulfilment value for requests.memory."
 }
 
-variable "production_cpu_limit" {
+variable "fulfilment_cpu_limit" {
   type        = string
   default     = "400m"
-  description = "The Production value for limits.cpu."
+  description = "The Fulfilment value for limits.cpu."
 }
 
-variable "production_memory_limit" {
+variable "fulfilment_memory_limit" {
   type        = string
   default     = "800Mi"
-  description = "The Production value for limits.memory."
+  description = "The Fulfilment value for limits.memory."
 }
 
 
@@ -471,58 +276,94 @@ variable "extprod_job_max_delay" {
 
 
 ############################################################
-# FULFILMENT
+# PRODUCTION
 ############################################################
-variable "fulfilment_name" {
+variable "production_name" {
   type        = string
-  default     = "fulfilment"
-  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in Kubernetes."
+  default     = "production"
+  description = "The name of the Production application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
-variable "fulfilment_appd" {
+variable "production_appd" {
   type        = string
-  default     = "Fulfilment"
-  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in AppDynamics."
+  default     = "Production"
+  description = "The name of the Production application component. Changing this value will change how the application component is called in AppDynamics."
 }
 
-variable "fulfilment_replicas" {
+variable "production_replicas" {
   type        = number
   default     = 2
-  description = "The number of replicas that should initially be deployed for the Fulfilment component."
+  description = "The number of replicas that should initially be deployed for the Production component."
 }
 
-variable "fulfilment_cpu_request" {
+variable "production_cpu_request" {
   type        = string
   default     = "100m"
-  description = "The Fulfilment value for requests.cpu."
+  description = "The Production value for requests.cpu."
 }
 
-variable "fulfilment_memory_request" {
+variable "production_memory_request" {
   type        = string
   default     = "200Mi"
-  description = "The Fulfilment value for requests.memory."
+  description = "The Production value for requests.memory."
 }
 
-variable "fulfilment_cpu_limit" {
+variable "production_cpu_limit" {
   type        = string
   default     = "400m"
-  description = "The Fulfilment value for limits.cpu."
+  description = "The Production value for limits.cpu."
 }
 
-variable "fulfilment_memory_limit" {
+variable "production_memory_limit" {
   type        = string
   default     = "800Mi"
-  description = "The Fulfilment value for limits.memory."
+  description = "The Production value for limits.memory."
 }
 
 
 ############################################################
-# INITQUEUE
+# PAYMENT
 ############################################################
-variable "initqueue_name" {
+variable "payment_name" {
   type        = string
-  default     = "orderqueue"
-  description = "The name of the InitQueue application component. Changing this value will change how the application component is called in Kubernetes."
+  default     = "payment"
+  description = "The name of the Payment application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "payment_appd" {
+  type        = string
+  default     = "Payment"
+  description = "The name of the Payment application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "payment_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Payment component."
+}
+
+variable "payment_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The Payment value for requests.cpu."
+}
+
+variable "payment_memory_request" {
+  type        = string
+  default     = "64Mi"
+  description = "The Payment value for requests.memory."
+}
+
+variable "payment_cpu_limit" {
+  type        = string
+  default     = "250m"
+  description = "The Payment value for limits.cpu."
+}
+
+variable "payment_memory_limit" {
+  type        = string
+  default     = "256Mi"
+  description = "The Payment value for limits.memory."
 }
 
 
@@ -619,7 +460,7 @@ variable "prodrequest_memory_limit" {
 
 
 ############################################################
-# NOTIFICATION
+# ORDERPROCESSING
 ############################################################
 variable "orderprocessing_name" {
   type        = string
@@ -661,4 +502,164 @@ variable "orderprocessing_memory_limit" {
   type        = string
   default     = "280Mi"
   description = "The OrderProcessing value for limits.memory."
+}
+
+
+############################################################
+# ORDER
+############################################################
+variable "order_name" {
+  type        = string
+  default     = "order"
+  description = "The name of the Order application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "order_appd" {
+  type        = string
+  default     = "Order"
+  description = "The name of the Order application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "order_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Order component."
+}
+
+variable "order_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The Order value for requests.cpu."
+}
+
+variable "order_memory_request" {
+  type        = string
+  default     = "128Mi"
+  description = "The Order value for requests.memory."
+}
+
+variable "order_cpu_limit" {
+  type        = string
+  default     = "400m"
+  description = "The Order value for limits.cpu."
+}
+
+variable "order_memory_limit" {
+  type        = string
+  default     = "512Mi"
+  description = "The Order value for limits.memory."
+}
+
+
+############################################################
+# ORDERFILE
+############################################################
+variable "orderfile_name" {
+  type        = string
+  default     = "orderfile"
+  description = "The name of the OrderFile application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "orderfile_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the OrderFile component."
+}
+
+variable "orderfile_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The OrderFile value for requests.cpu."
+}
+
+variable "orderfile_memory_request" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for requests.memory."
+}
+
+variable "orderfile_cpu_limit" {
+  type        = string
+  default     = "50m"
+  description = "The OrderFile value for limits.cpu."
+}
+
+variable "orderfile_memory_limit" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for limits.memory."
+}
+
+
+############################################################
+# ADMINFILE
+############################################################
+variable "adminfile_name" {
+  type        = string
+  default     = "adminfile"
+  description = "The name of the AdminFile application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "adminfile_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the OrderFile component."
+}
+
+variable "adminfile_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The OrderFile value for requests.cpu."
+}
+
+variable "adminfile_memory_request" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for requests.memory."
+}
+
+variable "adminfile_cpu_limit" {
+  type        = string
+  default     = "50m"
+  description = "The OrderFile value for limits.cpu."
+}
+
+variable "adminfile_memory_limit" {
+  type        = string
+  default     = "32Mi"
+  description = "The OrderFile value for limits.memory."
+}
+
+
+############################################################
+# TRAFFICGEN
+############################################################
+variable "trafficgen_name" {
+  type    = string
+  default = "trafficgen"
+}
+
+variable "trafficgen_replicas" {
+  type    = number
+  default = 10
+}
+
+variable "trafficgen_min_random_delay" {
+  type    = number
+  default = 0
+}
+
+variable "trafficgen_max_random_delay" {
+  type    = number
+  default = 60
+}
+
+variable "trafficgen_lagspike_percentage" {
+  type    = string
+  default = ""
+}
+
+variable "trafficgen_app_endpoint" {
+  type    = string
+  default = "essential-nginx-ingress-ingress-nginx-controller.iks"
 }
