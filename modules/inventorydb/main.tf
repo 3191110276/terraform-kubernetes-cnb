@@ -410,7 +410,7 @@ resource "kubernetes_cluster_role" "inventorydb" {
 
 
 resource "kubernetes_cluster_role_binding" "inventorydb" {
-  depends_on = [kubernetes_service_account.inventorydb, kubernetes_cluster_role.inventorydb]
+  depends_on = [kubernetes_service_account.inventorydb, kubernetes_cluster_role.inventorydb, kubernetes_role_binding.inventorydb]
   
   metadata {
     name = "mariadb-operator-cl-binding"
@@ -445,7 +445,9 @@ resource "kubernetes_persistent_volume_claim" "inventorydb" {
 }
 
 
-resource "kubernetes_deployment" "example" {
+resource "kubernetes_deployment" "inventorydb" {
+  depends_on = [kubernetes_persistent_volume_claim.inventorydb, kubernetes_cluster_role_binding.inventorydb, kubernetes_manifest.customresourcedefinition_backups_mariadb_persistentsys, kubernetes_manifest.customresourcedefinition_mariadbs_mariadb_persistentsys ,kubernetes_manifest.customresourcedefinition_monitors_mariadb_persistentsys]
+  
   metadata {
     name      = "mariadb-operator"
     namespace = var.namespace
@@ -512,33 +514,28 @@ resource "kubernetes_deployment" "example" {
 }
 
 
----
-apiVersion: mariadb.persistentsys/v1alpha1
-kind: MariaDB
-metadata:
-  name: {{ .Values.appname }}-{{ .Values.inventorydb_name }}
-  namespace: {{ .Release.Namespace }}
-spec:
-  # Keep this parameter value unchanged.
-  size: 1
+resource "kubernetes_manifest" "mariadb_cnb_inventorydb" {
+  depends_on = [kubernetes_deployment.inventorydb]
   
-  # Root user password
-  rootpwd: root
-
-  # New Database name
-  database: default
-  # Database additional user details (base64 encoded)
-  username: db-user
-  password: db-user
-
-  # Image name with version
-  image: {{ .Values.registry }}/inventorydb-{{ .Values.inventorydb_tech }}:{{ .Values.inventorydb_version }}
-
-  # Database storage Path
-  dataStoragePath: "/mnt/data" 
-
-  # Database storage Size (Ex. 1Gi, 100Mi)
-  dataStorageSize: "2Gi"
-
-  # Port number exposed for Database service
-  port: 30999
+  provider = kubernetes-alpha
+  
+  manifest = {
+    "apiVersion" = "mariadb.persistentsys/v1alpha1"
+    "kind" = "MariaDB"
+    "metadata" = {
+      "name" = var.inventorydb_name
+      "namespace" = var.namespace
+    }
+    "spec" = {
+      "dataStoragePath" = "/mnt/data"
+      "dataStorageSize" = "2Gi"
+      "database" = "default"
+      "image" = "${var.registry}/inventorydb-${var.inventorydb_tech}:${var.inventorydb_version}"
+      "password" = "db-user"
+      "port" = 30999
+      "rootpwd" = "root"
+      "size" = 1
+      "username" = "db-user"
+    }
+  }
+}
