@@ -112,6 +112,11 @@ resource "kubernetes_deployment" "prodrequest" {
             value = "${var.app_name}-${var.initqueue_name}-rabbitmq"
           }
           
+          env {
+            name  = "PRODUCTION_SVC"
+            value = "${var.app_name}-${var.production_name}"
+          }
+          
           env_from {
             config_map_ref {
               name = "appd-config"
