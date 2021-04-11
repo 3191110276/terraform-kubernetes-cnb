@@ -14,9 +14,7 @@ terraform {
 ############################################################
 # CREATE INVENTORYDB
 ############################################################
-resource "helm_release" "inventorydb" {
-  depends_on = [kubernetes_deployment.inventorydb]
-  
+resource "helm_release" "inventorydb" {  
   name       = "inventorydb"
 
   chart      = "${path.module}/helm/"
