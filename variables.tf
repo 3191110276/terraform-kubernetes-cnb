@@ -537,7 +537,7 @@ variable "notification_name" {
 
 variable "notification_appd" {
   type        = string
-  default     = "Fulfilment"
+  default     = "Notification"
   description = "The name of the Notification application component. Changing this value will change how the application component is called in AppDynamics."
 }
 
