@@ -428,20 +428,23 @@ resource "kubernetes_cluster_role_binding" "inventorydb" {
 }
 
 
+resource "kubernetes_persistent_volume_claim" "inventorydb" {
+  metadata {
+    name      = "mariadb-pv-claim"
+    namespace = var.namespace
+  }
+  spec {
+    storage_class_name = "standard"
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "4Gi"
+      }
+    }
+  }
+}
 
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mariadb-pv-claim
-  namespace: {{ .Release.Namespace }}
-spec:
-  storageClassName: standard
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 4Gi
----
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
