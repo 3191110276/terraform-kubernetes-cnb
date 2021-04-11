@@ -77,7 +77,7 @@ module "customization" {
   inventorydb_service     = "${var.inventorydb_name}-service"
   payment_service         = "${var.app_name}-${var.payment_name}"
   extpayment_service      = "${var.extpayment_name}.${var.extpayment_namespace}"
-  initqueue_service       = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+  initqueue_service       = "${var.app_name}-${var.orderqueue_name}-rabbitmq"
   orderprocessing_service = "${var.app_name}-${var.orderprocessing_name}"
   production_service      = "${var.app_name}-${var.production_name}"
   extprod_service         = "${var.extprod_name}.${var.extprod_namespace}"
@@ -96,7 +96,7 @@ module "ingress" {
   order_name     = var.order_name
   orderfile_name = var.orderfile_name
   adminfile_name = var.adminfile_name
-  initqueue_name = var.initqueue_name
+  initqueue_name = var.orderqueue_name
 }
   
 
@@ -234,7 +234,7 @@ module "notification" {
   cpu_limit         = var.notification_cpu_limit
   memory_limit      = var.notification_memory_limit
   
-  initqueue_name = var.initqueue_name
+  initqueue_name = var.orderqueue_name
 }
     
 
@@ -254,7 +254,7 @@ module "prodrequest" {
   cpu_limit         = var.prodrequest_cpu_limit
   memory_limit      = var.prodrequest_memory_limit
   
-  initqueue_name  = var.initqueue_name
+  initqueue_name  = var.orderqueue_name
   production_name = var.production_name
 }
     
