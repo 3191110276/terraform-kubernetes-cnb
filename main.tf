@@ -313,7 +313,7 @@ module "orderfile" {
     
 
 module "adminfile" {
-  depends_on = [module.orderfile]
+  depends_on = [module.order]
   
   source  = "./modules/adminfile"
 
@@ -330,7 +330,7 @@ module "adminfile" {
     
 
 module "trafficgen" {
-  depends_on = [module.adminfile]
+  depends_on = [module.orderfile, module.adminfile]
   
   source  = "./modules/trafficgen"
 
