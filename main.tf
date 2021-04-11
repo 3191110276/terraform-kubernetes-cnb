@@ -306,7 +306,8 @@ module "prodrequest" {
   cpu_limit         = var.prodrequest_cpu_limit
   memory_limit      = var.prodrequest_memory_limit
   
-  initqueue_name = var.initqueue_name
+  initqueue_name  = var.initqueue_name
+  production_name = var.production_name
 }
   
   
