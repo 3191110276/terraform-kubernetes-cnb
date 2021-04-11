@@ -413,7 +413,7 @@ resource "kubernetes_cluster_role" "inventorydb" {
 
 
 resource "kubernetes_cluster_role_binding" "inventorydb" {
-  depends_on = [kubernetes_service_account.inventorydb, kubernetes_cluster_role.inventorydb, kubernetes_role_binding.inventorydb]
+  depends_on = [kubernetes_service_account.inventorydb, kubernetes_cluster_role.inventorydb]
   
   metadata {
     name = "mariadb-operator-cl-binding"
