@@ -445,45 +445,73 @@ resource "kubernetes_persistent_volume_claim" "inventorydb" {
 }
 
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mariadb-operator
-  namespace: {{ .Release.Namespace }}
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: mariadb-operator
-  template:
-    metadata:
-      labels:
-        name: mariadb-operator
-    spec:
-      serviceAccountName: mariadb-operator
-      containers:
-        - name: mariadb-operator
-          # Replace this with the built image name
-          image: quay.io/manojdhanorkar/mariadb-operator:v0.0.4
-          resources:
-            requests:
-              cpu: 10m
-              memory: 32Mi
-            limits:
-              cpu: 50m
-              memory: 32Mi
-          command:
-          - mariadb-operator
-          imagePullPolicy: Always
-          env:
-            - name: WATCH_NAMESPACE
-              value: {{ .Release.Namespace }}
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: OPERATOR_NAME
-              value: "mariadb-operator"
+resource "kubernetes_deployment" "example" {
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        name = "mariadb-operator"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          name = "mariadb-operator"
+        }
+      }
+
+      spec {
+        service_account_name = "mariadb-operator"
+        
+        container {
+          image = "quay.io/manojdhanorkar/mariadb-operator:v0.0.4"
+          name  = "mariadb-operator"
+
+          command = ["mariadb-operator"]
+          
+          env {
+            name  = "WATCH_NAMESPACE"
+            value = var.namespace
+          }
+          
+          env {
+            name = "POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
+          
+          env {
+            name  = "OPERATOR_NAME"
+            value = "mariadb-operator"
+          }
+          
+          resources {
+            limits = {
+              cpu    = "10m"
+              memory = "32Mi"
+            }
+            requests = {
+              cpu    = "50m"
+              memory = "32Mi"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 ---
 apiVersion: mariadb.persistentsys/v1alpha1
 kind: MariaDB
