@@ -364,69 +364,71 @@ resource "kubernetes_role" "inventorydb" {
 }
 
 
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: mariadb-operator
-  namespace: {{ .Release.Namespace }}
-subjects:
-- kind: ServiceAccount
-  name: mariadb-operator
-roleRef:
-  kind: Role
-  name: mariadb-operator
-  apiGroup: rbac.authorization.k8s.io
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: mariadb-operator-cl-role
-  namespace: {{ .Release.Namespace }}
-rules:
-- apiGroups: [""]
-  resources:
-  - nodes
-  - persistentvolumes
-  - namespaces
-  verbs: 
-  - list
-  - watch
-  - get
-  - create
-  - delete 
-- apiGroups: ["storage.k8s.io"]
-  resources:
-  - storageclasses
-  verbs: 
-  - list
-  - watch
-  - get
-  - create
-  - delete
-- apiGroups:
-  - monitoring.coreos.com
-  resources:
-  - alertmanagers
-  - prometheuses
-  - prometheuses/finalizers
-  - servicemonitors
-  verbs:
-  - "*"
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: mariadb-operator-cl-binding
-  namespace: {{ .Release.Namespace }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: mariadb-operator-cl-role
-subjects:
-  - kind: ServiceAccount
-    name: mariadb-operator
-    namespace: mariadb
----
+resource "kubernetes_role_binding" "inventorydb" {
+  depends_on = [kubernetes_service_account.inventorydb, kubernetes_role.inventorydb]
+  
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "mariadb-operator"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "mariadb-operator"
+  }
+}
+
+
+resource "kubernetes_cluster_role" "inventorydb" {
+  metadata {
+    name      = "mariadb-operator-cl-role"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["nodes", "persistentvolumes", "namespaces"]
+    verbs      = ["list", "watch", "get", "create", "delete"]
+  }
+  
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["storageclasses"]
+    verbs      = ["list", "watch", "get", "create", "delete"]
+  }
+  
+  rule {
+    api_groups = ["monitoring.coreos.com"]
+    resources  = ["alertmanagers", "prometheuses", "prometheuses/finalizers", "servicemonitors"]
+    verbs      = ["*"]
+  }
+}
+
+
+resource "kubernetes_cluster_role_binding" "inventorydb" {
+  depends_on = [kubernetes_service_account.inventorydb, kubernetes_cluster_role.inventorydb]
+  
+  metadata {
+    name = "mariadb-operator-cl-binding"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "mariadb-operator-cl-role"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+}
+
+
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
