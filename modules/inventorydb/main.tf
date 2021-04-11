@@ -386,7 +386,6 @@ resource "kubernetes_role_binding" "inventorydb" {
 resource "kubernetes_cluster_role" "inventorydb" {
   metadata {
     name      = "mariadb-operator-cl-role"
-    namespace = var.namespace
   }
 
   rule {
