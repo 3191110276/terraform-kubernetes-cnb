@@ -99,10 +99,19 @@ module "ingress" {
   initqueue_name = var.initqueue_name
 }
   
+
+module "orderqueue" {
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
   
+  source  = "./modules/orderqueue"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+}
+
 
 module "inventorydb" {
-  depends_on = [module.main_sa, module.appd_config, module.ingress]
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
   
   source  = "./modules/inventorydb"
 
@@ -111,58 +120,7 @@ module "inventorydb" {
     
   inventorydb_name = var.inventorydb_name
 }
-
-
-module "orderfile" {
-  depends_on = [module.main_sa, module.appd_config, module.ingress]
-  
-  source  = "./modules/orderfile"
-
-  app_name  = var.app_name
-  namespace = var.main_namespace
     
-  orderfile_name = var.orderfile_name
-  replicas       = var.orderfile_replicas
-  cpu_request    = var.orderfile_cpu_request
-  memory_request = var.orderfile_memory_request
-  cpu_limit      = var.orderfile_cpu_limit
-  memory_limit   = var.orderfile_memory_limit
-}
-    
-    
-module "adminfile" {
-  depends_on = [module.main_sa, module.appd_config, module.ingress]
-  
-  source  = "./modules/adminfile"
-
-  app_name  = var.app_name
-  namespace = var.main_namespace
-    
-  adminfile_name = var.adminfile_name
-  replicas       = var.adminfile_replicas
-  cpu_request    = var.adminfile_cpu_request
-  memory_request = var.adminfile_memory_request
-  cpu_limit      = var.adminfile_cpu_limit
-  memory_limit   = var.adminfile_memory_limit
-}
-    
-module "order" {
-  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
-  
-  source  = "./modules/order"
-
-  app_name  = var.app_name
-  namespace = var.main_namespace
-    
-  order_name     = var.order_name
-  order_appd     = var.order_appd
-  replicas       = var.order_replicas
-  cpu_request    = var.order_cpu_request
-  memory_request = var.order_memory_request
-  cpu_limit      = var.order_cpu_limit
-  memory_limit   = var.order_memory_limit
-}
-
     
 module "extpayment" {
   depends_on = [kubernetes_namespace.extpayment]
@@ -184,26 +142,8 @@ module "extpayment" {
 }
 
 
-module "payment" {
-  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
-  
-  source  = "./modules/payment"
-
-  app_name  = var.app_name
-  namespace = var.main_namespace
-    
-  payment_name     = var.payment_name
-  payment_appd     = var.payment_appd
-  replicas         = var.payment_replicas
-  cpu_request      = var.payment_cpu_request
-  memory_request   = var.payment_memory_request
-  cpu_limit        = var.payment_cpu_limit
-  memory_limit     = var.payment_memory_limit
-}
-    
-
 module "fulfilment" {
-  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
+  depends_on = [module.inventorydb]
   
   source  = "./modules/fulfilment"
 
@@ -219,7 +159,7 @@ module "fulfilment" {
   memory_limit    = var.fulfilment_memory_limit
 }
     
-    
+
 module "extprod" {
   depends_on = [kubernetes_namespace.extprod, module.fulfilment]
   
@@ -240,10 +180,10 @@ module "extprod" {
   job_max_delay  = var.extprod_job_max_delay
   production_svc = "${var.extprod_name}.${var.extprod_namespace}.svc"
 }
-    
-    
+  
+
 module "production" {
-  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress, module.extprod]
+  depends_on = [module.extprod]
   
   source  = "./modules/production"
 
@@ -258,15 +198,23 @@ module "production" {
   cpu_limit       = var.production_cpu_limit
   memory_limit    = var.production_memory_limit
 }
-    
-    
-module "orderqueue" {
-  depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
   
-  source  = "./modules/orderqueue"
+  
+module "payment" {
+  depends_on = [module.main_sa, module.appd_config, module.customization, module.extpayment]
+  
+  source  = "./modules/payment"
 
   app_name  = var.app_name
   namespace = var.main_namespace
+    
+  payment_name     = var.payment_name
+  payment_appd     = var.payment_appd
+  replicas         = var.payment_replicas
+  cpu_request      = var.payment_cpu_request
+  memory_request   = var.payment_memory_request
+  cpu_limit        = var.payment_cpu_limit
+  memory_limit     = var.payment_memory_limit
 }
     
     
@@ -288,8 +236,8 @@ module "notification" {
   
   initqueue_name = var.initqueue_name
 }
-  
-  
+    
+
 module "prodrequest" {
   depends_on = [module.orderqueue]
   
@@ -309,8 +257,8 @@ module "prodrequest" {
   initqueue_name  = var.initqueue_name
   production_name = var.production_name
 }
-  
-  
+    
+
 module "orderprocessing" {
   depends_on = [module.notification, module.prodrequest]
   
@@ -329,8 +277,60 @@ module "orderprocessing" {
 }
     
 
+module "order" {
+  depends_on = [module.orderprocessing, module.production, module.payment]
+  
+  source  = "./modules/order"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  order_name     = var.order_name
+  order_appd     = var.order_appd
+  replicas       = var.order_replicas
+  cpu_request    = var.order_cpu_request
+  memory_request = var.order_memory_request
+  cpu_limit      = var.order_cpu_limit
+  memory_limit   = var.order_memory_limit
+}
+
+
+module "orderfile" {
+  depends_on = [module.order]
+  
+  source  = "./modules/orderfile"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  orderfile_name = var.orderfile_name
+  replicas       = var.orderfile_replicas
+  cpu_request    = var.orderfile_cpu_request
+  memory_request = var.orderfile_memory_request
+  cpu_limit      = var.orderfile_cpu_limit
+  memory_limit   = var.orderfile_memory_limit
+}
+    
+
+module "adminfile" {
+  depends_on = [module.orderfile]
+  
+  source  = "./modules/adminfile"
+
+  app_name  = var.app_name
+  namespace = var.main_namespace
+    
+  adminfile_name = var.adminfile_name
+  replicas       = var.adminfile_replicas
+  cpu_request    = var.adminfile_cpu_request
+  memory_request = var.adminfile_memory_request
+  cpu_limit      = var.adminfile_cpu_limit
+  memory_limit   = var.adminfile_memory_limit
+}
+    
+
 module "trafficgen" {
-  depends_on = [module.orderfile, module.order, module.payment, module.fulfilment]
+  depends_on = [module.adminfile]
   
   source  = "./modules/trafficgen"
 
