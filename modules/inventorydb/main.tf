@@ -164,7 +164,7 @@ resource "kubernetes_persistent_volume_claim" "inventorydb" {
 
 
 resource "kubernetes_deployment" "inventorydb" {
-  depends_on = [kubernetes_persistent_volume_claim.inventorydb, kubernetes_cluster_role_binding.inventorydb, kubernetes_manifest.customresourcedefinition_backups_mariadb_persistentsys, kubernetes_manifest.customresourcedefinition_mariadbs_mariadb_persistentsys ,kubernetes_manifest.customresourcedefinition_monitors_mariadb_persistentsys]
+  depends_on = [kubernetes_persistent_volume_claim.inventorydb, kubernetes_cluster_role_binding.inventorydb]
   
   metadata {
     name      = "mariadb-operator"
