@@ -178,7 +178,7 @@ module "extprod" {
   max_delay      = var.extprod_max_delay
   job_min_delay  = var.extprod_job_min_delay
   job_max_delay  = var.extprod_job_max_delay
-  production_svc = "${var.extprod_name}.${var.extprod_namespace}.svc"
+  production_svc = "${var.production_name}.${var.main_namespace}"
 }
   
 
