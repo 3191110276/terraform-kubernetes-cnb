@@ -359,3 +359,14 @@ module "test" {
 
   namespace = var.order_namespace
 }
+
+
+module "accounting" {
+  depends_on = [kubernetes_namespace.accounting]
+  
+  source  = "./modules/accounting"
+
+  namespace = var.accounting_namespace
+
+  clusterload_configurations = var.accounting_clusterload_configurations
+}
