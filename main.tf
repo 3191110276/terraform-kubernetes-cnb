@@ -1,6 +1,6 @@
-resource "kubernetes_namespace" "main" {
+resource "kubernetes_namespace" "order" {
   metadata {
-    name = var.main_namespace
+    name = var.order_namespace
   }
 }
 
@@ -31,7 +31,7 @@ module "quota" {
   
   source  = "./modules/quota"
 
-  namespace = var.main_namespace
+  namespace = var.order_namespace
 }
 
 
@@ -40,7 +40,7 @@ module "main_sa" {
   
   source  = "./modules/main_sa"
 
-  namespace = var.main_namespace
+  namespace = var.order_namespace
 }
 
 
@@ -49,7 +49,7 @@ module "appd_config" {
   
   source  = "./modules/appd_config"
 
-  namespace = var.main_namespace
+  namespace = var.order_namespace
   
   app_name = var.app_name
   
@@ -72,7 +72,7 @@ module "customization" {
   
   source  = "./modules/customization"
 
-  namespace = var.main_namespace
+  namespace = var.order_namespace
   
   inventorydb_service     = "${var.inventorydb_name}-service"
   payment_service         = "${var.app_name}-${var.payment_name}"
@@ -91,7 +91,7 @@ module "ingress" {
   source  = "./modules/ingress"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
   
   order_name     = var.order_name
   orderfile_name = var.orderfile_name
@@ -106,7 +106,7 @@ module "orderqueue" {
   source  = "./modules/orderqueue"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
 }
 
 
@@ -116,7 +116,7 @@ module "inventorydb" {
   source  = "./modules/inventorydb"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   inventorydb_name = var.inventorydb_name
 }
@@ -148,7 +148,7 @@ module "fulfilment" {
   source  = "./modules/fulfilment"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   fulfilment_name = var.fulfilment_name
   fulfilment_appd = var.fulfilment_appd
@@ -188,7 +188,7 @@ module "production" {
   source  = "./modules/production"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   production_name = var.production_name
   production_appd = var.production_appd
@@ -206,7 +206,7 @@ module "payment" {
   source  = "./modules/payment"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   payment_name     = var.payment_name
   payment_appd     = var.payment_appd
@@ -224,7 +224,7 @@ module "notification" {
   source  = "./modules/notification"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   notification_name = var.notification_name
   notification_appd = var.notification_appd
@@ -244,7 +244,7 @@ module "prodrequest" {
   source  = "./modules/prodrequest"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   prodrequest_name  = var.prodrequest_name
   prodrequest_appd  = var.prodrequest_appd
@@ -265,7 +265,7 @@ module "orderprocessing" {
   source  = "./modules/orderprocessing"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   orderprocessing_name = var.orderprocessing_name
   orderprocessing_appd = var.orderprocessing_appd
@@ -283,7 +283,7 @@ module "order" {
   source  = "./modules/order"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   order_name     = var.order_name
   order_appd     = var.order_appd
@@ -301,7 +301,7 @@ module "orderfile" {
   source  = "./modules/orderfile"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   orderfile_name = var.orderfile_name
   replicas       = var.orderfile_replicas
@@ -318,7 +318,7 @@ module "adminfile" {
   source  = "./modules/adminfile"
 
   app_name  = var.app_name
-  namespace = var.main_namespace
+  namespace = var.order_namespace
     
   adminfile_name = var.adminfile_name
   replicas       = var.adminfile_replicas
@@ -350,5 +350,5 @@ module "test" {
   
   source  = "./modules/test"
 
-  namespace = var.main_namespace
+  namespace = var.order_namespace
 }
