@@ -26,6 +26,13 @@ resource "kubernetes_namespace" "extpayment" {
 }
 
 
+resource "kubernetes_namespace" "accounting" {
+  metadata {
+    name = var.accounting_namespace
+  }
+}
+
+
 module "quota" {
   depends_on = [kubernetes_namespace.main]
   
