@@ -3,7 +3,7 @@
 ############################################################
 variable "main_namespace" {
   type        = string
-  default     = "brewery"
+  default     = "order"
   description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
 }
 
@@ -14,7 +14,7 @@ variable "trafficgen_namespace" {
 
 variable "extprod_namespace" {
   type    = string
-  default = "automation"
+  default = "production"
 }
 
 variable "extpayment_namespace" {
@@ -216,7 +216,7 @@ variable "fulfilment_memory_limit" {
 ############################################################
 variable "extprod_name" {
   type        = string
-  default     = "production"
+  default     = "gateway"
   description = "The name of the ExtProd application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
