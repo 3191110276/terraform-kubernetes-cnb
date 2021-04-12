@@ -34,7 +34,7 @@ resource "kubernetes_namespace" "accounting" {
 
 
 module "quota" {
-  depends_on = [kubernetes_namespace.main]
+  depends_on = [kubernetes_namespace.order]
   
   source  = "./modules/quota"
 
