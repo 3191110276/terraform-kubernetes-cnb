@@ -127,7 +127,25 @@ module "inventorydb" {
     
   inventorydb_name = var.inventorydb_name
 }
+
     
+module "fulfilment" {
+  depends_on = [module.inventorydb]
+  
+  source  = "./modules/fulfilment"
+
+  app_name  = var.app_name
+  namespace = var.order_namespace
+    
+  fulfilment_name = var.fulfilment_name
+  fulfilment_appd = var.fulfilment_appd
+  replicas        = var.fulfilment_replicas
+  cpu_request     = var.fulfilment_cpu_request
+  memory_request  = var.fulfilment_memory_request
+  cpu_limit       = var.fulfilment_cpu_limit
+  memory_limit    = var.fulfilment_memory_limit
+}
+
     
 module "extpayment" {
   depends_on = [kubernetes_namespace.extpayment]
@@ -146,24 +164,6 @@ module "extpayment" {
   min_random_delay    = var.extpayment_min_random_delay
   max_random_delay    = var.extpayment_max_random_delay
   lagspike_percentage = var.extpayment_lagspike_percentage
-}
-
-
-module "fulfilment" {
-  depends_on = [module.inventorydb]
-  
-  source  = "./modules/fulfilment"
-
-  app_name  = var.app_name
-  namespace = var.order_namespace
-    
-  fulfilment_name = var.fulfilment_name
-  fulfilment_appd = var.fulfilment_appd
-  replicas        = var.fulfilment_replicas
-  cpu_request     = var.fulfilment_cpu_request
-  memory_request  = var.fulfilment_memory_request
-  cpu_limit       = var.fulfilment_cpu_limit
-  memory_limit    = var.fulfilment_memory_limit
 }
     
 
