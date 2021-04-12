@@ -22,6 +22,11 @@ variable "extpayment_namespace" {
   default = "ext"
 }
 
+variable "accounting_namespace" {
+  type    = string
+  default = "accounting"
+}
+
 variable "app_name" {
   type        = string
   default     = "cnb"
