@@ -94,5 +94,5 @@ variable "job_max_delay" {
 variable "production_svc" {
   type        = string
   default     = "production.brewery"
-  description = "The service name for the external production."
+  description = "The service name for the Order production application component."
 }
