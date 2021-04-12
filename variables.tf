@@ -113,6 +113,52 @@ variable "inventorydb_name" {
 
 
 ############################################################
+# FULFILMENT
+############################################################
+variable "fulfilment_name" {
+  type        = string
+  default     = "fulfilment"
+  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "fulfilment_appd" {
+  type        = string
+  default     = "Fulfilment"
+  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in AppDynamics."
+}
+
+variable "fulfilment_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the Fulfilment component."
+}
+
+variable "fulfilment_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The Fulfilment value for requests.cpu."
+}
+
+variable "fulfilment_memory_request" {
+  type        = string
+  default     = "200Mi"
+  description = "The Fulfilment value for requests.memory."
+}
+
+variable "fulfilment_cpu_limit" {
+  type        = string
+  default     = "400m"
+  description = "The Fulfilment value for limits.cpu."
+}
+
+variable "fulfilment_memory_limit" {
+  type        = string
+  default     = "800Mi"
+  description = "The Fulfilment value for limits.memory."
+}
+
+
+############################################################
 # EXTPAYMENT
 ############################################################
 variable "extpayment_name" {
@@ -167,52 +213,6 @@ variable "extpayment_lagspike_percentage" {
   type        = string
   default     = "0.01"
   description = "The service name for ExtPayment."
-}
-
-
-############################################################
-# FULFILMENT
-############################################################
-variable "fulfilment_name" {
-  type        = string
-  default     = "fulfilment"
-  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in Kubernetes."
-}
-
-variable "fulfilment_appd" {
-  type        = string
-  default     = "Fulfilment"
-  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in AppDynamics."
-}
-
-variable "fulfilment_replicas" {
-  type        = number
-  default     = 2
-  description = "The number of replicas that should initially be deployed for the Fulfilment component."
-}
-
-variable "fulfilment_cpu_request" {
-  type        = string
-  default     = "100m"
-  description = "The Fulfilment value for requests.cpu."
-}
-
-variable "fulfilment_memory_request" {
-  type        = string
-  default     = "200Mi"
-  description = "The Fulfilment value for requests.memory."
-}
-
-variable "fulfilment_cpu_limit" {
-  type        = string
-  default     = "400m"
-  description = "The Fulfilment value for limits.cpu."
-}
-
-variable "fulfilment_memory_limit" {
-  type        = string
-  default     = "800Mi"
-  description = "The Fulfilment value for limits.memory."
 }
 
 
