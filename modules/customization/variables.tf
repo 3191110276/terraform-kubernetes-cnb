@@ -3,8 +3,8 @@
 ############################################################
 variable "namespace" {
   type        = string
-  default     = "iwo"
-  description = "Namespace used for deploying the IWO objects. This namespace has to exist and is not provisioned by this module."
+  default     = "order"
+  description = "Namespace used for deploying the customization ConfigMap. This namespace has to exist and is not provisioned by this module."
 }
 
 variable "inventorydb_service" {
@@ -45,7 +45,7 @@ variable "production_service" {
 
 variable "extprod_service" {
   type        = string
-  default     = "production.automation"
+  default     = "gateway.production"
   description = "Service for the ExtProd application component."
 }
 
