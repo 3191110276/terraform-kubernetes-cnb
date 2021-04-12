@@ -3,7 +3,7 @@
 ############################################################
 variable "namespace" {
   type        = string
-  default     = "automation"
+  default     = "production"
   description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
 }
 
@@ -15,7 +15,7 @@ variable "app_name" {
 
 variable "extprod_name" {
   type        = string
-  default     = "production"
+  default     = "gateway"
   description = "The name of the application component deployed through this submodule. Changing this value will change how the application component is called in Kubernetes."
 }
 
@@ -93,6 +93,6 @@ variable "job_max_delay" {
 
 variable "production_svc" {
   type        = string
-  default     = "cnb-production.brewery"
+  default     = "cnb-production.order"
   description = "The service name for the Order production application component."
 }
