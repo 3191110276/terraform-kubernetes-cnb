@@ -353,7 +353,7 @@ module "trafficgen" {
 
 
 module "test" {
-  depends_on = [kubernetes_namespace.order]
+  depends_on = [module.trafficgen]
   
   source  = "./modules/test"
 
@@ -362,7 +362,7 @@ module "test" {
 
 
 module "accounting" {
-  depends_on = [kubernetes_namespace.accounting]
+  depends_on = [module.test]
   
   source  = "./modules/accounting"
 
