@@ -3,8 +3,8 @@
 ############################################################
 variable "namespace" {
   type        = string
-  default     = "iwo"
-  description = "Namespace used for deploying the IWO objects. This namespace has to exist and is not provisioned by this module."
+  default     = "appdynamics"
+  description = "Namespace used for deploying the AppDynamics objects. This namespace has to exist and is not provisioned by this module."
 }
 
 variable "app_name" {
