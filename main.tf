@@ -145,28 +145,8 @@ module "fulfilment" {
   cpu_limit       = var.fulfilment_cpu_limit
   memory_limit    = var.fulfilment_memory_limit
 }
-
-    
-module "extpayment" {
-  depends_on = [kubernetes_namespace.extpayment]
   
-  source  = "./modules/extpayment"
-
-  app_name  = var.app_name
-  namespace = var.extpayment_namespace
-    
-  extpayment_name     = var.extpayment_name
-  replicas            = var.extpayment_replicas
-  cpu_request         = var.extpayment_cpu_request
-  memory_request      = var.extpayment_memory_request
-  cpu_limit           = var.extpayment_cpu_limit
-  memory_limit        = var.extpayment_memory_limit
-  min_random_delay    = var.extpayment_min_random_delay
-  max_random_delay    = var.extpayment_max_random_delay
-  lagspike_percentage = var.extpayment_lagspike_percentage
-}
-    
-
+  
 module "extprod" {
   depends_on = [kubernetes_namespace.extprod, module.fulfilment]
   
@@ -204,6 +184,26 @@ module "production" {
   memory_request  = var.production_memory_request
   cpu_limit       = var.production_cpu_limit
   memory_limit    = var.production_memory_limit
+}
+
+    
+module "extpayment" {
+  depends_on = [kubernetes_namespace.extpayment]
+  
+  source  = "./modules/extpayment"
+
+  app_name  = var.app_name
+  namespace = var.extpayment_namespace
+    
+  extpayment_name     = var.extpayment_name
+  replicas            = var.extpayment_replicas
+  cpu_request         = var.extpayment_cpu_request
+  memory_request      = var.extpayment_memory_request
+  cpu_limit           = var.extpayment_cpu_limit
+  memory_limit        = var.extpayment_memory_limit
+  min_random_delay    = var.extpayment_min_random_delay
+  max_random_delay    = var.extpayment_max_random_delay
+  lagspike_percentage = var.extpayment_lagspike_percentage
 }
   
   
