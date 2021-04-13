@@ -1,49 +1,86 @@
+############################################################
+# REQUIRED PROVIDERS
+############################################################
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.2"
+    }
+  }
+}
 
 
+############################################################
+# CREATE PROCUREMENT PREDICTION DEPLOYMENT
+############################################################
+resource "kubernetes_service" "prediction" {
+  metadata {
+    name      = "world-generator"
+    namespace = var.namespace
+  }
+  spec {
+    type = "ClusterIP"
+    
+    selector = {
+      name  = var.procprediction_name
+    }
+    
+    port {
+      name        = "8080"
+      port        = 8080
+      target_port = 8080
+    }
+  }
+}
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Values.component4 }}
-spec:
-  selector:
-    matchLabels:
-      name: world-generator
-  replicas: {{ .Values.component4_replicas }}
-  template:
-    metadata:
-      labels:
-        name: world-generator
-        tier-name: world-generator-tier
-        application-name: OS-App
-    spec:
-      serviceAccountName: appdynamics-cluster-agent
-      containers:
-        - name: {{ .Values.component4 }}
-          image: sashaz/java-services:v5
-          imagePullPolicy: IfNotPresent
-          ports:
-          - containerPort: 8080
-          resources:
-            requests:
-              memory: "400M"
-              cpu: "250m"
-            limits:
-              memory: "1000M"
-              cpu: "500m"
-      restartPolicy: Always
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: world-generator
-spec:
-  selector:
-    name: world-generator
-  ports:
-  - name: "8080"
-    port: 8080
-    targetPort: 8080
-status:
-  loadBalancer: {}
+resource "kubernetes_deployment" "prediction" {
+  metadata {
+    name      = var.procprediction_name
+    namespace = var.namespace
+  }
+
+  spec {
+    replicas = var.replicas
+
+    selector {
+      match_labels = {
+        name  = var.procprediction_name
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          name  = var.procprediction_name
+        }
+      }
+
+      spec {
+        service_account_name = "appdynamics-cluster-agent"
+        
+        container {
+          name  = var.procprediction_name
+          
+          image = "sashaz/java-services:v5"
+          
+          port {
+            container_port = 8080
+          }
+
+          resources {
+            requests = {
+              cpu    = var.cpu_request
+              memory = var.memory_request
+            }
+            limits = {
+              cpu    = var.cpu_limit
+              memory = var.memory_limit
+            }
+          }
+        }
+      }
+    }
+  }
+}
