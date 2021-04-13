@@ -56,7 +56,7 @@ resource "kubernetes_service" "frontend" {
 }
 
 
-resource "kubernetes_deployment" "order" {
+resource "kubernetes_deployment" "edge" {
   metadata {
     name      = var.procedge_name
     namespace = var.namespace
