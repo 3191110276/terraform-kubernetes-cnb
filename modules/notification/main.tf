@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "notification" {
   metadata {
-    name      = "${var.app_name}-${var.notification_name}"
+    name      = "${var.notification_name}"
     namespace = var.namespace
     
     labels = {
@@ -109,7 +109,7 @@ resource "kubernetes_deployment" "notification" {
           
           env {
             name  = "INITQUEUE_SVC"
-            value = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+            value = "${var.initqueue_name}-rabbitmq"
           }
           
           env_from {
