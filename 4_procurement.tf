@@ -55,3 +55,27 @@ module "procurement_portal" {
   cpu_limit       = var.procportal_cpu_limit
   memory_limit    = var.procportal_memory_limit
 }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+module "procurement_edge" {
+  depends_on = []
+  
+  source  = "./modules/procurement_edge"
+
+  namespace = var.procurement_namespace    
+    
+  procedge_name  = var.procedge_name
+  replicas       = var.procedge_replicas
+  cpu_request    = var.procedge_cpu_request
+  memory_request = var.procedge_memory_request
+  cpu_limit      = var.procedge_cpu_limit
+  memory_limit   = var.procedge_memory_limit
+}
