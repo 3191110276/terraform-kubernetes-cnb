@@ -14,21 +14,21 @@ resource "kubernetes_ingress" "ingress" {
         path {
           path = "/()()(.*)"
           backend {
-            service_name = "${var.orderfile_name}"
+            service_name = var.orderfile_name
             service_port = 80
           }
         }
         path {
           path = "/(admin)(/|$)(.*)"
           backend {
-            service_name = "${var.adminfile_name}"
+            service_name = var.adminfile_name
             service_port = 80
           }
         }
         path {
           path = "/(api)(/)(order)"
           backend {
-            service_name = "${var.order_name}"
+            service_name = var.order_name
             service_port = 80
           }
         }
