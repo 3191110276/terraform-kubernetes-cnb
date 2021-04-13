@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "payment" {
   metadata {
-    name      = "${var.payment_name}"
+    name      = var.payment_name
     namespace = var.namespace
     
     labels = {
