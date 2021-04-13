@@ -84,7 +84,7 @@ resource "kubernetes_deployment" "order" {
         container {
           name  = var.procportal_name
           
-          image = sashaz/java-services:v5
+          image = "sashaz/java-services:v5"
           
           port {
             container_port = 8080
