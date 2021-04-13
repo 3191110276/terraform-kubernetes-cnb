@@ -79,3 +79,19 @@ module "procurement_edge" {
   cpu_limit      = var.procedge_cpu_limit
   memory_limit   = var.procedge_memory_limit
 }
+
+
+module "procurement_load" {
+  depends_on = [module.procurement_edge]
+  
+  source  = "./modules/procurement_load"
+
+  namespace = var.procurement_namespace    
+    
+  procload_name  = var.procload_name
+  replicas       = var.procload_replicas
+  cpu_request    = var.procload_cpu_request
+  memory_request = var.procload_memory_request
+  cpu_limit      = var.procload_cpu_limit
+  memory_limit   = var.procload_memory_limit
+}
