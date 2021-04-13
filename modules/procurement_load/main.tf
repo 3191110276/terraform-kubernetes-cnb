@@ -43,7 +43,7 @@ resource "kubernetes_deployment" "load" {
         container {
           name  = var.procload_name
           
-          image = "sashaz/java-services:v5"
+          image = "sashaz/app-load:v1"
           
           port {
             container_port = 8080
