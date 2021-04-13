@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "fulfilment" {
   metadata {
-    name      = "${var.fulfilment_name}"
+    name      = var.fulfilment_name
     namespace = var.namespace
     
     labels = {
