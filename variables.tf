@@ -918,3 +918,43 @@ variable "procedge_memory_limit" {
   default     = "900Mi"
   description = "The ProcurementEdge value for limits.memory."
 }
+
+
+############################################################
+# PROCUREMENT LOAD
+############################################################
+variable "procload_name" {
+  type        = string
+  default     = "app-load"
+  description = "The name of the ProcurementLoad application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procload_replicas" {
+  type        = number
+  default     = 4
+  description = "The number of replicas that should initially be deployed for the ProcurementLoad component."
+}
+
+variable "procload_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The ProcurementLoad value for requests.cpu."
+}
+
+variable "procload_memory_request" {
+  type        = string
+  default     = "600Mi"
+  description = "The ProcurementLoad value for requests.memory."
+}
+
+variable "procload_cpu_limit" {
+  type        = string
+  default     = "200m"
+  description = "The ProcurementLoad value for limits.cpu."
+}
+
+variable "procload_memory_limit" {
+  type        = string
+  default     = "900Mi"
+  description = "The ProcurementLoad value for limits.memory."
+}
