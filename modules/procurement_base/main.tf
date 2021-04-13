@@ -28,7 +28,7 @@ resource "kubernetes_resource_quota" "procurement" {
   }
   spec {
     hard = {
-      pods = 100
+      pods = var.pod_quota
       "requests.cpu" = "6"
       "limits.cpu" = "6"
       "requests.memory" = "30G"
