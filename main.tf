@@ -33,6 +33,13 @@ resource "kubernetes_namespace" "accounting" {
 }
 
 
+resource "kubernetes_namespace" "procurement" {
+  metadata {
+    name = var.procurement_namespace
+  }
+}
+
+
 module "quota" {
   depends_on = [kubernetes_namespace.order]
   
@@ -58,7 +65,7 @@ module "appd_config" {
 
   namespace = var.order_namespace
   
-  app_name = var.app_name
+  app_name = var.order_app_name
   
   appd_browserapp_key       = var.appd_browserapp_key
   appd_browserapp_beaconurl = var.appd_browserapp_beaconurl
@@ -82,13 +89,13 @@ module "customization" {
   namespace = var.order_namespace
   
   inventorydb_service     = "${var.inventorydb_name}-service"
-  payment_service         = "${var.app_name}-${var.payment_name}"
+  payment_service         = "${var.order_app_name}-${var.payment_name}"
   extpayment_service      = "${var.extpayment_name}.${var.extpayment_namespace}"
-  initqueue_service       = "${var.app_name}-${var.orderqueue_name}-rabbitmq"
-  orderprocessing_service = "${var.app_name}-${var.orderprocessing_name}"
-  production_service      = "${var.app_name}-${var.production_name}"
+  initqueue_service       = "${var.order_app_name}-${var.orderqueue_name}-rabbitmq"
+  orderprocessing_service = "${var.order_app_name}-${var.orderprocessing_name}"
+  production_service      = "${var.order_app_name}-${var.production_name}"
   extprod_service         = "${var.extprod_name}.${var.extprod_namespace}"
-  fulfilment_service      = "${var.app_name}-${var.fulfilment_name}"
+  fulfilment_service      = "${var.order_app_name}-${var.fulfilment_name}"
 }
   
   
@@ -97,7 +104,7 @@ module "ingress" {
   
   source  = "./modules/ingress"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
   
   order_name     = var.order_name
@@ -112,7 +119,7 @@ module "orderqueue" {
   
   source  = "./modules/orderqueue"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
 }
 
@@ -122,7 +129,7 @@ module "inventorydb" {
   
   source  = "./modules/inventorydb"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   inventorydb_name = var.inventorydb_name
@@ -134,7 +141,7 @@ module "fulfilment" {
   
   source  = "./modules/fulfilment"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   fulfilment_name = var.fulfilment_name
@@ -152,7 +159,7 @@ module "extprod" {
   
   source  = "./modules/extprod"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.extprod_namespace
     
   extprod_name   = var.extprod_name
@@ -165,7 +172,7 @@ module "extprod" {
   max_delay      = var.extprod_max_delay
   job_min_delay  = var.extprod_job_min_delay
   job_max_delay  = var.extprod_job_max_delay
-  production_svc = "${var.app_name}-${var.production_name}.${var.order_namespace}"
+  production_svc = "${var.order_app_name}-${var.production_name}.${var.order_namespace}"
 }
   
 
@@ -174,7 +181,7 @@ module "production" {
   
   source  = "./modules/production"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   production_name = var.production_name
@@ -192,7 +199,7 @@ module "extpayment" {
   
   source  = "./modules/extpayment"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.extpayment_namespace
     
   extpayment_name     = var.extpayment_name
@@ -212,7 +219,7 @@ module "payment" {
   
   source  = "./modules/payment"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   payment_name     = var.payment_name
@@ -230,7 +237,7 @@ module "notification" {
   
   source  = "./modules/notification"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   notification_name = var.notification_name
@@ -250,7 +257,7 @@ module "prodrequest" {
   
   source  = "./modules/prodrequest"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   prodrequest_name  = var.prodrequest_name
@@ -271,7 +278,7 @@ module "orderprocessing" {
   
   source  = "./modules/orderprocessing"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   orderprocessing_name = var.orderprocessing_name
@@ -289,7 +296,7 @@ module "order" {
   
   source  = "./modules/order"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   order_name     = var.order_name
@@ -307,7 +314,7 @@ module "orderfile" {
   
   source  = "./modules/orderfile"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   orderfile_name = var.orderfile_name
@@ -324,7 +331,7 @@ module "adminfile" {
   
   source  = "./modules/adminfile"
 
-  app_name  = var.app_name
+  app_name  = var.order_app_name
   namespace = var.order_namespace
     
   adminfile_name = var.adminfile_name
