@@ -93,6 +93,6 @@ variable "job_max_delay" {
 
 variable "production_svc" {
   type        = string
-  default     = "cnb-production.order"
+  default     = "production.order"
   description = "The service name for the Order production application component."
 }
