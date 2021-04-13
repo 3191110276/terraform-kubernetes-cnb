@@ -777,24 +777,64 @@ variable "procportal_replicas" {
 
 variable "procportal_cpu_request" {
   type        = string
-  default     = "20m"
+  default     = "100m"
   description = "The ProcurementPortal value for requests.cpu."
 }
 
 variable "procportal_memory_request" {
   type        = string
-  default     = "32Mi"
+  default     = "600Mi"
   description = "The ProcurementPortal value for requests.memory."
 }
 
 variable "procportal_cpu_limit" {
   type        = string
-  default     = "50m"
+  default     = "200m"
   description = "The ProcurementPortal value for limits.cpu."
 }
 
 variable "procportal_memory_limit" {
   type        = string
-  default     = "32Mi"
+  default     = "900Mi"
+  description = "The ProcurementPortal value for limits.memory."
+}
+
+
+############################################################
+# PROCUREMENT PREDICTION
+############################################################
+variable "procprediction_name" {
+  type        = string
+  default     = "prediction-service"
+  description = "The name of the ProcurementPortal application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procprediction_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ProcurementPortal component."
+}
+
+variable "procprediction_cpu_request" {
+  type        = string
+  default     = "250m"
+  description = "The ProcurementPortal value for requests.cpu."
+}
+
+variable "procprediction_memory_request" {
+  type        = string
+  default     = "400Mi"
+  description = "The ProcurementPortal value for requests.memory."
+}
+
+variable "procprediction_cpu_limit" {
+  type        = string
+  default     = "500m"
+  description = "The ProcurementPortal value for limits.cpu."
+}
+
+variable "procprediction_memory_limit" {
+  type        = string
+  default     = "1000Mi"
   description = "The ProcurementPortal value for limits.memory."
 }
