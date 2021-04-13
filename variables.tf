@@ -801,6 +801,46 @@ variable "procportal_memory_limit" {
 
 
 ############################################################
+# PROCUREMENT EXTERNAL
+############################################################
+variable "procexternal_name" {
+  type        = string
+  default     = "external-procurement"
+  description = "The name of the ProcurementExternal application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procprediction_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ProcurementExternal component."
+}
+
+variable "procprediction_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The ProcurementExternal value for requests.cpu."
+}
+
+variable "procprediction_memory_request" {
+  type        = string
+  default     = "600Mi"
+  description = "The ProcurementExternal value for requests.memory."
+}
+
+variable "procprediction_cpu_limit" {
+  type        = string
+  default     = "200m"
+  description = "The ProcurementExternal value for limits.cpu."
+}
+
+variable "procprediction_memory_limit" {
+  type        = string
+  default     = "900Mi"
+  description = "The ProcurementExternal value for limits.memory."
+}
+
+
+############################################################
 # PROCUREMENT PREDICTION
 ############################################################
 variable "procprediction_name" {
