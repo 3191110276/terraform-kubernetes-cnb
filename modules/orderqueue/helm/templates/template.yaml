@@ -12,7 +12,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+  name: {{ .Values.initqueue_name }}-rabbitmq
   namespace: {{ .Release.Namespace }}
 secrets:
   - name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
@@ -20,7 +20,7 @@ secrets:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+  name: {{ .Values.initqueue_name }}-rabbitmq
   namespace: {{ .Release.Namespace }}
 type: Opaque
 data:
@@ -31,7 +31,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-config
+  name: {{ .Values.initqueue_name }}-rabbitmq-config
   namespace: {{ .Release.Namespace }}
 data:
   rabbitmq.conf: |-
@@ -57,7 +57,7 @@ data:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
+  name: {{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
   namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: [""]
@@ -70,20 +70,20 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
+  name: {{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
-    name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+    name: {{ .Values.initqueue_name }}-rabbitmq
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
+  name: {{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-headless
+  name: {{ .Values.initqueue_name }}-rabbitmq-headless
   namespace: {{ .Release.Namespace }}
 spec:
   clusterIP: None
@@ -106,7 +106,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+  name: {{ .Values.initqueue_name }}-rabbitmq
   namespace: {{ .Release.Namespace }}
 spec:
   type: ClusterIP
@@ -133,10 +133,10 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+  name: {{ .Values.initqueue_name }}-rabbitmq
   namespace: {{ .Release.Namespace }}
 spec:
-  serviceName: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-headless
+  serviceName: {{ .Values.initqueue_name }}-rabbitmq-headless
   podManagementPolicy: OrderedReady
   replicas: 3
   updateStrategy:
@@ -153,7 +153,7 @@ spec:
         checksum/secret: cdf4233d6b9f1dab011c2fd778cf07f09c0565cdf595f41c2ddb275baad49e5c
     spec:
       
-      serviceAccountName: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+      serviceAccountName: {{ .Values.initqueue_name }}-rabbitmq
       affinity:
         podAffinity:
           
@@ -193,7 +193,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: K8S_SERVICE_NAME
-              value: "{{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-headless"
+              value: "{{ .Values.initqueue_name }}-rabbitmq-headless"
             - name: K8S_ADDRESS_TYPE
               value: hostname
             - name: RABBITMQ_FORCE_BOOT
@@ -215,7 +215,7 @@ spec:
             - name: RABBITMQ_ERL_COOKIE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+                  name: {{ .Values.initqueue_name }}-rabbitmq
                   key: rabbitmq-erlang-cookie
             - name: RABBITMQ_USERNAME
 #              value: "user"
@@ -286,7 +286,7 @@ spec:
       volumes:
         - name: configuration
           configMap:
-            name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq-config
+            name: {{ .Values.initqueue_name }}-rabbitmq-config
             items:
               - key: rabbitmq.conf
                 path: rabbitmq.conf
@@ -295,7 +295,7 @@ spec:
         name: data
         labels:
           app.kubernetes.io/name: rabbitmq
-          app.kubernetes.io/instance: {{ .Values.appname }}-{{ .Values.initqueue_name }}
+          app.kubernetes.io/instance: {{ .Values.initqueue_name }}
       spec:
         accessModes:
           - "ReadWriteOnce"
