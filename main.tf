@@ -89,13 +89,13 @@ module "customization" {
   namespace = var.order_namespace
   
   inventorydb_service     = "${var.inventorydb_name}-service"
-  payment_service         = "${var.order_app_name}-${var.payment_name}"
+  payment_service         = "${var.payment_name}"
   extpayment_service      = "${var.extpayment_name}.${var.extpayment_namespace}"
-  initqueue_service       = "${var.order_app_name}-${var.orderqueue_name}-rabbitmq"
-  orderprocessing_service = "${var.order_app_name}-${var.orderprocessing_name}"
-  production_service      = "${var.order_app_name}-${var.production_name}"
+  initqueue_service       = "${var.orderqueue_name}-rabbitmq"
+  orderprocessing_service = "${var.orderprocessing_name}"
+  production_service      = "${var.production_name}"
   extprod_service         = "${var.extprod_name}.${var.extprod_namespace}"
-  fulfilment_service      = "${var.order_app_name}-${var.fulfilment_name}"
+  fulfilment_service      = "${var.fulfilment_name}"
 }
   
   
@@ -172,7 +172,7 @@ module "extprod" {
   max_delay      = var.extprod_max_delay
   job_min_delay  = var.extprod_job_min_delay
   job_max_delay  = var.extprod_job_max_delay
-  production_svc = "${var.order_app_name}-${var.production_name}.${var.order_namespace}"
+  production_svc = "${var.production_name}.${var.order_namespace}"
 }
   
 
