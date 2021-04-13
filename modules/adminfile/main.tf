@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "orderfile" {
   metadata {
-    name      = "${var.adminfile_name}"
+    name      = var.adminfile_name
     namespace = var.namespace
     
     labels = {
