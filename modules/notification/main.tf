@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "notification" {
   metadata {
-    name      = "${var.notification_name}"
+    name      = var.notification_name
     namespace = var.namespace
     
     labels = {
