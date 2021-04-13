@@ -23,7 +23,7 @@ resource "kubernetes_service" "edge" {
     type = "ClusterIP"
     
     selector = {
-      name  = var.procportal_name
+      name  = var.procedge_name
     }
     
     port {
