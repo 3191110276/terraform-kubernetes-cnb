@@ -815,7 +815,7 @@ variable "procexternal_replicas" {
   description = "The number of replicas that should initially be deployed for the ProcurementExternal component."
 }
 
-variable "procexternalcpu_request" {
+variable "procexternal_cpu_request" {
   type        = string
   default     = "100m"
   description = "The ProcurementExternal value for requests.cpu."
