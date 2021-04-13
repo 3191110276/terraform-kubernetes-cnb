@@ -114,7 +114,7 @@ resource "kubernetes_deployment" "prodrequest" {
           
           env {
             name  = "PRODUCTION_SVC"
-            value = "${var.production_name}"
+            value = var.production_name
           }
           
           env_from {
