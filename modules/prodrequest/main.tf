@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "prodrequest" {
   metadata {
-    name      = "${var.app_name}-${var.prodrequest_name}"
+    name      = "${var.prodrequest_name}"
     namespace = var.namespace
     
     labels = {
@@ -109,12 +109,12 @@ resource "kubernetes_deployment" "prodrequest" {
           
           env {
             name  = "INITQUEUE_SVC"
-            value = "${var.app_name}-${var.initqueue_name}-rabbitmq"
+            value = "${var.initqueue_name}-rabbitmq"
           }
           
           env {
             name  = "PRODUCTION_SVC"
-            value = "${var.app_name}-${var.production_name}"
+            value = "${var.production_name}"
           }
           
           env_from {
