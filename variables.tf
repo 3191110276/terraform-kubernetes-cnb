@@ -515,13 +515,13 @@ variable "orderprocessing_memory_limit" {
 ############################################################
 variable "order_name" {
   type        = string
-  default     = "order"
+  default     = "apiserver"
   description = "The name of the Order application component. Changing this value will change how the application component is called in Kubernetes."
 }
 
 variable "order_appd" {
   type        = string
-  default     = "Order"
+  default     = "APIServer"
   description = "The name of the Order application component. Changing this value will change how the application component is called in AppDynamics."
 }
 
