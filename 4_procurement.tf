@@ -4,7 +4,7 @@
 module "procurement_portal" {
   depends_on = [module.accounting]
   
-  source  = "./modules/production_portal"
+  source  = "./modules/procurement_portal"
 
   namespace = var.procurement_namespace    
     
