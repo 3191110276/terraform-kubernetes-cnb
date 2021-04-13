@@ -344,7 +344,7 @@ module "adminfile" {
     
 
 module "trafficgen" {
-  depends_on = [module.orderfile, module.adminfile]
+  depends_on = [kubernetes_namespace.trafficgen, module.orderfile, module.adminfile]
   
   source  = "./modules/trafficgen"
 
