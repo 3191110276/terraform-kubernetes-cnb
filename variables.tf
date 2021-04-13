@@ -27,10 +27,21 @@ variable "accounting_namespace" {
   default = "accounting"
 }
 
-variable "app_name" {
+variable "procurement_namespace" {
+  type    = string
+  default = "procurement"
+}
+
+variable "order_app_name" {
   type        = string
-  default     = "cnb"
-  description = "The name of the application that this submodule is part of."
+  default     = "cnb-order"
+  description = "The name of the order application."
+}
+
+variable "procurement_app_name" {
+  type        = string
+  default     = "cnb-procurement"
+  description = "The name of the procurement application."
 }
 
 
