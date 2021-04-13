@@ -1,8 +1,16 @@
 ############################################################
 # PROCUREMENT APPLICATION
 ############################################################
-module "procurement_portal" {
+module "procurement_base" {
   depends_on = [module.accounting]
+  
+  source  = "./modules/procurement_base"
+
+  namespace = var.procurement_namespace
+}
+
+module "procurement_portal" {
+  depends_on = [module.procurement_base]
   
   source  = "./modules/procurement_portal"
 
