@@ -7,12 +7,6 @@ variable "namespace" {
   description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
 }
 
-variable "app_name" {
-  type        = string
-  default     = "cnb-procurement"
-  description = "The name of the application that this submodule is part of."
-}
-
 variable "procportal_name" {
   type        = string
   default     = "procurement-portal"
