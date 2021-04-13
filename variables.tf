@@ -758,3 +758,43 @@ variable "accounting_clusterload_configurations" {
   }]
   description = "This is the configuration of the clusterload Deployment(s). One Deployment is created for each entry in the list. It is possible to tune the values, such as requests, limits, and utilization of each container that will be created."
 }
+
+
+############################################################
+# PROCUREMENT PORTAL
+############################################################
+variable "procportal_name" {
+  type        = string
+  default     = "procurement-portal"
+  description = "The name of the ProcurementPortal application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procportal_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ProcurementPortal component."
+}
+
+variable "procportal_cpu_request" {
+  type        = string
+  default     = "20m"
+  description = "The ProcurementPortal value for requests.cpu."
+}
+
+variable "procportal_memory_request" {
+  type        = string
+  default     = "32Mi"
+  description = "The ProcurementPortal value for requests.memory."
+}
+
+variable "procportal_cpu_limit" {
+  type        = string
+  default     = "50m"
+  description = "The ProcurementPortal value for limits.cpu."
+}
+
+variable "procportal_memory_limit" {
+  type        = string
+  default     = "32Mi"
+  description = "The ProcurementPortal value for limits.memory."
+}
