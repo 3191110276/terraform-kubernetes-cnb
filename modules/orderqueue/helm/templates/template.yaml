@@ -1,7 +1,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+  name: {{ .Values.initqueue_name }}-rabbitmq
   namespace: {{ .Release.Namespace }}
 spec:
   minAvailable: 1
@@ -15,7 +15,7 @@ metadata:
   name: {{ .Values.initqueue_name }}-rabbitmq
   namespace: {{ .Release.Namespace }}
 secrets:
-  - name: {{ .Values.appname }}-{{ .Values.initqueue_name }}-rabbitmq
+  - name: {{ .Values.initqueue_name }}-rabbitmq
 ---
 apiVersion: v1
 kind: Secret
