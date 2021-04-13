@@ -878,3 +878,43 @@ variable "procprediction_memory_limit" {
   default     = "1000Mi"
   description = "The ProcurementPrediction value for limits.memory."
 }
+
+
+############################################################
+# PROCUREMENT EDGE
+############################################################
+variable "procedge_name" {
+  type        = string
+  default     = "edge-collector"
+  description = "The name of the ProcurementEdge application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procprediction_replicas" {
+  type        = number
+  default     = 4
+  description = "The number of replicas that should initially be deployed for the ProcurementEdge component."
+}
+
+variable "procprediction_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The ProcurementEdge value for requests.cpu."
+}
+
+variable "procprediction_memory_request" {
+  type        = string
+  default     = "600Mi"
+  description = "The ProcurementEdge value for requests.memory."
+}
+
+variable "procprediction_cpu_limit" {
+  type        = string
+  default     = "200m"
+  description = "The ProcurementEdge value for limits.cpu."
+}
+
+variable "procprediction_memory_limit" {
+  type        = string
+  default     = "900Mi"
+  description = "The ProcurementEdge value for limits.memory."
+}
