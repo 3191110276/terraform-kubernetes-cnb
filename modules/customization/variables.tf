@@ -9,13 +9,13 @@ variable "namespace" {
 
 variable "inventorydb_service" {
   type        = string
-  default     = "cnb-inventorydb-service"
+  default     = "inventorydb-service"
   description = "Service for the InventoryDB application component."
 }
 
 variable "payment_service" {
   type        = string
-  default     = "cnb-payment"
+  default     = "payment"
   description = "Service for the Payment application component."
 }
 
@@ -27,19 +27,19 @@ variable "extpayment_service" {
 
 variable "initqueue_service" {
   type        = string
-  default     = "cnb-initqueue-rabbitmq"
+  default     = "initqueue-rabbitmq"
   description = "Service for the Initqueue application component."
 }
 
 variable "orderprocessing_service" {
   type        = string
-  default     = "cnb-orderprocessing"
+  default     = "orderprocessing"
   description = "Service for the Orderprocessing application component."
 }
 
 variable "production_service" {
   type        = string
-  default     = "cnb-production"
+  default     = "production"
   description = "Service for the Production application component."
 }
 
@@ -51,6 +51,6 @@ variable "extprod_service" {
 
 variable "fulfilment_service" {
   type        = string
-  default     = "cnb-fulfilment"
+  default     = "fulfilment"
   description = "Service for the Fulfilment application component."
 }
