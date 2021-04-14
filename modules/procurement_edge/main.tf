@@ -16,27 +16,6 @@ terraform {
 ############################################################
 resource "kubernetes_service" "edge" {
   metadata {
-    name      = "world-portal"
-    namespace = var.namespace
-  }
-  spec {
-    type = "ClusterIP"
-    
-    selector = {
-      name  = var.procedge_name
-    }
-    
-    port {
-      name        = "8080"
-      port        = 8080
-      target_port = 8080
-    }
-  }
-}
-
-
-resource "kubernetes_service" "frontend" {
-  metadata {
     name      = "client-api"
     namespace = var.namespace
   }
