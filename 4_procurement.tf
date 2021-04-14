@@ -2,7 +2,7 @@
 # PROCUREMENT APPLICATION
 ############################################################
 module "procurement_helm" {
-  depends_on = []
+  depends_on = [kubernetes_namespace.procurement]
   
   source  = "./modules/procurement"
 }
