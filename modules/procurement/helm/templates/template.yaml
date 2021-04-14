@@ -1,3 +1,83 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+      
+      
+      
+      
+      
+      
+      
+     
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+      
+      
+      
+      
+      
+      
+      
+      
+      
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: object-counts
+spec:
+  hard:
+    pods: "100"
+    requests.cpu: "6"
+    limits.cpu: "6"
+    requests.memory: 30G
+    limits.memory: 30G
+    persistentvolumeclaims: 10
+    requests.storage: 100G
+    
+    
+    
+    
+    
+    
+    
+    
+    
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: appdynamics-cluster-agent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -435,78 +515,7 @@ spec:
     port: 8080
     targetPort: 8080
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: pvc1
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-      
-      
-      
-      
-      
-      
-      
-     
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: pvc2
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-      
-      
-      
-      
-      
-      
-      
-      
-      
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: object-counts
-spec:
-  hard:
-    pods: "100"
-    requests.cpu: "6"
-    limits.cpu: "6"
-    requests.memory: 30G
-    limits.memory: 30G
-    persistentvolumeclaims: 10
-    requests.storage: 100G
-    
-    
-    
-    
-    
-    
-    
-    
-    
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: appdynamics-cluster-agent
+ 
   
   
   
