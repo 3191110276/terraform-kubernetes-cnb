@@ -71,11 +71,24 @@ module "procurement_portal" {
   
   
   
+module "procurement_edgeaggregator" {
+  depends_on = []
   
+  source  = "./modules/procurement_edgeaggregator"
+
+  namespace = var.procurement_namespace    
+    
+  procedgeagg_name  = var.procedgeagg_name
+  replicas          = var.procedgeagg_replicas
+  cpu_request       = var.procedgeagg_cpu_request
+  memory_request    = var.procedgeagg_memory_request
+  cpu_limit         = var.procedgeagg_cpu_limit
+  memory_limit      = var.procedgeagg_memory_limit
+} 
   
   
 module "procurement_edge" {
-  depends_on = []
+  depends_on = [module.procurement_edgeaggregator]
   
   source  = "./modules/procurement_edge"
 
