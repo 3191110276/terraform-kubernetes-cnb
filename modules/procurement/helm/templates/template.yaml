@@ -144,8 +144,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
   
   
   
@@ -266,8 +264,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
 ---
 apiVersion: v1
 kind: Service
@@ -280,8 +276,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
   
   
   
@@ -440,8 +434,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
   
   
   
@@ -572,8 +564,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
   
   
   
@@ -633,8 +623,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
   
   
   
@@ -693,8 +681,6 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
 ---
 apiVersion: v1
 kind: Service
@@ -707,5 +693,3 @@ spec:
   - name: "8080"
     port: 8080
     targetPort: 8080
-status:
-  loadBalancer: {}
