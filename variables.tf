@@ -881,6 +881,46 @@ variable "procprediction_memory_limit" {
 
 
 ############################################################
+# PROCUREMENT EDGE AGGREGATOR
+############################################################
+variable "procedgeagg_name" {
+  type        = string
+  default     = "edge-aggregator"
+  description = "The name of the ProcurementEdgeAgg application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procedgeagg_replicas" {
+  type        = number
+  default     = 2
+  description = "The number of replicas that should initially be deployed for the ProcurementEdgeAgg component."
+}
+
+variable "procedgeagg_cpu_request" {
+  type        = string
+  default     = "100m"
+  description = "The ProcurementEdgeAgg value for requests.cpu."
+}
+
+variable "procedgeagg_memory_request" {
+  type        = string
+  default     = "600Mi"
+  description = "The ProcurementEdgeAgg value for requests.memory."
+}
+
+variable "procedgeagg_cpu_limit" {
+  type        = string
+  default     = "200m"
+  description = "The ProcurementEdgeAgg value for limits.cpu."
+}
+
+variable "procedgeagg_memory_limit" {
+  type        = string
+  default     = "900Mi"
+  description = "The ProcurementEdgeAgg value for limits.memory."
+}
+
+
+############################################################
 # PROCUREMENT EDGE
 ############################################################
 variable "procedge_name" {
