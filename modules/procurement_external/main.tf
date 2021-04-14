@@ -14,7 +14,7 @@ terraform {
 ############################################################
 # CREATE PROCUREMENT PORTAL DEPLOYMENT
 ############################################################
-resource "kubernetes_service" "portal" {
+resource "kubernetes_service" "external" {
   metadata {
     name      = "web-api"
     namespace = var.namespace
@@ -35,28 +35,7 @@ resource "kubernetes_service" "portal" {
 }
 
 
-resource "kubernetes_service" "frontend" {
-  metadata {
-    name      = "web-front-end"
-    namespace = var.namespace
-  }
-  spec {
-    type = "ClusterIP"
-    
-    selector = {
-      name  = var.procexternal_name
-    }
-    
-    port {
-      name        = "8080"
-      port        = 8080
-      target_port = 8080
-    }
-  }
-}
-
-
-resource "kubernetes_deployment" "order" {
+resource "kubernetes_deployment" "external" {
   metadata {
     name      = var.procexternal_name
     namespace = var.namespace
