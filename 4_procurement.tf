@@ -10,8 +10,17 @@ module "procurement_base" {
 }
   
 
-module "procurement_prediction" {
+module "procurement_responsesvc" {
   depends_on = [module.procurement_base]
+  
+  source  = "./modules/procurement_responsesvc"
+
+  namespace = var.procurement_namespace 
+}
+  
+
+module "procurement_prediction" {
+  depends_on = [module.procurement_responsesvc]
   
   source  = "./modules/procurement_prediction"
 
