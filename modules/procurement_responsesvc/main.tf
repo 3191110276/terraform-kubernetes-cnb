@@ -164,9 +164,7 @@ resource "kubernetes_deployment" "action-response-services" {
             }  
           }
           
-          exec {
-            command = ["/app/node.sh"]
-          }
+          command = ["/app/node.sh"]
           
           resources {
             limits = {
