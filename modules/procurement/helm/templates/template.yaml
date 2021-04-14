@@ -9,7 +9,7 @@ spec:
     requests:
       storage: 2Gi
       
-      
+---  
       
       
       
@@ -28,7 +28,7 @@ spec:
       storage: 2Gi
       
       
-      
+---    
       
       
       
@@ -52,7 +52,7 @@ spec:
     
     
     
-    
+---
     
     
     
@@ -66,8 +66,7 @@ metadata:
 
 
 
-
-
+---
 
 
 
@@ -176,6 +175,7 @@ spec:
     
     
     
+---
     
     
     
@@ -228,7 +228,7 @@ spec:
   
   
   
-  
+---
   
   
 apiVersion: apps/v1
@@ -260,7 +260,7 @@ spec:
       
       
 
-
+---
 
 
 apiVersion: apps/v1
@@ -359,7 +359,7 @@ spec:
   
   
   
-  
+---
   
 kind: Deployment
 apiVersion: apps/v1
@@ -418,7 +418,7 @@ spec:
  
  
  
- 
+---
  
  
  
@@ -462,7 +462,7 @@ spec:
       
       
       
-      
+---
 
 
 
@@ -522,7 +522,7 @@ spec:
   
   
   
-  
+---
 
 
 
@@ -584,7 +584,7 @@ spec:
   
   
   
-  
+---
   
   
   
@@ -640,7 +640,7 @@ spec:
   
   
   
-  
+---
   
   
   
