@@ -17,6 +17,7 @@ terraform {
 resource "kubernetes_config_map" "responsesvc" {
   metadata {
     name = "action-response-services"
+    namespace = var.namespace
   }
 
   data = {
@@ -95,6 +96,7 @@ resource "kubernetes_service" "auth-services" {
 resource "kubernetes_deployment" "action-response-services" {
   metadata {
     name = "action-response-services"
+    namespace = var.namespace
     labels = {
       name = "action-response-services"
     }
