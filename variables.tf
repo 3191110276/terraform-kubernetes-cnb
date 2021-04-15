@@ -771,25 +771,25 @@ variable "procurement_pod_quota" {
 
 variable "procurement_cpu_request_quota" {
   type        = string
-  default     = "6"
+  default     = "10"
   description = "Quota for requests.cpu"
 }
 
 variable "procurement_cpu_limit_quota" {
   type        = string
-  default     = "6"
+  default     = "10"
   description = "Quota for limits.cpu"
 }
 
 variable "procurement_memory_request_quota" {
   type        = string
-  default     = "30G"
+  default     = "50G"
   description = "Quota for requests.memory"
 }
 
 variable "procurement_memory_limit_quota" {
   type        = string
-  default     = "30G"
+  default     = "50G"
   description = "Quota for limits.memory"
 }
 
