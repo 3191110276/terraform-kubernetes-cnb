@@ -28,13 +28,13 @@ resource "kubernetes_resource_quota" "procurement" {
   }
   spec {
     hard = {
-      pods = var.pod_quota
-      "requests.cpu" = "6"
-      "limits.cpu" = "6"
-      "requests.memory" = "30G"
-      "limits.memory" = "30G"
-      "persistentvolumeclaims" = 5
-      "requests.storage" = "100G"
+      "pods"                   = var.pod_quota
+      "requests.cpu"           = var.cpu_request_quota #"6"
+      "limits.cpu"             = var.cpu_limit_quota #"6"
+      "requests.memory"        = var.memory_request_quota #"30G"
+      "limits.memory"          = var.memory_limit_quota #"30G"
+      "persistentvolumeclaims" = var.pvc_quota #5
+      "requests.storage"       = var.storage_quota #"100G"
     }
   }
 }
