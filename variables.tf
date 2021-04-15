@@ -761,6 +761,52 @@ variable "accounting_clusterload_configurations" {
 
 
 ############################################################
+# PROCUREMENT BASE
+############################################################
+variable "procurement_pod_quota" {
+  type        = number
+  default     = 100
+  description = "Quota for Pods"
+}
+
+variable "procurement_cpu_request_quota" {
+  type        = string
+  default     = "6"
+  description = "Quota for requests.cpu"
+}
+
+variable "procurement_cpu_limit_quota" {
+  type        = string
+  default     = "6"
+  description = "Quota for limits.cpu"
+}
+
+variable "procurement_memory_request_quota" {
+  type        = string
+  default     = "30G"
+  description = "Quota for requests.memory"
+}
+
+variable "procurement_memory_limit_quota" {
+  type        = string
+  default     = "30G"
+  description = "Quota for limits.memory"
+}
+
+variable "procurement_pvc_quota" {
+  type        = number
+  default     = 5
+  description = "Quota for PVCs"
+}
+
+variable "procurement_storage_quota" {
+  type        = string
+  default     = "100G"
+  description = "Quota for storage"
+}
+
+
+############################################################
 # PROCUREMENT PORTAL
 ############################################################
 variable "procportal_name" {
