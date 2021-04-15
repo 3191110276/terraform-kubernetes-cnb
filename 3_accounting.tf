@@ -2,7 +2,7 @@
 # ACCOUNTING APPLICATION
 ############################################################
 module "accounting" {
-  depends_on = [module.test]
+  depends_on = [kubernetes_namespace.test, module.test]
   
   source  = "./modules/accounting"
 
