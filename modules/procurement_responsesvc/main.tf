@@ -168,12 +168,12 @@ resource "kubernetes_deployment" "action-response-services" {
           
           resources {
             limits = {
-              cpu    = "100M"
-              memory = "600Mi"
+              cpu    = "200M"
+              memory = "900Mi"
             }
             requests = {
-              cpu    = "200m"
-              memory = "900Mi"
+              cpu    = "100m"
+              memory = "600Mi"
             }
           }
         }
