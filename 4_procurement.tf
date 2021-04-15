@@ -8,13 +8,13 @@ module "procurement_base" {
 
   namespace = var.procurement_namespace
     
-  pod_quota = 100
-  cpu_request_quota= "6"
-  cpu_limit_quota = "6"
-  memory_request_quota = "30G"
-  memory_limit_quota = "30G"
-  pvc_quota = 5
-  storage_quota = "100G"
+  pod_quota            = var.procurement_pod_quota
+  cpu_request_quota    = var.procurement_cpu_request_quota
+  cpu_limit_quota      = var.procurement_cpu_limit_quota
+  memory_request_quota = var.procurement_memory_request_quota
+  memory_limit_quota   = var.procurement_memory_limit_quota
+  pvc_quota            = var.procurement_pvc_quota
+  storage_quota        = var.procurement_storage_quota
 }
   
   
