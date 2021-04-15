@@ -7,6 +7,14 @@ module "procurement_base" {
   source  = "./modules/procurement_base"
 
   namespace = var.procurement_namespace
+    
+  pod_quota = 100
+  cpu_request_quota= "6"
+  cpu_limit_quota = "6"
+  memory_request_quota = "30G"
+  memory_limit_quota = "30G"
+  pvc_quota = 5
+  storage_quota = "100G"
 }
   
   
