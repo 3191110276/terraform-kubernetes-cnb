@@ -16,7 +16,7 @@ terraform {
 ############################################################
 resource "kubernetes_service" "edgeaggregator" {
   metadata {
-    name      = "ai-services"
+    name      = "world-change-services"
     namespace = var.namespace
   }
   spec {
