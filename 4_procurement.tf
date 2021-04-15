@@ -40,9 +40,25 @@ module "procurement_helm" {
   source  = "./modules/procurement"
 }
 
+
+module "procurement_portal" {
+  depends_on = [module.procurement_helm]
+  
+  source  = "./modules/procurement_portal"
+
+  namespace = var.procurement_namespace    
+    
+  procportal_name = var.procportal_name
+  replicas        = var.procportal_replicas
+  cpu_request     = var.procportal_cpu_request
+  memory_request  = var.procportal_memory_request
+  cpu_limit       = var.procportal_cpu_limit
+  memory_limit    = var.procportal_memory_limit
+}
+
   
 module "procurement_edgeaggregator" {
-  depends_on = [module.procurement_helm]
+  depends_on = [module.procurement_portal]
   
   source  = "./modules/procurement_edgeaggregator"
 
