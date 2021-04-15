@@ -2,7 +2,7 @@
 # PROCUREMENT APPLICATION
 ############################################################
 module "procurement_base" {
-  depends_on = [module.accounting, kubernetes_namespace.procurement]
+  depends_on = [kubernetes_namespace.procurement, module.accounting]
   
   source  = "./modules/procurement_base"
 
