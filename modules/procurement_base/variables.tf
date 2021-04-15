@@ -44,7 +44,7 @@ variable "pvc_quota" {
 }
 
 variable "storage_quota" {
-  type        = number
+  type        = string
   default     = "100G"
   description = "Quota for storage"
 }
