@@ -41,8 +41,17 @@ module "procurement_helm" {
 }
 
 
-module "procurement_portal" {
+module "procurement_responsesvc" {
   depends_on = [module.procurement_helm]
+  
+  source  = "./modules/procurement_responsesvc"
+
+  namespace = var.procurement_namespace 
+}
+
+
+module "procurement_portal" {
+  depends_on = [module.procurement_responsesvc]
   
   source  = "./modules/procurement_portal"
 
