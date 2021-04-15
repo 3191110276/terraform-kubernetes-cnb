@@ -15,25 +15,25 @@ variable "pod_quota" {
 
 variable "cpu_request_quota" {
   type        = string
-  default     = "10"
+  default     = "100"
   description = "Quota for requests.cpu"
 }
 
 variable "cpu_limit_quota" {
   type        = string
-  default     = "10"
+  default     = "100"
   description = "Quota for limits.cpu"
 }
 
 variable "memory_request_quota" {
   type        = string
-  default     = "50G"
+  default     = "100G"
   description = "Quota for requests.memory"
 }
 
 variable "memory_limit_quota" {
   type        = string
-  default     = "50G"
+  default     = "100G"
   description = "Quota for limits.memory"
 }
 
