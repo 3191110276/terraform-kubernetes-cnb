@@ -40,18 +40,25 @@ module "procurement_helm" {
   source  = "./modules/procurement"
 }
 
-
-module "procurement_responsesvc" {
+  
+module "procurement_external" {
   depends_on = [module.procurement_helm]
   
-  source  = "./modules/procurement_responsesvc"
+  source  = "./modules/procurement_external"
 
-  namespace = var.procurement_namespace 
+  namespace = var.procurement_namespace    
+    
+  procexternal_name = var.procexternal_name
+  replicas          = var.procexternal_replicas
+  cpu_request       = var.procexternal_cpu_request
+  memory_request    = var.procexternal_memory_request
+  cpu_limit         = var.procexternal_cpu_limit
+  memory_limit      = var.procexternal_memory_limit
 }
 
 
 module "procurement_portal" {
-  depends_on = [module.procurement_responsesvc]
+  depends_on = [module.procurement_external]
   
   source  = "./modules/procurement_portal"
 
