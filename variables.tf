@@ -1,4 +1,47 @@
 ############################################################
+# DEPLOYMENT CONTROL
+############################################################
+variable "deploy_order" {
+  type        = bool
+  default     = true
+  description = "Determines if the Order component will be deployed."
+}
+
+#ORDERDETAILS
+
+variable "deploy_trafficgen" {
+  type        = bool
+  default     = true
+  description = "Determines if the TrafficGen component will be deployed."
+}
+
+variable "deploy_extprod" {
+  type        = bool
+  default     = true
+  description = "Determines if the ExtProd component will be deployed."
+}
+
+variable "deploy_extpayment" {
+  type        = bool
+  default     = true
+  description = "Determines if the ExtPayment component will be deployed."
+}
+
+variable "deploy_accounting" {
+  type        = bool
+  default     = true
+  description = "Determines if the Accounting component will be deployed."
+}
+
+variable "deploy_procurement" {
+  type        = bool
+  default     = true
+  description = "Determines if the Procurement component will be deployed."
+}
+
+#PROCUREMENTDETAILS
+
+############################################################
 # GENERAL
 ############################################################
 variable "order_namespace" {
