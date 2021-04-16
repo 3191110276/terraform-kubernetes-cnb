@@ -32,10 +32,19 @@ module "procurement_prediction" {
   cpu_limit           = var.procprediction_cpu_limit
   memory_limit        = var.procprediction_memory_limit
 }
+  
+
+module "procurement_responsesvc" {
+  depends_on = [module.procurement_prediction]
+  
+  source  = "./modules/procurement_responsesvc"
+
+  namespace = var.procurement_namespace 
+}
 
 
 module "procurement_helm" {
-  depends_on = [module.procurement_prediction]
+  depends_on = [module.procurement_responsesvc]
   
   source  = "./modules/procurement"
 }
