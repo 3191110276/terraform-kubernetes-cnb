@@ -23,7 +23,7 @@ resource "kubernetes_service_account" "appdynamics-cluster-agent" {
 
 resource "kubernetes_resource_quota" "procurement" {
   metadata {
-    name      = "terraform-example"
+    name      = "procurement_quota"
     namespace = var.namespace
   }
   spec {
