@@ -172,7 +172,7 @@ resource "kubernetes_deployment" "action-response-services" {
           
           resources {
             limits = {
-              cpu    = "200M"
+              cpu    = "200m"
               memory = "900Mi"
             }
             requests = {
