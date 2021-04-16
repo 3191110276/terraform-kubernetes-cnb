@@ -43,15 +43,15 @@ module "procurement_responsesvc" {
 }
 
 
-module "procurement_helm" {
-  depends_on = [module.procurement_responsesvc]
-  
-  source  = "./modules/procurement"
-}
+#module "procurement_helm" {
+#  depends_on = [module.procurement_responsesvc]
+#  
+#  source  = "./modules/procurement"
+#}
   
   
 module "procurement_load" {
-  depends_on = [module.procurement_helm]
+  depends_on = [module.procurement_responsesvc]
   
   source  = "./modules/procurement_load"
 
