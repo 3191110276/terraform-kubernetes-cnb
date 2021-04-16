@@ -20,6 +20,36 @@ variable "deploy_order" {
 # Production
 # Fulfilment
 
+variable "order_subcomponents_deployment" {
+  type    = object({
+    orderfile       = bool
+    adminfile       = bool
+    apiserver       = bool
+    inventorydb     = bool
+    payment         = bool
+    orderprocessing = bool
+    orderqueue      = bool
+    notification    = bool
+    prodrequest     = bool
+    production      = bool
+    fulfilment      = bool
+  })
+  default = {
+    orderfile       = true
+    adminfile       = true
+    apiserver       = true
+    inventorydb     = true
+    payment         = true
+    orderprocessing = true
+    orderqueue      = true
+    notification    = true
+    prodrequest     = true
+    production      = true
+    fulfilment      = true
+  }
+  description = "Determines what Subcomponents of the Order application will be deployed."
+}
+
 variable "deploy_trafficgen" {
   type        = bool
   default     = true
