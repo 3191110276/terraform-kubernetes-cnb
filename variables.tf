@@ -50,26 +50,24 @@ variable "deploy_procurement" {
   description = "Determines if the Procurement component will be deployed."
 }
 
-# PROCUREMENTDETAILS
-# edge-collector
-# edge-aggregator
-# procurement-portal
-# external-procurement
-# prediction-service
-# auth-services
-# action-response-services
-# billing-services
-
-
-
-variable "accounting_clusterload_configurations" {
+variable "procurement_subcomponents_deployment" {
   type    = object({
-    edge_collector  = bool
-    edge_aggregator = bool
+    edge_collector           = bool
+    edge_aggregator          = bool
+    procurement_portal       = bool
+    external_procurement     = bool
+    auth_services            = bool
+    action_response_services = bool
+    billing_services         = bool
   })
   default = {
-    edge_collector  = true
-    edge_aggregator = true
+    edge_collector           = true
+    edge_aggregator          = true
+    procurement_portal       = true
+    external_procurement     = true
+    auth_services            = true
+    action_response_services = true
+    billing_services         = true
   }
   description = "Determines what Subcomponents of the Procurement application will be deployed."
 }
