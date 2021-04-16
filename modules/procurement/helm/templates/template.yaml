@@ -1,11 +1,4 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: action-response-services
-data:
-  APPDYNAMICS_LOGGER_LEVEL: "debug"
-  APPDYNAMICS_LOGGER_OUTPUT_TYPE: "console"
----
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -53,42 +46,3 @@ spec:
               name: action-response-services
           command: ["/app/node.sh"]
       restartPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: action-response-services
-spec:
-  ports:
-  - name: http
-    port: 8001
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: action-response-services
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: billing-services
-spec:
-  ports:
-  - name: http
-    port: 8080
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: action-response-services
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth-services
-spec:
-  ports:
-  - name: http
-    port: 8080
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: action-response-services
