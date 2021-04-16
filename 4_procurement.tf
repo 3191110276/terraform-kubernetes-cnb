@@ -8,6 +8,8 @@ module "procurement_base" {
 
   namespace = var.procurement_namespace
     
+  app_name = var.procurement_app_name
+    
   pod_quota            = var.procurement_pod_quota
   cpu_request_quota    = var.procurement_cpu_request_quota
   cpu_limit_quota      = var.procurement_cpu_limit_quota
