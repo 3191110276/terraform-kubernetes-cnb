@@ -23,7 +23,7 @@ resource "kubernetes_service_account" "appdynamics-cluster-agent" {
 
 resource "kubernetes_resource_quota" "procurement" {
   metadata {
-    name      = "${var.app_name}_quota"
+    name      = "${var.app_name}-quota"
     namespace = var.namespace
   }
   spec {
