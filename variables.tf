@@ -7,19 +7,6 @@ variable "deploy_order" {
   description = "Determines if the Order component will be deployed."
 }
 
-# ORDERDETAILS
-# OrderFile
-# AdminFile
-# APIServer
-# InventoryDB
-# Payment
-# OrderProcessing
-# OrderQueue
-# Notification
-# ProdRequest
-# Production
-# Fulfilment
-
 variable "order_subcomponents_deployment" {
   type    = object({
     orderfile       = bool
