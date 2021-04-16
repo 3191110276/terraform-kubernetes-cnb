@@ -60,6 +60,21 @@ variable "deploy_procurement" {
 # action-response-services
 # billing-services
 
+
+
+variable "accounting_clusterload_configurations" {
+  type    = object({
+    edge_collector  = bool
+    edge_aggregator = bool
+  })
+  default = {
+    edge_collector  = true
+    edge_aggregator = true
+  }
+  description = "Determines what Subcomponents of the Procurement application will be deployed."
+}
+
+
 ############################################################
 # GENERAL
 ############################################################
