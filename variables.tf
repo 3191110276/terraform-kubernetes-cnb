@@ -7,7 +7,18 @@ variable "deploy_order" {
   description = "Determines if the Order component will be deployed."
 }
 
-#ORDERDETAILS
+# ORDERDETAILS
+# OrderFile
+# AdminFile
+# APIServer
+# InventoryDB
+# Payment
+# OrderProcessing
+# OrderQueue
+# Notification
+# ProdRequest
+# Production
+# Fulfilment
 
 variable "deploy_trafficgen" {
   type        = bool
@@ -39,7 +50,15 @@ variable "deploy_procurement" {
   description = "Determines if the Procurement component will be deployed."
 }
 
-#PROCUREMENTDETAILS
+# PROCUREMENTDETAILS
+# edge-collector
+# edge-aggregator
+# procurement-portal
+# external-procurement
+# prediction-service
+# auth-services
+# action-response-services
+# billing-services
 
 ############################################################
 # GENERAL
