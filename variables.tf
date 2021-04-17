@@ -74,9 +74,8 @@ variable "procurement_subcomponents_deployment" {
     procurement_portal       = bool
     external_procurement     = bool
     prediction               = bool
-    auth_services            = bool
-    action_response_services = bool
-    billing_services         = bool
+    procurement_load         = bool
+    responsesvc              = bool
   })
   default = {
     edge_collector           = true
@@ -84,9 +83,8 @@ variable "procurement_subcomponents_deployment" {
     procurement_portal       = true
     external_procurement     = true
     prediction               = true
-    auth_services            = true
-    action_response_services = true
-    billing_services         = true
+    procurement_load         = true
+    responsesvc              = true
   }
   description = "Determines what Subcomponents of the Procurement application will be deployed."
 }
