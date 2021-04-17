@@ -3,6 +3,8 @@
 ############################################################
 module "procurement_base" {
   depends_on = [kubernetes_namespace.procurement, module.accounting]
+    
+  count = var.deploy_procurement ? 1 : 0
   
   source  = "./modules/procurement_base"
 
@@ -22,6 +24,8 @@ module "procurement_base" {
   
 module "procurement_prediction" {
   depends_on = [module.procurement_base]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.prediction) ? 1 : 0
   
   source  = "./modules/procurement_prediction"
 
@@ -43,13 +47,6 @@ module "procurement_responsesvc" {
 
   namespace = var.procurement_namespace 
 }
-
-
-#module "procurement_helm" {
-#  depends_on = [module.procurement_responsesvc]
-#  
-#  source  = "./modules/procurement"
-#}
   
   
 module "procurement_load" {
