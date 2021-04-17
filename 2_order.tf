@@ -4,6 +4,8 @@
 module "quota" {
   depends_on = [kubernetes_namespace.order]
   
+  count = var.deploy_order ? 1 : 0
+  
   source  = "./modules/quota"
 
   namespace = var.order_namespace
@@ -12,6 +14,8 @@ module "quota" {
 
 module "main_sa" {
   depends_on = [module.quota]
+    
+  count = var.deploy_order ? 1 : 0
   
   source  = "./modules/main_sa"
 
@@ -21,6 +25,8 @@ module "main_sa" {
 
 module "appd_config" {
   depends_on = [module.quota]
+    
+  count = var.deploy_order ? 1 : 0
   
   source  = "./modules/appd_config"
 
@@ -44,6 +50,8 @@ module "appd_config" {
 
 module "customization" {
   depends_on = [module.quota]
+    
+  count = var.deploy_order ? 1 : 0
   
   source  = "./modules/customization"
 
@@ -62,6 +70,8 @@ module "customization" {
   
 module "ingress" {
   depends_on = [module.quota]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.nginx_ingress) ? 1 : 0
   
   source  = "./modules/ingress"
 
@@ -77,6 +87,8 @@ module "ingress" {
 
 module "orderqueue" {
   depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.orderqueue) ? 1 : 0
   
   source  = "./modules/orderqueue"
 
@@ -87,6 +99,8 @@ module "orderqueue" {
 
 module "inventorydb" {
   depends_on = [module.main_sa, module.appd_config, module.customization, module.ingress]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.inventorydb) ? 1 : 0
   
   source  = "./modules/inventorydb"
 
@@ -99,6 +113,8 @@ module "inventorydb" {
     
 module "fulfilment" {
   depends_on = [module.inventorydb]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.fulfilment) ? 1 : 0
   
   source  = "./modules/fulfilment"
 
@@ -117,6 +133,8 @@ module "fulfilment" {
   
 module "extprod" {
   depends_on = [kubernetes_namespace.extprod, module.fulfilment]
+    
+  count = var.deploy_extprod ? 1 : 0
   
   source  = "./modules/extprod"
 
@@ -139,6 +157,8 @@ module "extprod" {
 
 module "production" {
   depends_on = [module.extprod]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.production) ? 1 : 0
   
   source  = "./modules/production"
 
@@ -157,6 +177,8 @@ module "production" {
     
 module "extpayment" {
   depends_on = [kubernetes_namespace.extpayment]
+  
+  count = var.deploy_extpayment ? 1 : 0
   
   source  = "./modules/extpayment"
 
@@ -177,6 +199,8 @@ module "extpayment" {
   
 module "payment" {
   depends_on = [module.main_sa, module.appd_config, module.customization, module.extpayment]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.payment) ? 1 : 0
   
   source  = "./modules/payment"
 
@@ -195,6 +219,8 @@ module "payment" {
     
 module "notification" {
   depends_on = [module.orderqueue]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.notification) ? 1 : 0
   
   source  = "./modules/notification"
 
@@ -215,6 +241,8 @@ module "notification" {
 
 module "prodrequest" {
   depends_on = [module.orderqueue]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.prodrequest) ? 1 : 0
   
   source  = "./modules/prodrequest"
 
@@ -236,6 +264,8 @@ module "prodrequest" {
 
 module "orderprocessing" {
   depends_on = [module.notification, module.prodrequest]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.orderprocessing) ? 1 : 0
   
   source  = "./modules/orderprocessing"
 
@@ -252,8 +282,10 @@ module "orderprocessing" {
 }
     
 
-module "order" {
+module "apiserver" {
   depends_on = [module.orderprocessing, module.production, module.payment]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.apiserver) ? 1 : 0
   
   source  = "./modules/order"
 
@@ -271,7 +303,9 @@ module "order" {
 
 
 module "orderfile" {
-  depends_on = [module.order]
+  depends_on = [module.apiserver]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.orderfile) ? 1 : 0
   
   source  = "./modules/orderfile"
 
@@ -288,7 +322,9 @@ module "orderfile" {
     
 
 module "adminfile" {
-  depends_on = [module.order]
+  depends_on = [module.apiserver]
+    
+  count = (var.deploy_order && var.order_subcomponents_deployment.adminfile) ? 1 : 0
   
   source  = "./modules/adminfile"
 
@@ -306,6 +342,8 @@ module "adminfile" {
 
 module "trafficgen" {
   depends_on = [kubernetes_namespace.trafficgen, module.orderfile, module.adminfile]
+    
+  count = var.deploy_trafficgen ? 1 : 0
   
   source  = "./modules/trafficgen"
 
@@ -322,6 +360,8 @@ module "trafficgen" {
 
 module "test" {
   depends_on = [module.trafficgen]
+    
+  count = var.deploy_order ? 1 : 0
   
   source  = "./modules/test"
 
