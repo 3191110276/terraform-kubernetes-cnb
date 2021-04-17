@@ -42,6 +42,8 @@ module "procurement_prediction" {
 
 module "procurement_responsesvc" {
   depends_on = [module.procurement_prediction]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.responsesvc) ? 1 : 0
   
   source  = "./modules/procurement_responsesvc"
 
@@ -51,6 +53,8 @@ module "procurement_responsesvc" {
   
 module "procurement_load" {
   depends_on = [module.procurement_responsesvc]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.external_procurement) ? 1 : 0
   
   source  = "./modules/procurement_load"
 
@@ -67,6 +71,8 @@ module "procurement_load" {
   
 module "procurement_external" {
   depends_on = [module.procurement_load]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.external_procurement) ? 1 : 0
   
   source  = "./modules/procurement_external"
 
@@ -83,6 +89,8 @@ module "procurement_external" {
 
 module "procurement_portal" {
   depends_on = [module.procurement_external]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.procurement_portal) ? 1 : 0
   
   source  = "./modules/procurement_portal"
 
@@ -99,6 +107,8 @@ module "procurement_portal" {
   
 module "procurement_edgeaggregator" {
   depends_on = [module.procurement_portal]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.edge_aggregator) ? 1 : 0
   
   source  = "./modules/procurement_edgeaggregator"
 
@@ -115,6 +125,8 @@ module "procurement_edgeaggregator" {
   
 module "procurement_edge" {
   depends_on = [module.procurement_edgeaggregator]
+    
+  count = (var.deploy_procurement && var.procurement_subcomponents_deployment.edge_collector) ? 1 : 0
   
   source  = "./modules/procurement_edge"
 
