@@ -73,6 +73,7 @@ variable "procurement_subcomponents_deployment" {
     edge_aggregator          = bool
     procurement_portal       = bool
     external_procurement     = bool
+    prediction               = bool
     auth_services            = bool
     action_response_services = bool
     billing_services         = bool
@@ -82,6 +83,7 @@ variable "procurement_subcomponents_deployment" {
     edge_aggregator          = true
     procurement_portal       = true
     external_procurement     = true
+    prediction               = true
     auth_services            = true
     action_response_services = true
     billing_services         = true
