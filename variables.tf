@@ -9,6 +9,7 @@ variable "deploy_order" {
 
 variable "order_subcomponents_deployment" {
   type    = object({
+    nginx_ingress   = bool
     orderfile       = bool
     adminfile       = bool
     apiserver       = bool
@@ -22,6 +23,7 @@ variable "order_subcomponents_deployment" {
     fulfilment      = bool
   })
   default = {
+    nginx_ingress   = true
     orderfile       = true
     adminfile       = true
     apiserver       = true
