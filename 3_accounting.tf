@@ -3,6 +3,8 @@
 ############################################################
 module "accounting" {
   depends_on = [kubernetes_namespace.accounting, module.test]
+    
+  count = var.deploy_accounting ? 1 : 0
   
   source  = "./modules/accounting"
 
