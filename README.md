@@ -21,7 +21,14 @@ The main characteristic you can change about the high-level components is the na
 | Accounting  | deploy_accounting  | accounting_namespace        |
 
 
-## Component: Trafficgen
+## Component: TrafficGen
+The TrafficGen application component is used for generating user traffic to the web frontend, which is part of the Order component. This simulated traffic loads the webpage and then generates multiple requests on the page. What happens can be modified in several ways to simulate certain events. You could, for example, change the client response time to simulate Internet connectivity problems. These values have not been exposed yet, but will be avaiable in a future release. Below you can find an overview of all variables you can change and their effect on the generated traffic.
+
+| Variable                | Default                                                | Effect                                                                                |
+|-------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------|
+| trafficgen_app_endpoint | "essential-nginx-ingress-ingress-nginx-controller.iks" | The endpoint to which all requests are sent                                           |
+| trafficgen_name         | trafficgen                                             | The name of the application component in Kubernetes itself                            |
+| trafficgen_replicas     | 10                                                     | Simultaneous requests that will be generated. Double the amount is created per minute |
 
 ## Component: Order
 
