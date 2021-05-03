@@ -126,6 +126,15 @@ The EdgeAggregator application subcomponent receives HTTP requests from the Edge
 ### Subcomponent: ProcurementPortal
 The ProcurementPortal application subcomponent receives HTTP requests from the EdgeAggreator, and creates HTTP requests to the Prediction and ExternalProcurement components. You can change the following variables to adapt this subcomponent:
 
+| Variable                  | Default            | Effect                                                                          |
+|---------------------------|--------------------|---------------------------------------------------------------------------------|
+| procportal_name           | procurement-portal | Name of ProcurementPortal - changes how it will show up in UIs like AppDynamics |
+| procportal_replicas       | 2                  | Copies of the Pod                                                               |
+| procportal_cpu_request    | 100m               | CPU Request for each Pod                                                        |
+| procportal_cpu_limit      | 200m               | CPU Limit for each Pod                                                          |
+| procportal_memory_request | 600Mi              | Memory Request for each Pod                                                     |
+| procportal_memory_limit   | 900Mi              | Memory Limit for each Pod                                                       |
+
 ### Subcomponent: Prediction
 The Prediction application subcomponent receives HTTP requests from the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
