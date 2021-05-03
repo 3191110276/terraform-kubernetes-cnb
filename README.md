@@ -31,6 +31,13 @@ The TrafficGen application component is used for generating user traffic to the 
 | trafficgen_replicas     | 10                                                     | Simultaneous requests that will be generated. Double the amount is created per minute |
 
 ## Component: Order
+The Order application component consists of multiple sub-components that all exist in the same namespace. You can see a high-level overview of the component below.
+
+![Order design](https://github.com/3191110276/terraform-kubernetes-cnb/blob/main/images/order_design.png?raw=true)
+
+
+
+
 
 ## Component: ExtPayment
 The ExtPayment application component represents an HTTP endpoint that can be connected to from the Order application component. Unlike Order, this component does not have any instrumentation for AppDynamics, thus it will appear like an external call, even if both components are deployed on the same cluster. This component allows for tuning some response time parameters to fake delays when processing the request. You can modify the values in the table below to change the way that ExtPayment looks and behaves.
