@@ -175,7 +175,15 @@ The Production application subcomponent provides an HTTP microservice that recei
 ### Subcomponent: Fulfilment
 The Fulfilment application subcomponent provides an HTTP microservice that receives requests from Production. You can change the following variables to adapt this subcomponent:
 
-
+| Variable                  | Default    | Effect                            |
+|---------------------------|------------|-----------------------------------|
+| fulfilment_name           | fulfilment | Name of Fulfilment in Kubernetes  |
+| fulfilment_appd           | Fulfilment | Name of Fulfilment in AppDynamics |
+| fulfilment_replicas       | 2          | Copies of the Pod                 |
+| fulfilment_cpu_request    | 100m       | CPU Request for each Pod          |
+| fulfilment_cpu_limit      | 400m       | CPU Limit for each Pod            |
+| fulfilment_memory_request | 200Mi      | Memory Request for each Pod       |
+| fulfilment_memory_limit   | 800Mi      | Memory Limit for each Pod         |
 
 ## Component: ExtPayment
 The ExtPayment application component represents an HTTP endpoint that can be connected to from the Order application component. Unlike Order, this component does not have any instrumentation for AppDynamics, thus it will appear like an external call, even if both components are deployed on the same cluster. This component allows for tuning some response time parameters to fake delays when processing the request. You can modify the values in the table below to change the way that ExtPayment looks and behaves.
