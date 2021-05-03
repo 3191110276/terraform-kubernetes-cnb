@@ -102,6 +102,15 @@ The ProcurementLoad application subcomponent creates artificial load for the Pro
 ### Subcomponent: EdgeCollector
 The EdgeCollector application subcomponent creates HTTP requests to the ResponseSvc, and then creates HTTP requests to the EdgeAggregator. You can change the following variables to adapt this subcomponent:
 
+| Variable                | Default        | Effect                                                                      |
+|-------------------------|----------------|-----------------------------------------------------------------------------|
+| procedge_name           | edge-collector | Name of EdgeCollector - changes how it will show up in UIs like AppDynamics |
+| procedge_replicas       | 4              | Copies of the Pod                                                           |
+| procedge_cpu_request    | 100m           | CPU Request for each Pod                                                    |
+| procedge_cpu_limit      | 200m           | CPU Limit for each Pod                                                      |
+| procedge_memory_request | 600Mi          | Memory Request for each Pod                                                 |
+| procedge_memory_limit   | 900Mi          | Memory Limit for each Pod                                                   |
+
 ### Subcomponent: EdgeAggregator
 The EdgeAggregator application subcomponent receives HTTP requests from the EdgeCollector, and then creates HTTP requests to the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
