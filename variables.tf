@@ -102,32 +102,37 @@ variable "procurement_subcomponents_deployment" {
 variable "order_namespace" {
   type        = string
   default     = "order"
-  description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
+  description = "Namespace used for deploying the Order application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
 variable "trafficgen_namespace" {
-  type    = string
-  default = "trafficgen"
+  type        = string
+  default     = "trafficgen"
+  description = "Namespace used for deploying the TrafficGen application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
 variable "extprod_namespace" {
   type    = string
   default = "production"
+  description = "Namespace used for deploying the ExtProd application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
 variable "extpayment_namespace" {
   type    = string
   default = "ext"
+  description = "Namespace used for deploying the ExtPayment application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
 variable "accounting_namespace" {
   type    = string
   default = "accounting"
+  description = "Namespace used for deploying the Accounting application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
 variable "procurement_namespace" {
   type    = string
   default = "procurement"
+  description = "Namespace used for deploying the Procurement application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
 variable "order_app_name" {
@@ -782,12 +787,6 @@ variable "trafficgen_app_endpoint" {
 ############################################################
 # ACCOUNTING
 ############################################################
-variable "namespace" {
-  type        = string
-  default     = "accounting"
-  description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
-}
-
 variable "accounting_clusterload_configurations" {
   type    = list(object({
     pod_name     = string
