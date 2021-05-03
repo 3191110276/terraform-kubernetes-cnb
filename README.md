@@ -57,26 +57,38 @@ As you can see, there are several sub-components that all communicate with each 
 By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the variables that are available for each of them.
 
 ### Subcomponent: AdminFile
+The AdminFile application subcomponent provides an HTTP web server with an admin interface. You can change the following variables to adapt this subcomponent:
+
 
 ### Subcomponent: OrderFile
+The OrderFile application subcomponent provides an HTTP web server with an end user interface. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: APIServer
+The APIServer application subcomponent provides an HTTP API Server with serveral methods that are also implemented in the OrderFile webpage. The APIServer communicates with the InventoryDB, Payment, and OrderProcessing. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: InventoryDB
+The InventoryDB application subcomponent provides a MariaDB instance that is used for storing relevant information about the transactions. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: Payment
+The Payment application subcomponent provides an HTTP microservice that acts as a middleman between the APIServer and the ExtPayment application component. It can receive HTTP requests from the APIServer and forwards them to ExtPayment. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: OrderProcessing
+The OrderProcessing application subcomponent provides an HTTP microservice that acts as a middleman between the APIServer and the OrderQueue application component. It can receive HTTP requests from the APIServer and forwards them to the Orderqueue message queue. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: OrderQueue
+The OrderQueue application subcomponent provides a message queue that stores all production requests. It receives requests from OrderProcessing. The Notification and ProdRequest components then consume the message queue entries. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: Notification
+The Notification application subcomponent consumes entries from the OrderQueue message queue and then creates a notification message. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: ProdRequest
+The ProdRequest application subcomponent consumes entries from the OrderQueue message queue and then creates an HTTP request that is sent to the Production subcomponent. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: Production
+The Production application subcomponent provides an HTTP microservice that receives requests from ProdRequest, and then forwards them to ExtProd. Upon receiving a request from ExtProd in response, it forwards it as an HTTP request to Fulfilment. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: Fulfilment
+The Fulfilment application subcomponent provides an HTTP microservice that receives requests from Production. You can change the following variables to adapt this subcomponent:
 
 ## Component: ExtPayment
 The ExtPayment application component represents an HTTP endpoint that can be connected to from the Order application component. Unlike Order, this component does not have any instrumentation for AppDynamics, thus it will appear like an external call, even if both components are deployed on the same cluster. This component allows for tuning some response time parameters to fake delays when processing the request. You can modify the values in the table below to change the way that ExtPayment looks and behaves.
