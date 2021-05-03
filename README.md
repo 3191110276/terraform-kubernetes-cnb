@@ -150,7 +150,14 @@ The Prediction application subcomponent receives HTTP requests from the Procurem
 ### Subcomponent: ExternalProcurement
 The ExternalProcurement application subcomponent receives HTTP requests from the ProcurementPortal, and creates HTTP requests to the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
-
+| Variable                    | Default              | Effect                                                                            |
+|-----------------------------|----------------------|-----------------------------------------------------------------------------------|
+| procexternal_name           | external-procurement | Name of ExternalProcurement - changes how it will show up in UIs like AppDynamics |
+| procexternal_replicas       | 2                    | Copies of the Pod                                                                 |
+| procexternal_cpu_request    | 100m                 | CPU Request for each Pod                                                          |
+| procexternal_cpu_limit      | 200m                 | CPU Limit for each Pod                                                            |
+| procexternal_memory_request | 600Mi                | Memory Request for each Pod                                                       |
+| procexternal_memory_limit   | 900Mi                | Memory Limit for each Pod                                                         |
 
 ### Subcomponent: ResponseSvc
 The ResponseSvc application subcomponent allows for various external calls from the Procurement components. You should not need to modify this component.
