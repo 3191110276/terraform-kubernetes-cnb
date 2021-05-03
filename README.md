@@ -85,18 +85,34 @@ As you can see, there are several sub-components that all communicate with each 
 }
 ```
 
-By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the varialbes that are available for each of them.
+By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the varialbes that are available for each of them. The components allow you to change their name, their replicas and their CPU/memory request/limit.
 
 ### Subcomponent: ProcurementLoad
+The ProcurementLoad application subcomponent creates artificial load for the Procurement components. You can change the following variables to adapt this subcomponent:
+
+| Variable                | Default  | Effect                      |
+|-------------------------|----------|-----------------------------|
+| procload_name           | app-load | Name of ProcLoad            |
+| procload_replicas       | 4        | Copies of the Pod           |
+| procload_cpu_request    | 100m     | CPU Request for each Pod    |
+| procload_cpu_limit      | 200m     | CPU Limit for each Pod      |
+| procload_memory_request | 600Mi    | Memory Request for each Pod |
+| procload_memory_limit   | 900Mi    | Memory Limit for each Pod   |
 
 ### Subcomponent: EdgeCollector
+The EdgeCollector application subcomponent creates HTTP requests to the ResponseSvc, and then creates HTTP requests to the EdgeAggregator. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: EdgeAggregator
+The EdgeAggregator application subcomponent receives HTTP requests from the EdgeCollector, and then creates HTTP requests to the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: ProcurementPortal
+The ProcurementPortal application subcomponent receives HTTP requests from the EdgeAggreator, and creates HTTP requests to the Prediction and ExternalProcurement components. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: Prediction
+The Prediction application subcomponent receives HTTP requests from the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: ExternalProcurement
+The ExternalProcurement application subcomponent receives HTTP requests from the ProcurementPortal, and creates HTTP requests to the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
 ### Subcomponent: ResponseSvc
+The ResponseSvc application subcomponent allows for various external calls from the Procurement components. You should not need to modify this component.
