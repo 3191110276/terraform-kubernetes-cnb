@@ -728,25 +728,25 @@ variable "adminfile_replicas" {
 variable "adminfile_cpu_request" {
   type        = string
   default     = "20m"
-  description = "The OrderFile value for requests.cpu."
+  description = "The AdminFile value for requests.cpu."
 }
 
 variable "adminfile_memory_request" {
   type        = string
   default     = "32Mi"
-  description = "The OrderFile value for requests.memory."
+  description = "The AdminFile value for requests.memory."
 }
 
 variable "adminfile_cpu_limit" {
   type        = string
   default     = "50m"
-  description = "The OrderFile value for limits.cpu."
+  description = "The AdminFile value for limits.cpu."
 }
 
 variable "adminfile_memory_limit" {
   type        = string
   default     = "32Mi"
-  description = "The OrderFile value for limits.memory."
+  description = "The AdminFile value for limits.memory."
 }
 
 
