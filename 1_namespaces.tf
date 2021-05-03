@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "order" {
   metadata {
     name = var.order_namespace
     labels = {
-      istio-injection = "enabled"
+      istio-injection = var.istioLabel
     }   
   }
 }
@@ -19,7 +19,7 @@ resource "kubernetes_namespace" "trafficgen" {
   metadata {
     name = var.trafficgen_namespace
     labels = {
-      istio-injection = "enabled"
+      istio-injection = var.istioLabel
     }
   }
 }
@@ -31,7 +31,7 @@ resource "kubernetes_namespace" "extprod" {
   metadata {
     name = var.extprod_namespace
     labels = {
-      istio-injection = "enabled"
+      istio-injection = var.istioLabel
     }
   }
 }
@@ -43,7 +43,7 @@ resource "kubernetes_namespace" "extpayment" {
   metadata {
     name = var.extpayment_namespace
     labels = {
-      istio-injection = "enabled"
+      istio-injection = var.istioLabel
     }    
   }
 }
@@ -55,7 +55,7 @@ resource "kubernetes_namespace" "accounting" {
   metadata {
     name = var.accounting_namespace
     labels = {
-      istio-injection = "enabled"
+      istio-injection = var.istioLabel
     }
   }
 }
@@ -67,7 +67,7 @@ resource "kubernetes_namespace" "procurement" {
   metadata {
     name = var.procurement_namespace
     labels = {
-      istio-injection = "enabled"
+      istio-injection = var.istioLabel
     }
   }
 }
