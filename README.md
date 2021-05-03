@@ -103,23 +103,45 @@ The InventoryDB application subcomponent provides a MariaDB instance that is use
 ### Subcomponent: Payment
 The Payment application subcomponent provides an HTTP microservice that acts as a middleman between the APIServer and the ExtPayment application component. It can receive HTTP requests from the APIServer and forwards them to ExtPayment. You can change the following variables to adapt this subcomponent:
 
+| Variable               | Default | Effect                             |
+|------------------------|---------|------------------------------------|
+| payment_name           | payment | Name of Payment in Kubernetes      |
+| payment_appd           | Payment | Name of the Payment in AppDynamics |
+| payment_replicas       | 2       | Copies of the Pod                  |
+| payment_cpu_request    | 20m     | CPU Request for each Pod           |
+| payment_cpu_limit      | 250m    | CPU Limit for each Pod             |
+| payment_memory_request | 64Mi    | Memory Request for each Pod        |
+| payment_memory_limit   | 256Mi   | Memory Limit for each Pod          |
+
 ### Subcomponent: OrderProcessing
 The OrderProcessing application subcomponent provides an HTTP microservice that acts as a middleman between the APIServer and the OrderQueue application component. It can receive HTTP requests from the APIServer and forwards them to the Orderqueue message queue. You can change the following variables to adapt this subcomponent:
+
+
 
 ### Subcomponent: OrderQueue
 The OrderQueue application subcomponent provides a message queue that stores all production requests. It receives requests from OrderProcessing. The Notification and ProdRequest components then consume the message queue entries. You can change the following variables to adapt this subcomponent:
 
+
+
 ### Subcomponent: Notification
 The Notification application subcomponent consumes entries from the OrderQueue message queue and then creates a notification message. You can change the following variables to adapt this subcomponent:
+
+
 
 ### Subcomponent: ProdRequest
 The ProdRequest application subcomponent consumes entries from the OrderQueue message queue and then creates an HTTP request that is sent to the Production subcomponent. You can change the following variables to adapt this subcomponent:
 
+
+
 ### Subcomponent: Production
 The Production application subcomponent provides an HTTP microservice that receives requests from ProdRequest, and then forwards them to ExtProd. Upon receiving a request from ExtProd in response, it forwards it as an HTTP request to Fulfilment. You can change the following variables to adapt this subcomponent:
 
+
+
 ### Subcomponent: Fulfilment
 The Fulfilment application subcomponent provides an HTTP microservice that receives requests from Production. You can change the following variables to adapt this subcomponent:
+
+
 
 ## Component: ExtPayment
 The ExtPayment application component represents an HTTP endpoint that can be connected to from the Order application component. Unlike Order, this component does not have any instrumentation for AppDynamics, thus it will appear like an external call, even if both components are deployed on the same cluster. This component allows for tuning some response time parameters to fake delays when processing the request. You can modify the values in the table below to change the way that ExtPayment looks and behaves.
