@@ -81,7 +81,8 @@ As you can see, there are several sub-components that all communicate with each 
   "procurement_portal": true,
   "prediction": true,
   "external_procurement": true,
-  "responsesvc": true }
+  "responsesvc": true
+}
 ```
 
 By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the varialbes that are available for each of them.
