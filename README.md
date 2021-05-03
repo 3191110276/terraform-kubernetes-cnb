@@ -106,7 +106,7 @@ The Payment application subcomponent provides an HTTP microservice that acts as 
 | Variable               | Default | Effect                             |
 |------------------------|---------|------------------------------------|
 | payment_name           | payment | Name of Payment in Kubernetes      |
-| payment_appd           | Payment | Name of the Payment in AppDynamics |
+| payment_appd           | Payment | Name of Payment in AppDynamics     |
 | payment_replicas       | 2       | Copies of the Pod                  |
 | payment_cpu_request    | 20m     | CPU Request for each Pod           |
 | payment_cpu_limit      | 250m    | CPU Limit for each Pod             |
@@ -119,7 +119,7 @@ The OrderProcessing application subcomponent provides an HTTP microservice that 
 | Variable                       | Default         | Effect                                     |
 |--------------------------------|-----------------|--------------------------------------------|
 | orderprocessing_name           | orderprocessing | Name of OrderProcessing in Kubernetes      |
-| orderprocessing_appd           | OrderProcessing | Name of the OrderProcessing in AppDynamics |
+| orderprocessing_appd           | OrderProcessing | Name of OrderProcessing in AppDynamics     |
 | orderprocessing_replicas       | 2               | Copies of the Pod                          |
 | orderprocessing_cpu_request    | 20m             | CPU Request for each Pod                   |
 | orderprocessing_cpu_limit      | 250m            | CPU Limit for each Pod                     |
@@ -129,17 +129,35 @@ The OrderProcessing application subcomponent provides an HTTP microservice that 
 ### Subcomponent: OrderQueue
 The OrderQueue application subcomponent provides a message queue that stores all production requests. It receives requests from OrderProcessing. The Notification and ProdRequest components then consume the message queue entries. You can change the following variables to adapt this subcomponent:
 
-
+| Variable         | Default     | Effect                            |
+|------------------|-------------|-----------------------------------|
+| orderqueue_name  | orderqueue  | Name of OrderQueue in Kubernetes  |
 
 ### Subcomponent: Notification
 The Notification application subcomponent consumes entries from the OrderQueue message queue and then creates a notification message. You can change the following variables to adapt this subcomponent:
 
-
+| Variable                    | Default      | Effect                              |
+|-----------------------------|--------------|-------------------------------------|
+| notification_name           | notification | Name of Notification in Kubernetes  |
+| notification_appd           | Notification | Name of Notification in AppDynamics |
+| notification_replicas       | 2            | Copies of the Pod                   |
+| notification_cpu_request    | 20m          | CPU Request for each Pod            |
+| notification_cpu_limit      | 250m         | CPU Limit for each Pod              |
+| notification_memory_request | 80Mi         | Memory Request for each Pod         |
+| notification_memory_limit   | 280Mi        | Memory Limit for each Pod           |
 
 ### Subcomponent: ProdRequest
 The ProdRequest application subcomponent consumes entries from the OrderQueue message queue and then creates an HTTP request that is sent to the Production subcomponent. You can change the following variables to adapt this subcomponent:
 
-
+| Variable                   | Default     | Effect                             |
+|----------------------------|-------------|------------------------------------|
+| prodrequest_name           | prodrequest | Name of ProdRequest in Kubernetes  |
+| prodrequest_appd           | ProdRequest | Name of ProdRequest in AppDynamics |
+| prodrequest_replicas       | 2           | Copies of the Pod                  |
+| prodrequest_cpu_request    | 20m         | CPU Request for each Pod           |
+| prodrequest_cpu_limit      | 250m        | CPU Limit for each Pod             |
+| prodrequest_memory_request | 80Mi        | Memory Request for each Pod        |
+| prodrequest_memory_limit   | 280Mi       | Memory Limit for each Pod          |
 
 ### Subcomponent: Production
 The Production application subcomponent provides an HTTP microservice that receives requests from ProdRequest, and then forwards them to ExtProd. Upon receiving a request from ExtProd in response, it forwards it as an HTTP request to Fulfilment. You can change the following variables to adapt this subcomponent:
