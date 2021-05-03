@@ -162,7 +162,15 @@ The ProdRequest application subcomponent consumes entries from the OrderQueue me
 ### Subcomponent: Production
 The Production application subcomponent provides an HTTP microservice that receives requests from ProdRequest, and then forwards them to ExtProd. Upon receiving a request from ExtProd in response, it forwards it as an HTTP request to Fulfilment. You can change the following variables to adapt this subcomponent:
 
-
+| Variable                  | Default    | Effect                            |
+|---------------------------|------------|-----------------------------------|
+| production_name           | production | Name of Production in Kubernetes  |
+| production_appd           | Production | Name of Production in AppDynamics |
+| production_replicas       | 2          | Copies of the Pod                 |
+| production_cpu_request    | 100m       | CPU Request for each Pod          |
+| production_cpu_limit      | 400m       | CPU Limit for each Pod            |
+| production_memory_request | 200Mi      | Memory Request for each Pod       |
+| production_memory_limit   | 800Mi      | Memory Limit for each Pod         |
 
 ### Subcomponent: Fulfilment
 The Fulfilment application subcomponent provides an HTTP microservice that receives requests from Production. You can change the following variables to adapt this subcomponent:
