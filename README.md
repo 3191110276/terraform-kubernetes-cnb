@@ -22,7 +22,7 @@ The main characteristic you can change about the high-level components is the na
 
 
 ## Component: TrafficGen
-The TrafficGen application component is used for generating user traffic to the web frontend, which is part of the Order component. This simulated traffic loads the webpage and then generates multiple requests on the page. What happens can be modified in several ways to simulate certain events. You could, for example, change the client response time to simulate Internet connectivity problems. These values have not been exposed yet, but will be avaiable in a future release. Below you can find an overview of all variables you can change and their effect on the generated traffic.
+The TrafficGen application component is used for generating user traffic to the web frontend (part of the Order application component). This simulated traffic loads the webpage and then generates multiple requests on the page. What happens can be modified in several ways to simulate certain events. You could, for example, change the client response time to simulate Internet connectivity problems. These values have not been exposed yet, but will be avaiable in a future release. Below you can find an overview of all variables you can change and their effect on the generated traffic.
 
 | Variable                | Default                                                | Effect                                                                                |
 |-------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------|
@@ -33,6 +33,19 @@ The TrafficGen application component is used for generating user traffic to the 
 ## Component: Order
 
 ## Component: ExtPayment
+The ExtPayment application component represents an HTTP endpoint that can be connected to from the Order application component. Unlike Order, this component does not have any instrumentation for AppDynamics, thus it will appear like an external call, even if both components are deployed on the same cluster. This component allows for tuning some response time parameters to fake delays when processing the request. You can modify the values in the table below to change the way that ExtPayment looks and behaves.
+
+| Variable                       | Default | Effect                                                                       |
+|--------------------------------|---------|------------------------------------------------------------------------------|
+| extpayment_name                | payment | Name of the ExtPayment - changes how it will show up in UIs like AppDynamics |
+| extpayment_replicas            | 2       | Copies of the Pod                                                            |
+| extpayment_cpu_request         | 100m    | CPU Request for each Pod                                                     |
+| extpayment_cpu_limit           | 400m    | CPU Limit for each Pod                                                       |
+| extpayment_memory_request      | 128Mi   | Memory Request for each Pod                                                  |
+| extpayment_memory_limit        | 512Mi   | Memory Limit for each Pod                                                    |
+| extpayment_min_random_delay    | 0       | Minimum average delay for a request in milliseconds                          |
+| extpayment_max_random_delay    | 1000    | Maximum average delay for a request in milliseconds                          |
+| extpayment_lagspike_percentage | 0.01    | Chance of a lagspike happening per request                                   |
 
 ## Component: ExtProd
 
