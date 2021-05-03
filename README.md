@@ -5,7 +5,7 @@ The Cisco Kubernetes demo application consists of multiple building blocks that 
 ## High-level application design
 
 The application consists of six main building blocks that can be seen in the image below.
-![High-level application design](https://github.com/3191110276/terraform-kubernetes-cnb/blob/main/images/high_level_design.png)
+![High-level application design](https://github.com/3191110276/terraform-kubernetes-cnb/blob/main/images/high_level_design.png?raw=true)
 
 As you can see, the application has already been created with a specific use case in mind, but all components can be re-named. Thus you can adapt the application to show any use case. By just re-naming this application, it could show a finance use case, a medical use case, or anything else that you might want to demo. Each application component also equals to a namespace in Kubernetes.
 
