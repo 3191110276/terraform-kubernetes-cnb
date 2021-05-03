@@ -68,3 +68,11 @@ The Accounting application component represents Deployments that are created wit
 
 ## Component: Procurement
 The Procurement application component consists of multiple sub-components that all exist in the same namespace. You can see a high-level overview of the component below.
+
+![Procurement design](https://github.com/3191110276/terraform-kubernetes-cnb/blob/main/images/procurement_design.png?raw=true)
+
+As you can see, there are several sub-components that all communicate with each other. The ResponseSvc is used by multiple components as an external service which is not instrumented by AppDynamics, and thus looks like an outside call. If you want to split this application up across multiple clusters, you could put EdgeCollector components on different clusters and then add the remainder of the application on one central cluster. To modify which components get deployed on a cluster, you can modify the variable "procurement_subcomponents_deployment". As an example, the definition below would deploy all subcomponents:
+
+```terraform
+{ "edge_aggregator": true, "edge_collector": true, "external_procurement": true, "prediction": true, "procurement_load": true, "procurement_portal": true, "responsesvc": true }
+```
