@@ -5,4 +5,4 @@ The Cisco Kubernetes demo application consists of multiple building blocks that 
 ## High-level application design
 
 The application consists of six main building blocks that can be seen in the image below.
-![High-level application design](./images/high-level-design.png)
+![High-level application design](./images/high_level_design.png)
