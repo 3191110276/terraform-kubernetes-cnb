@@ -6,7 +6,11 @@ variable "deploy_order" {
   default     = true
   description = "Determines if the Order component will be deployed."
 }
-
+variable "istioLabel" {
+  type = string
+  default = ""
+  description = "Label for automatic Istio Sidecar Injection." 
+}
 variable "order_subcomponents_deployment" {
   type    = object({
     nginx_ingress   = bool
