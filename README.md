@@ -37,7 +37,7 @@ The ExtPayment application component represents an HTTP endpoint that can be con
 
 | Variable                       | Default | Effect                                                                       |
 |--------------------------------|---------|------------------------------------------------------------------------------|
-| extpayment_name                | payment | Name of the ExtPayment - changes how it will show up in UIs like AppDynamics |
+| extpayment_name                | payment | Name of ExtPayment - changes how it will show up in UIs like AppDynamics.    |
 | extpayment_replicas            | 2       | Copies of the Pod                                                            |
 | extpayment_cpu_request         | 100m    | CPU Request for each Pod                                                     |
 | extpayment_cpu_limit           | 400m    | CPU Limit for each Pod                                                       |
@@ -48,8 +48,22 @@ The ExtPayment application component represents an HTTP endpoint that can be con
 | extpayment_lagspike_percentage | 0.01    | Chance of a lagspike happening per request                                   |
 
 ## Component: ExtProd
+The ExtProd application component represents an external web endpoint, which receives requests from the Order application. Each successful request results in a Kubernetes Job. Once the job finishes, it will send back a request to the application component in Order. The request from Order to ExtProd, and the request from ExtProd back to Order are not directly related, and essentially represent two different transactions. If you need a component to put on a remote cluster, ExtProd is a good choice for this. You can tune the internal behavior of this component with the following Terraform variables.
+
+| Variable               | Default | Effect                                                                |
+|------------------------|---------|-----------------------------------------------------------------------|
+| extprod_name           | gateway | Name of ExtProd - changes how it will show up in UIs like AppDynamics |
+| extprod_replicas       | 2       | Copies of the Pod                                                     |
+| extprod_cpu_request    | 100m    | CPU Request for each Pod                                              |
+| extprod_cpu_limit      | 400m    | CPU Limit for each Pod                                                |
+| extprod_memory_request | 128Mi   | Memory Request for each Pod                                           |
+| extprod_memory_limit   | 512Mi   | Memory Limit for each Pod                                             |
+| extprod_min_delay      | 0       | Minimum average delay for a request in milliseconds                   |
+| extprod_max_delay      | 1000    | Maximum average delay for a request in milliseconds                   |
+| extprod_job_min_delay  | 240     | Duration of the Kubernetes Job created by ExtProd                     |
+| extprod_job_max_delay  | 360     | Duration of the Kubernetes Job created by ExtProd                     |
 
 ## Component: Accounting
-the Accounting application component represents Deployments that are created with the purpose of showing oversized or undersized Pods. These components do not have any connectivity between them or any requests coming in or going out. They are just statically set to a certain CPU and/or memory usage, which can then be analyzed using monitoring tools like AppDynamics or Intersight Workload Optimizer. The Pods defined in this component are all defined dynamically through a variable called "accounting_clusterload_configurations". Changing this variable allows you to rename the Pods, to create new Pods, and to change their characteristics.
+The Accounting application component represents Deployments that are created with the purpose of showing oversized or undersized Pods. These components do not have any connectivity between them or any requests coming in or going out. They are just statically set to a certain CPU and/or memory usage, which can then be analyzed using monitoring tools like AppDynamics or Intersight Workload Optimizer. The Pods defined in this component are all defined dynamically through a variable called "accounting_clusterload_configurations". Changing this variable allows you to rename the Pods, to create new Pods, and to change their characteristics.
 
 ## Component: Procurement
