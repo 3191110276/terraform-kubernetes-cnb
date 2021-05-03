@@ -5,7 +5,7 @@ The Cisco Kubernetes demo application consists of multiple building blocks that 
 ## High-level application design
 
 The application consists of six main building blocks that can be seen in the image below.
-![High-level application design](./images/high_level_design.png)
+![High-level application design](https://github.com/3191110276/terraform-kubernetes-cnb/blob/main/images/high_level_design.png)
 
 ## Component: Trafficgen
 
