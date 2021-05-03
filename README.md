@@ -26,8 +26,8 @@ The TrafficGen application component is used for generating user traffic to the 
 
 | Variable                | Default                                                | Effect                                                                                |
 |-------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------|
-| trafficgen_app_endpoint | "essential-nginx-ingress-ingress-nginx-controller.iks" | The endpoint to which all requests are sent                                           |
-| trafficgen_name         | "trafficgen"                                           | The name of the application component in Kubernetes itself                            |
+| trafficgen_app_endpoint | essential-nginx-ingress-ingress-nginx-controller.iks   | The endpoint to which all requests are sent                                           |
+| trafficgen_name         | trafficgen                                             | The name of the application component in Kubernetes itself                            |
 | trafficgen_replicas     | 10                                                     | Simultaneous requests that will be generated. Double the amount is created per minute |
 
 ## Component: Order
