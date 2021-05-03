@@ -114,6 +114,15 @@ The EdgeCollector application subcomponent creates HTTP requests to the Response
 ### Subcomponent: EdgeAggregator
 The EdgeAggregator application subcomponent receives HTTP requests from the EdgeCollector, and then creates HTTP requests to the ProcurementPortal. You can change the following variables to adapt this subcomponent:
 
+| Variable                   | Default         | Effect                                                                       |
+|----------------------------|-----------------|------------------------------------------------------------------------------|
+| procedgeagg_name           | edge-aggregator | Name of EdgeAggregator - changes how it will show up in UIs like AppDynamics |
+| procedgeagg_replicas       | 2               | Copies of the Pod                                                            |
+| procedgeagg_cpu_request    | 100m            | CPU Request for each Pod                                                     |
+| procedgeagg_cpu_limit      | 200m            | CPU Limit for each Pod                                                       |
+| procedgeagg_memory_request | 600Mi           | Memory Request for each Pod                                                  |
+| procedgeagg_memory_limit   | 900Mi           | Memory Limit for each Pod                                                    |
+
 ### Subcomponent: ProcurementPortal
 The ProcurementPortal application subcomponent receives HTTP requests from the EdgeAggreator, and creates HTTP requests to the Prediction and ExternalProcurement components. You can change the following variables to adapt this subcomponent:
 
