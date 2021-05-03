@@ -71,6 +71,15 @@ The AdminFile application subcomponent provides an HTTP web server with an admin
 ### Subcomponent: OrderFile
 The OrderFile application subcomponent provides an HTTP web server with an end user interface. You can change the following variables to adapt this subcomponent:
 
+| Variable                 | Default   | Effect                                                                  |
+|--------------------------|-----------|-------------------------------------------------------------------------|
+| orderfile_name           | orderfile | Name of OrderFile - changes how it will show up in UIs like AppDynamics |
+| orderfile_replicas       | 2         | Copies of the Pod                                                       |
+| orderfile_cpu_request    | 20m       | CPU Request for each Pod                                                |
+| orderfile_cpu_limit      | 50m       | CPU Limit for each Pod                                                  |
+| orderfile_memory_request | 32Mi      | Memory Request for each Pod                                             |
+| orderfile_memory_limit   | 32Mi      | Memory Limit for each Pod                                               |
+
 ### Subcomponent: APIServer
 The APIServer application subcomponent provides an HTTP API Server with serveral methods that are also implemented in the OrderFile webpage. The APIServer communicates with the InventoryDB, Payment, and OrderProcessing. You can change the following variables to adapt this subcomponent:
 
