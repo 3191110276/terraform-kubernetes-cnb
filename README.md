@@ -116,7 +116,15 @@ The Payment application subcomponent provides an HTTP microservice that acts as 
 ### Subcomponent: OrderProcessing
 The OrderProcessing application subcomponent provides an HTTP microservice that acts as a middleman between the APIServer and the OrderQueue application component. It can receive HTTP requests from the APIServer and forwards them to the Orderqueue message queue. You can change the following variables to adapt this subcomponent:
 
-
+| Variable                       | Default         | Effect                                     |
+|--------------------------------|-----------------|--------------------------------------------|
+| orderprocessing_name           | orderprocessing | Name of OrderProcessing in Kubernetes      |
+| orderprocessing_appd           | OrderProcessing | Name of the OrderProcessing in AppDynamics |
+| orderprocessing_replicas       | 2               | Copies of the Pod                          |
+| orderprocessing_cpu_request    | 20m             | CPU Request for each Pod                   |
+| orderprocessing_cpu_limit      | 250m            | CPU Limit for each Pod                     |
+| orderprocessing_memory_request | 80Mi            | Memory Request for each Pod                |
+| orderprocessing_memory_limit   | 280Mi           | Memory Limit for each Pod                  |
 
 ### Subcomponent: OrderQueue
 The OrderQueue application subcomponent provides a message queue that stores all production requests. It receives requests from OrderProcessing. The Notification and ProdRequest components then consume the message queue entries. You can change the following variables to adapt this subcomponent:
