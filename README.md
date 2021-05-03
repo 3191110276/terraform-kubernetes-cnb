@@ -35,9 +35,48 @@ The Order application component consists of multiple sub-components that all exi
 
 ![Order design](https://github.com/3191110276/terraform-kubernetes-cnb/blob/main/images/order_design.png?raw=true)
 
+As you can see, there are several sub-components that all communicate with each other. To modify which components get deployed on a cluster, you can modify the variable "order_subcomponents_deployment". As an example, the definition below would deploy all subcomponents:
 
+```terraform
+{
+  "nginx_ingress": true,
+  "adminfile": true,
+  "orderfile": true,
+  "apiserver": true,
+  "inventorydb": true,
+  "payment": true,
+  "orderprocessing": true,
+  "orderqueue": true,
+  "notification": true,
+  "prodrequest": true,
+  "production": true
+  "fulfilment": true,
+}
+```
 
+By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the variables that are available for each of them.
 
+### Subcomponent: AdminFile
+
+### Subcomponent: OrderFile
+
+### Subcomponent: APIServer
+
+### Subcomponent: InventoryDB
+
+### Subcomponent: Payment
+
+### Subcomponent: OrderProcessing
+
+### Subcomponent: OrderQueue
+
+### Subcomponent: Notification
+
+### Subcomponent: ProdRequest
+
+### Subcomponent: Production
+
+### Subcomponent: Fulfilment
 
 ## Component: ExtPayment
 The ExtPayment application component represents an HTTP endpoint that can be connected to from the Order application component. Unlike Order, this component does not have any instrumentation for AppDynamics, thus it will appear like an external call, even if both components are deployed on the same cluster. This component allows for tuning some response time parameters to fake delays when processing the request. You can modify the values in the table below to change the way that ExtPayment looks and behaves.
@@ -92,7 +131,7 @@ As you can see, there are several sub-components that all communicate with each 
 }
 ```
 
-By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the varialbes that are available for each of them. The components allow you to change their name, their replicas and their CPU/memory request/limit.
+By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the variables that are available for each of them. The components allow you to change their name, their replicas and their CPU/memory request/limit.
 
 ### Subcomponent: ProcurementLoad
 The ProcurementLoad application subcomponent creates artificial load for the Procurement components. You can change the following variables to adapt this subcomponent:
