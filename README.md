@@ -11,6 +11,14 @@ As you can see, the application has already been created with a specific use cas
 
 The main characteristic you can change about the high-level components is the name of the namespace and whether or not the component should be deployed at all. The name change allows you to adapt the application to different scenarios. You can also decide that components you want to deploy to, for example, split the application up across multiple clusters. Below you can find an overview of the values you can use to tune the high-level design:
 
+| Component   | Deploy? (bool)     | Namespace variable (string) |
+|-------------|--------------------|-----------------------------|
+| Trafficgen  | deploy_trafficgen  | trafficgen_namespace        |
+| Order       | deploy_order       | order_namespace             |
+| ExtPayment  | deploy_extpayment  | extpayment_namespace        |
+| ExtProd     | deploy_extprod     | extprod_namespace           |
+| Procurement | deploy_procurement | procurement_namespace       |
+| Accounting  | deploy_accounting  | accounting_namespace        |
 
 
 ## Component: Trafficgen
