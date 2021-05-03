@@ -74,5 +74,28 @@ The Procurement application component consists of multiple sub-components that a
 As you can see, there are several sub-components that all communicate with each other. The ResponseSvc is used by multiple components as an external service which is not instrumented by AppDynamics, and thus looks like an outside call. If you want to split this application up across multiple clusters, you could put EdgeCollector components on different clusters and then add the remainder of the application on one central cluster. To modify which components get deployed on a cluster, you can modify the variable "procurement_subcomponents_deployment". As an example, the definition below would deploy all subcomponents:
 
 ```terraform
-{ "edge_aggregator": true, "edge_collector": true, "external_procurement": true, "prediction": true, "procurement_load": true, "procurement_portal": true, "responsesvc": true }
+{
+  "procurement_load": true,
+  "edge_collector": true,
+  "edge_aggregator": true,
+  "procurement_portal": true,
+  "prediction": true,
+  "external_procurement": true,
+  "responsesvc": true }
 ```
+
+By default, all subcomponents will be deployed. Below you can find the documentation for each subcomponents and the varialbes that are available for each of them.
+
+### Subcomponent: ProcurementLoad
+
+### Subcomponent: EdgeCollector
+
+### Subcomponent: EdgeAggregator
+
+### Subcomponent: ProcurementPortal
+
+### Subcomponent: Prediction
+
+### Subcomponent: ExternalProcurement
+
+### Subcomponent: ResponseSvc
