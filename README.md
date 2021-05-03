@@ -67,3 +67,4 @@ The ExtProd application component represents an external web endpoint, which rec
 The Accounting application component represents Deployments that are created with the purpose of showing oversized or undersized Pods. These components do not have any connectivity between them or any requests coming in or going out. They are just statically set to a certain CPU and/or memory usage, which can then be analyzed using monitoring tools like AppDynamics or Intersight Workload Optimizer. The Pods defined in this component are all defined dynamically through a variable called "accounting_clusterload_configurations". Changing this variable allows you to rename the Pods, to create new Pods, and to change their characteristics.
 
 ## Component: Procurement
+The Procurement application component consists of multiple sub-components that all exist in the same namespace. You can see a high-level overview of the component below.
