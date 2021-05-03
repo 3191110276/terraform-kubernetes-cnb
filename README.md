@@ -59,6 +59,14 @@ By default, all subcomponents will be deployed. Below you can find the documenta
 ### Subcomponent: AdminFile
 The AdminFile application subcomponent provides an HTTP web server with an admin interface. You can change the following variables to adapt this subcomponent:
 
+| Variable                 | Default   | Effect                                                                  |
+|--------------------------|-----------|-------------------------------------------------------------------------|
+| adminfile_name           | adminfile | Name of AdminFile - changes how it will show up in UIs like AppDynamics |
+| adminfile_replicas       | 2         | Copies of the Pod                                                       |
+| adminfile_cpu_request    | 20m       | CPU Request for each Pod                                                |
+| adminfile_cpu_limit      | 50m       | CPU Limit for each Pod                                                  |
+| adminfile_memory_request | 32Mi      | Memory Request for each Pod                                             |
+| adminfile_memory_limit   | 32Mi      | Memory Limit for each Pod                                               |
 
 ### Subcomponent: OrderFile
 The OrderFile application subcomponent provides an HTTP web server with an end user interface. You can change the following variables to adapt this subcomponent:
