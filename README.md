@@ -61,7 +61,7 @@ The AdminFile application subcomponent provides an HTTP web server with an admin
 
 | Variable                 | Default   | Effect                                                                  |
 |--------------------------|-----------|-------------------------------------------------------------------------|
-| adminfile_name           | adminfile | Name of AdminFile - changes how it will show up in UIs like AppDynamics |
+| adminfile_name           | adminfile | Name of AdminFile in Kubernetes                                         |
 | adminfile_replicas       | 2         | Copies of the Pod                                                       |
 | adminfile_cpu_request    | 20m       | CPU Request for each Pod                                                |
 | adminfile_cpu_limit      | 50m       | CPU Limit for each Pod                                                  |
@@ -73,7 +73,7 @@ The OrderFile application subcomponent provides an HTTP web server with an end u
 
 | Variable                 | Default   | Effect                                                                  |
 |--------------------------|-----------|-------------------------------------------------------------------------|
-| orderfile_name           | orderfile | Name of OrderFile - changes how it will show up in UIs like AppDynamics |
+| orderfile_name           | orderfile | Name of OrderFile in Kubernetes                                         |
 | orderfile_replicas       | 2         | Copies of the Pod                                                       |
 | orderfile_cpu_request    | 20m       | CPU Request for each Pod                                                |
 | orderfile_cpu_limit      | 50m       | CPU Limit for each Pod                                                  |
@@ -82,6 +82,16 @@ The OrderFile application subcomponent provides an HTTP web server with an end u
 
 ### Subcomponent: APIServer
 The APIServer application subcomponent provides an HTTP API Server with serveral methods that are also implemented in the OrderFile webpage. The APIServer communicates with the InventoryDB, Payment, and OrderProcessing. You can change the following variables to adapt this subcomponent:
+
+| Variable             | Default   | Effect                               |
+|----------------------|-----------|--------------------------------------|
+| order_name           | apiserver | Name of APIServer in Kubernetes      |
+| order_appd           | APIServer | Name of the APIServer in AppDynamics |
+| order_replicas       | 2         | Copies of the Pod                    |
+| order_cpu_request    | 100m      | CPU Request for each Pod             |
+| order_cpu_limit      | 400m      | CPU Limit for each Pod               |
+| order_memory_request | 128Mi     | Memory Request for each Pod          |
+| order_memory_limit   | 512Mi     | Memory Limit for each Pod            |
 
 ### Subcomponent: InventoryDB
 The InventoryDB application subcomponent provides a MariaDB instance that is used for storing relevant information about the transactions. You can change the following variables to adapt this subcomponent:
