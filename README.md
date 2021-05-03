@@ -96,6 +96,10 @@ The APIServer application subcomponent provides an HTTP API Server with serveral
 ### Subcomponent: InventoryDB
 The InventoryDB application subcomponent provides a MariaDB instance that is used for storing relevant information about the transactions. You can change the following variables to adapt this subcomponent:
 
+| Variable         | Default     | Effect                            |
+|------------------|-------------|-----------------------------------|
+| inventorydb_name | inventorydb | Name of InventoryDB in Kubernetes |
+
 ### Subcomponent: Payment
 The Payment application subcomponent provides an HTTP microservice that acts as a middleman between the APIServer and the ExtPayment application component. It can receive HTTP requests from the APIServer and forwards them to ExtPayment. You can change the following variables to adapt this subcomponent:
 
