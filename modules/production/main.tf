@@ -43,6 +43,11 @@ resource "kubernetes_service" "production" {
 
 
 resource "kubernetes_deployment" "production" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.production_name
     namespace = var.namespace
