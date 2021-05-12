@@ -36,6 +36,11 @@ resource "kubernetes_service" "edgeaggregator" {
 
 
 resource "kubernetes_deployment" "edgeaggregator" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.procedgeagg_name
     namespace = var.namespace
