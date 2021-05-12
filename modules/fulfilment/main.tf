@@ -43,6 +43,11 @@ resource "kubernetes_service" "fulfilment" {
 
 
 resource "kubernetes_deployment" "fulfilment" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.fulfilment_name
     namespace = var.namespace
