@@ -43,6 +43,11 @@ resource "kubernetes_service" "notification" {
 
 
 resource "kubernetes_deployment" "notification" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.notification_name
     namespace = var.namespace
