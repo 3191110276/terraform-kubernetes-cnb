@@ -36,6 +36,11 @@ resource "kubernetes_service" "external" {
 
 
 resource "kubernetes_deployment" "external" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.procexternal_name
     namespace = var.namespace
