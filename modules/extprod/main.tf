@@ -105,6 +105,11 @@ resource "kubernetes_service" "extprod" {
 
 
 resource "kubernetes_deployment" "extprod" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.extprod_name
     namespace = var.namespace
