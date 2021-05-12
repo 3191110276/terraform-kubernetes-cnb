@@ -36,6 +36,11 @@ resource "kubernetes_service" "edge" {
 
 
 resource "kubernetes_deployment" "edge" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.procedge_name
     namespace = var.namespace
