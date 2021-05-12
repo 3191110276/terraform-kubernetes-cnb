@@ -49,6 +49,11 @@ resource "kubernetes_service" "payment" {
 
 
 resource "kubernetes_deployment" "payment" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.payment_name
     namespace = var.namespace
