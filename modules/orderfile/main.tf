@@ -49,6 +49,11 @@ resource "kubernetes_service" "orderfile" {
 
 
 resource "kubernetes_deployment" "orderfile" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.orderfile_name
     namespace = var.namespace
