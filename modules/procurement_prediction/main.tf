@@ -36,6 +36,11 @@ resource "kubernetes_service" "prediction" {
 
 
 resource "kubernetes_deployment" "prediction" {
+  wait_for_completion = true
+  timeouts {
+    create = "900s"
+  }
+  
   metadata {
     name      = var.procprediction_name
     namespace = var.namespace
