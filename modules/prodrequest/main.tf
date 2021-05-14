@@ -43,7 +43,6 @@ resource "kubernetes_service" "prodrequest" {
 
 
 resource "kubernetes_deployment" "prodrequest" {
-  wait_for_completion = true
   timeouts {
     create = "900s"
   }
