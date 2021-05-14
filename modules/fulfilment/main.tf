@@ -44,7 +44,7 @@ resource "kubernetes_service" "fulfilment" {
 
 resource "kubernetes_deployment" "fulfilment" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
