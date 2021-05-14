@@ -37,7 +37,7 @@ resource "kubernetes_service" "prediction" {
 
 resource "kubernetes_deployment" "prediction" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
