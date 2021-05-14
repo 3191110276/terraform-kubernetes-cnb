@@ -50,7 +50,7 @@ resource "kubernetes_service" "orderfile" {
 
 resource "kubernetes_deployment" "orderfile" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
