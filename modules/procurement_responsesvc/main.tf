@@ -97,7 +97,7 @@ resource "kubernetes_deployment" "action-response-services" {
   depends_on = [kubernetes_config_map.responsesvc]
   
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
