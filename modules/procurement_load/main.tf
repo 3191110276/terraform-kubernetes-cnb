@@ -16,7 +16,6 @@ terraform {
 # CREATE PROCUREMENT LOAD DEPLOYMENT
 ############################################################
 resource "kubernetes_deployment" "load" {
-  wait_for_completion = true
   timeouts {
     create = "900s"
   }
