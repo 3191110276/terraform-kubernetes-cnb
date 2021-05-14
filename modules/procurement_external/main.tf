@@ -36,7 +36,6 @@ resource "kubernetes_service" "external" {
 
 
 resource "kubernetes_deployment" "external" {
-  wait_for_completion = true
   timeouts {
     create = "900s"
   }
