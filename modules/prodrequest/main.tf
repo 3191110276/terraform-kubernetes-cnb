@@ -44,7 +44,7 @@ resource "kubernetes_service" "prodrequest" {
 
 resource "kubernetes_deployment" "prodrequest" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
