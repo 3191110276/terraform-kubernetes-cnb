@@ -43,7 +43,6 @@ resource "kubernetes_service" "orderprocessing" {
 
 
 resource "kubernetes_deployment" "orderprocessing" {
-  wait_for_completion = true
   timeouts {
     create = "900s"
   }
