@@ -17,7 +17,7 @@ terraform {
 ############################################################
 resource "kubernetes_deployment" "load" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
