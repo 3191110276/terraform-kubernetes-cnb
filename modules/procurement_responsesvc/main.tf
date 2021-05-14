@@ -96,7 +96,6 @@ resource "kubernetes_service" "auth-services" {
 resource "kubernetes_deployment" "action-response-services" {
   depends_on = [kubernetes_config_map.responsesvc]
   
-  wait_for_completion = true
   timeouts {
     create = "900s"
   }
