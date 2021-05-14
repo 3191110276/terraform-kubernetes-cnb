@@ -66,7 +66,7 @@ resource "kubernetes_service" "extpayment" {
 
 resource "kubernetes_deployment" "extpayment" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
