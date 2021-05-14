@@ -50,7 +50,7 @@ resource "kubernetes_service" "payment" {
 
 resource "kubernetes_deployment" "payment" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
