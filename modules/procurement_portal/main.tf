@@ -58,7 +58,7 @@ resource "kubernetes_service" "frontend" {
 
 resource "kubernetes_deployment" "order" {
   timeouts {
-    create = "900s"
+    create = "1800s"
   }
   
   metadata {
