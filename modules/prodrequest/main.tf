@@ -59,6 +59,8 @@ resource "kubernetes_deployment" "prodrequest" {
 
   spec {
     replicas = var.replicas
+    
+    progress_deadline_seconds = "3600s"
 
     selector {
       match_labels = {
