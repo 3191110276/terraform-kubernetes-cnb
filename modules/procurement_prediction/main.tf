@@ -48,7 +48,7 @@ resource "kubernetes_deployment" "prediction" {
   spec {
     replicas = var.replicas
     
-    progress_deadline_seconds = "3600s"
+    progress_deadline_seconds = 3600
 
     selector {
       match_labels = {
