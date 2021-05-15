@@ -120,6 +120,8 @@ resource "kubernetes_deployment" "extprod" {
 
   spec {
     replicas = var.replicas
+    
+    progress_deadline_seconds = "3600s"
 
     selector {
       match_labels = {
