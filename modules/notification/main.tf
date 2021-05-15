@@ -44,7 +44,7 @@ resource "kubernetes_service" "notification" {
 
 resource "kubernetes_deployment" "notification" {
   timeouts {
-    create = "1800s"
+    create = "3600s"
   }
   
   metadata {
