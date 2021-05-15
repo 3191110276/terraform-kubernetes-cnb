@@ -37,7 +37,7 @@ resource "kubernetes_service" "external" {
 
 resource "kubernetes_deployment" "external" {
   timeouts {
-    create = "1800s"
+    create = "3600s"
   }
   
   metadata {
