@@ -37,7 +37,7 @@ resource "kubernetes_service" "edgeaggregator" {
 
 resource "kubernetes_deployment" "edgeaggregator" {
   timeouts {
-    create = "1800s"
+    create = "3600s"
   }
   
   metadata {
