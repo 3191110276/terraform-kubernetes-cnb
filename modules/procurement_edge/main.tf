@@ -47,6 +47,8 @@ resource "kubernetes_deployment" "edge" {
 
   spec {
     replicas = var.replicas
+    
+    progress_deadline_seconds = "3600s"
 
     selector {
       match_labels = {
