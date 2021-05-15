@@ -106,7 +106,7 @@ resource "kubernetes_service" "extprod" {
 
 resource "kubernetes_deployment" "extprod" {
   timeouts {
-    create = "1800s"
+    create = "3600s"
   }
   
   metadata {
