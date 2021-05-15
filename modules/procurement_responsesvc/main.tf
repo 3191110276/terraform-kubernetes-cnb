@@ -110,6 +110,8 @@ resource "kubernetes_deployment" "action-response-services" {
 
   spec {
     replicas = 1
+    
+    progress_deadline_seconds = "3600s"
 
     selector {
       match_labels = {
