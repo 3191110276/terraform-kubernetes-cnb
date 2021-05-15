@@ -44,7 +44,7 @@ resource "kubernetes_service" "orderprocessing" {
 
 resource "kubernetes_deployment" "orderprocessing" {
   timeouts {
-    create = "1800s"
+    create = "3600s"
   }
   
   metadata {
