@@ -31,9 +31,9 @@ resource "kubernetes_resource_quota" "main" {
       "replicationcontrollers" = 50
       "services" = 100
       "services.loadbalancers" = 2
-      "requests.cpu" = "5000m"
+      "requests.cpu" = "5"
       "requests.memory" = "12Gi"
-      "limits.cpu" = "20Gi"
+      "limits.cpu" = "20"
       "limits.memory" = "40Gi"
       "persistentvolumeclaims" = 10
       "requests.nvidia.com/gpu" = 0
