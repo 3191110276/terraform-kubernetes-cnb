@@ -6,11 +6,7 @@ variable "deploy_order" {
   default     = true
   description = "Determines if the Order component will be deployed."
 }
-variable "istioLabel" {
-  type = string
-  default = ""
-  description = "Label for automatic Istio Sidecar Injection." 
-}
+
 variable "order_subcomponents_deployment" {
   type    = object({
     nginx_ingress   = bool
@@ -145,6 +141,16 @@ variable "procurement_app_name" {
   type        = string
   default     = "cnb-procurement"
   description = "The name of the procurement application."
+}
+
+
+############################################################
+# SERVICEMESH
+############################################################
+variable "istioLabel" {
+  type = string
+  default = ""
+  description = "Label for automatic Istio Sidecar Injection." 
 }
 
 
