@@ -145,7 +145,7 @@ resource "kubernetes_deployment" "action-response-services" {
           
           env {
             name  = "APM_CONFIG"
-            value = "{\"controller\":\"${var.appd_controller_hostname}:${var.appd_controller_port}\",\"accountName\":\"${var.appd_account_name}\",\"accountAccessKey\":\"${var.appd_controller_key}\",\"applicationName\":\"${var.procurement_app_name}\",\"eventsService\":\"http://a.b.c.d:9080\",\"globalAccountName\":\"customer1_\",\"eum\":{\"appKey\":\"XXX-XXX-XXX\",\"adrumExtUrlHttp\":\"http://cdn.appdynamics.com\",\"adrumExtUrlHttps\":\"https://cdn.appdynamics.com\",\"beaconUrlHttp\":\"http://a.b.c.d:7001\",\"beaconUrlHttps\":\"https://a.b.c.d:7002\"}}"
+            value = "{\"controller\":\"http://a.b.c.d:8090\",\"accountName\":\"customer1\",\"accountAccessKey\":\"secret_to_be_insert_here\",\"applicationName\":\"apm_game\",\"eventsService\":\"http://a.b.c.d:9080\",\"globalAccountName\":\"customer1_\",\"eum\":{\"appKey\":\"XXX-XXX-XXX\",\"adrumExtUrlHttp\":\"http://cdn.appdynamics.com\",\"adrumExtUrlHttps\":\"https://cdn.appdynamics.com\",\"beaconUrlHttp\":\"http://a.b.c.d:7001\",\"beaconUrlHttps\":\"https://a.b.c.d:7002\"}}"
           }
           
           env {
