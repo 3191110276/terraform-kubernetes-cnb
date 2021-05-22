@@ -2,7 +2,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-extpayment1
-  namespace: ext
+  namespace: {{ .Release.Namespace }}
 spec:
   action: netem
   mode: all
@@ -22,7 +22,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-extpayment2
-  namespace: ext
+  namespace: {{ .Release.Namespace }}
 spec:
   action: netem
   mode: all
