@@ -16,6 +16,8 @@ terraform {
 ############################################################
 resource "helm_release" "chaosmesh_problems_order" {  
   name       = "chaosmesh_problems_order"
+  
+  count      = var.deploy_order ? 1 : 0
 
   chart      = "${path.module}/helm_order/"
 
@@ -39,6 +41,8 @@ resource "helm_release" "chaosmesh_problems_order" {
 
 resource "helm_release" "chaosmesh_problems_ext" {  
   name       = "chaosmesh_problems_ext"
+  
+  count      = var.deploy_extpayment ? 1 : 0
 
   chart      = "${path.module}/helm_ext/"
 
@@ -52,6 +56,8 @@ resource "helm_release" "chaosmesh_problems_ext" {
 
 resource "helm_release" "chaosmesh_problems_production" {  
   name       = "chaosmesh_problems_production"
+  
+  count      = var.deploy_extprod ? 1 : 0
 
   chart      = "${path.module}/helm_production/"
 
@@ -65,6 +71,8 @@ resource "helm_release" "chaosmesh_problems_production" {
 
 resource "helm_release" "chaosmesh_problems_procurement" {  
   name       = "chaosmesh_problems_procurement"
+  
+  count      = var.deploy_procurement ? 1 : 0
 
   chart      = "${path.module}/helm_procurement/"
 
