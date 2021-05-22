@@ -1,5 +1,5 @@
 apiVersion: v2
-name: ext_chaos
+name: extchaos
 description: ext_chaos
 type: application
 version: 1.0.0
