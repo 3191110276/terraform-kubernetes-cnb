@@ -9,7 +9,7 @@ spec:
   selector:
     labelSelectors:
       "app": {{ .Values.app_name }}
-      "tier": "fulfilment"
+      "tier": {{ .Values.fulfilment_name }}
   scheduler:
     cron: "@every 275m"
 ---
@@ -25,7 +25,7 @@ spec:
   selector:
     labelSelectors:
       "app": {{ .Values.app_name }}
-      "tier": "adminfile"
+      "tier": {{ .Values.adminfile_name }}
   scheduler:
     cron: "@every 22m"
 ---
