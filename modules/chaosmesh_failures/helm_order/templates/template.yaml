@@ -14,6 +14,22 @@ spec:
     cron: "@every 275m"
 ---
 apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: container-kill-adminfile
+  namespace: order
+spec:
+  action: container-kill
+  mode: one
+  containerName: "fileserver"
+  selector:
+    labelSelectors:
+      "app": "demo-order"
+      "tier": "adminfile"
+  scheduler:
+    cron: "@every 22m"
+---
+apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-inventorydb
