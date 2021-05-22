@@ -8,7 +8,7 @@ spec:
   mode: one
   selector:
     labelSelectors:
-      "app": "demo-order"
+      "app": {{ .Values.app_name }}
       "tier": "fulfilment"
   scheduler:
     cron: "@every 275m"
@@ -24,7 +24,7 @@ spec:
   containerName: "fileserver"
   selector:
     labelSelectors:
-      "app": "demo-order"
+      "app": {{ .Values.app_name }}
       "tier": "adminfile"
   scheduler:
     cron: "@every 22m"
