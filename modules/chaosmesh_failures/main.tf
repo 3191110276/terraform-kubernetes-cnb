@@ -15,7 +15,7 @@ terraform {
 # CREATE CHAOSMESH PROBLEMS
 ############################################################
 resource "helm_release" "chaosmesh_problems_order" {  
-  name       = "chaosmesh_problems_order"
+  name       = "orderchaos"
   
   count      = var.deploy_order ? 1 : 0
 
@@ -40,7 +40,7 @@ resource "helm_release" "chaosmesh_problems_order" {
 }
 
 resource "helm_release" "chaosmesh_problems_ext" {  
-  name       = "chaosmesh_problems_ext"
+  name       = "extchaos"
   
   count      = var.deploy_extpayment ? 1 : 0
 
@@ -55,7 +55,7 @@ resource "helm_release" "chaosmesh_problems_ext" {
 }
 
 resource "helm_release" "chaosmesh_problems_production" {  
-  name       = "chaosmesh_problems_production"
+  name       = "productionchaos"
   
   count      = var.deploy_extprod ? 1 : 0
 
@@ -70,7 +70,7 @@ resource "helm_release" "chaosmesh_problems_production" {
 }
 
 resource "helm_release" "chaosmesh_problems_procurement" {  
-  name       = "chaosmesh_problems_procurement"
+  name       = "procurementchaos"
   
   count      = var.deploy_procurement ? 1 : 0
 
