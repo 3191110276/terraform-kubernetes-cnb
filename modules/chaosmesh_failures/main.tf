@@ -23,7 +23,7 @@ resource "helm_release" "chaosmesh_problems_order" {
   
   set {
     name  = "app_name"
-    value = var.app_name
+    value = var.order_app_name
   }
 }
 
