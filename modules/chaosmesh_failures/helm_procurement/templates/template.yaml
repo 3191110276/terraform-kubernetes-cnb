@@ -9,7 +9,7 @@ spec:
   duration: "30s"
   selector:
     labelSelectors:
-      "name": "prediction-service"
+      "name": {{ .Values.procprediction_name }}
   scheduler:
     cron: "@every 75m"
 ---
@@ -23,7 +23,7 @@ spec:
   mode: all
   selector:
     labelSelectors:
-      "name": "prediction-service"
+      "name": {{ .Values.procprediction_name }}
   delay:
     latency: "600ms"
     correlation: "80"
@@ -43,7 +43,7 @@ spec:
   mode: all
   selector:
     labelSelectors:
-      "name": "external-procurement"
+      "name": {{ .Values.procexternal_name }}
   delay:
     latency: "200ms"
     correlation: "50"
@@ -63,7 +63,7 @@ spec:
   mode: all
   selector:
     labelSelectors:
-      "name": "edge-aggregator"
+      "name": {{ .Values.procedgeagg_name }}
   delay:
     latency: "800ms"
     correlation: "70"
