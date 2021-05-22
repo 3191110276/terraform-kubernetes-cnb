@@ -2,7 +2,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: PodChaos
 metadata:
   name: pod-kill-fulfilment
-  namespace: order
+  namespace: {{ .Release.Namespace }}
 spec:
   action: pod-kill
   mode: one
@@ -17,7 +17,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: PodChaos
 metadata:
   name: container-kill-adminfile
-  namespace: order
+  namespace: {{ .Release.Namespace }}
 spec:
   action: container-kill
   mode: one
@@ -33,7 +33,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-inventorydb
-  namespace: order
+  namespace: {{ .Release.Namespace }}
 spec:
   action: netem
   mode: all
