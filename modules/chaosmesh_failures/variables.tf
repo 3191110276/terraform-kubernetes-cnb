@@ -36,3 +36,9 @@ variable "extprod_name" {
   default     = "gateway"
   description = "The name of the ExtProd application component. Changing this value will change how the application component is called in Kubernetes."
 }
+
+variable "extpayment_name" {
+  type        = string
+  default     = "payment"
+  description = "The name of the ExtPayment application component. Changing this value will change how the application component is called in Kubernetes."
+}
