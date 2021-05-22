@@ -8,7 +8,7 @@ spec:
   mode: all
   selector:
     labelSelectors:
-      "tier": "gateway"
+      "tier": {{ .Values.extprod_name }}
   delay:
     latency: "200ms"
     correlation: "40"
