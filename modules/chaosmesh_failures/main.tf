@@ -25,6 +25,16 @@ resource "helm_release" "chaosmesh_problems_order" {
     name  = "app_name"
     value = var.order_app_name
   }
+  
+  set {
+    name  = "fulfilment_name"
+    value = var.fulfilment_name
+  }
+  
+  set {
+    name  = "adminfile_name"
+    value = var.adminfile_name
+  }
 }
 
 resource "helm_release" "chaosmesh_problems_ext" {  
@@ -59,4 +69,19 @@ resource "helm_release" "chaosmesh_problems_procurement" {
   chart      = "${path.module}/helm_procurement/"
 
   namespace  = var.procurement_namespace
+  
+  set {
+    name  = "procprediction_name"
+    value = var.procprediction_name
+  }
+  
+  set {
+    name  = "procexternal_name"
+    value = var.procexternal_name
+  }
+  
+  set {
+    name  = "procedgeagg_name"
+    value = var.procedgeagg_name
+  }
 }
