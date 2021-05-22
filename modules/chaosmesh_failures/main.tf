@@ -33,6 +33,11 @@ resource "helm_release" "chaosmesh_problems_ext" {
   chart      = "${path.module}/helm_ext/"
 
   namespace  = var.ext_namespace
+  
+  set {
+    name  = "extpayment_name"
+    value = var.extpayment_name
+  }
 }
 
 resource "helm_release" "chaosmesh_problems_production" {  
