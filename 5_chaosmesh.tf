@@ -31,4 +31,9 @@ module "chaosmesh_failures" {
   procprediction_name = var.procprediction_name
   procexternal_name   = var.procexternal_name
   procedgeagg_name    = var.procedgeagg_name
+    
+  deploy_order       = var.deploy_order
+  deploy_extprod     = var.deploy_extprod
+  deploy_extpayment  = var.deploy_extpayment
+  deploy_procurement = var.deploy_procurement
 }
