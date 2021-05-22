@@ -1,5 +1,5 @@
 apiVersion: v2
-name: order_chaos
+name: orderchaos
 description: order_chaos
 type: application
 version: 1.0.0
