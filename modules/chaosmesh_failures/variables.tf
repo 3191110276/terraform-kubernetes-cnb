@@ -72,3 +72,27 @@ variable "procedgeagg_name" {
   default     = "edge-aggregator"
   description = "The name of the ProcurementEdgeAgg application component. Changing this value will change how the application component is called in various UIs."
 }
+
+variable "deploy_order" {
+  type        = bool
+  default     = true
+  description = "Determines if the Order component will be deployed."
+}
+
+variable "deploy_extprod" {
+  type        = bool
+  default     = true
+  description = "Determines if the ExtProd component will be deployed."
+}
+
+variable "deploy_extpayment" {
+  type        = bool
+  default     = true
+  description = "Determines if the ExtPayment component will be deployed."
+}
+
+variable "deploy_procurement" {
+  type        = bool
+  default     = true
+  description = "Determines if the Procurement component will be deployed."
+}
