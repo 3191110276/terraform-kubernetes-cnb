@@ -42,3 +42,33 @@ variable "extpayment_name" {
   default     = "payment"
   description = "The name of the ExtPayment application component. Changing this value will change how the application component is called in Kubernetes."
 }
+
+variable "fulfilment_name" {
+  type        = string
+  default     = "fulfilment"
+  description = "The name of the Fulfilment application component. Changing this value will change how the application component is called in Kubernetes."
+}
+
+variable "adminfile_name" {
+  type        = string
+  default     = "adminfile"
+  description = "The name of the AdminFile application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procprediction_name" {
+  type        = string
+  default     = "prediction-service"
+  description = "The name of the ProcurementPrediction application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procexternal_name" {
+  type        = string
+  default     = "external-procurement"
+  description = "The name of the ProcurementExternal application component. Changing this value will change how the application component is called in various UIs."
+}
+
+variable "procedgeagg_name" {
+  type        = string
+  default     = "edge-aggregator"
+  description = "The name of the ProcurementEdgeAgg application component. Changing this value will change how the application component is called in various UIs."
+}
