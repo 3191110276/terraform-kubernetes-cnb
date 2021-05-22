@@ -1,0 +1,74 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: pod-failure-prediction
+  namespace: procurement
+spec:
+  action: pod-failure
+  mode: one
+  duration: "30s"
+  selector:
+    labelSelectors:
+      "name": "prediction-service"
+  scheduler:
+    cron: "@every 75m"
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-netem-prediction
+  namespace: procurement
+spec:
+  action: netem
+  mode: all
+  selector:
+    labelSelectors:
+      "name": "prediction-service"
+  delay:
+    latency: "600ms"
+    correlation: "80"
+    jitter: "100ms"
+  direction: to
+  duration: "45s"
+  scheduler:
+    cron: "@every 25m"
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-netem-extprocurement
+  namespace: procurement
+spec:
+  action: netem
+  mode: all
+  selector:
+    labelSelectors:
+      "name": "external-procurement"
+  delay:
+    latency: "200ms"
+    correlation: "50"
+    jitter: "600ms"
+  direction: to
+  duration: "150s"
+  scheduler:
+    cron: "@every 150m"
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-netem-edgeagg
+  namespace: procurement
+spec:
+  action: netem
+  mode: all
+  selector:
+    labelSelectors:
+      "name": "edge-aggregator"
+  delay:
+    latency: "800ms"
+    correlation: "70"
+    jitter: "400ms"
+  direction: to
+  duration: "450s"
+  scheduler:
+    cron: "@every 1900m"
