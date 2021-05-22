@@ -1,0 +1,19 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: network-netem-extprod
+  namespace: production
+spec:
+  action: netem
+  mode: all
+  selector:
+    labelSelectors:
+      "tier": "gateway"
+  delay:
+    latency: "200ms"
+    correlation: "40"
+    jitter: "600ms"
+  direction: to
+  duration: "160s"
+  scheduler:
+    cron: "@every 95m"
