@@ -25,8 +25,8 @@ variable "procurement_namespace" {
   description = "Namespace used for deploying the object. This namespace has to exist and is not provisioned by this submodule."
 }
 
-variable "app_name" {
+variable "order_app_name" {
   type        = string
-  default     = "cnb"
+  default     = "demo-order"
   description = "The name of the application that this submodule is part of."
 }
