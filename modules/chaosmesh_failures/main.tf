@@ -20,6 +20,11 @@ resource "helm_release" "chaosmesh_problems_order" {
   chart      = "${path.module}/helm_order/"
 
   namespace  = var.order_namespace
+  
+  set {
+    name  = "app_name"
+    value = var.app_name
+  }
 }
 
 resource "helm_release" "chaosmesh_problems_ext" {  
