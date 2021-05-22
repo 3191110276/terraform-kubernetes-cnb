@@ -30,3 +30,9 @@ variable "order_app_name" {
   default     = "demo-order"
   description = "The name of the application that this submodule is part of."
 }
+
+variable "extprod_name" {
+  type        = string
+  default     = "gateway"
+  description = "The name of the ExtProd application component. Changing this value will change how the application component is called in Kubernetes."
+}
