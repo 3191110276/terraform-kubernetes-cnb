@@ -1,5 +1,5 @@
 apiVersion: v2
-name: production_chaos
+name: productionchaos
 description: production_chaos
 type: application
 version: 1.0.0
