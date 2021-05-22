@@ -2,7 +2,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: PodChaos
 metadata:
   name: pod-failure-prediction
-  namespace: procurement
+  namespace: {{ .Release.Namespace }}
 spec:
   action: pod-failure
   mode: one
@@ -17,7 +17,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-prediction
-  namespace: procurement
+  namespace: {{ .Release.Namespace }}
 spec:
   action: netem
   mode: all
@@ -37,7 +37,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-extprocurement
-  namespace: procurement
+  namespace: {{ .Release.Namespace }}
 spec:
   action: netem
   mode: all
@@ -57,7 +57,7 @@ apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: network-netem-edgeagg
-  namespace: procurement
+  namespace: {{ .Release.Namespace }}
 spec:
   action: netem
   mode: all
