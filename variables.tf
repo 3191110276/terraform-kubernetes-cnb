@@ -93,7 +93,23 @@ variable "procurement_subcomponents_deployment" {
 
 
 ############################################################
-# GENERAL
+# APP NAMES
+############################################################
+variable "order_app_name" {
+  type        = string
+  default     = "cnb-order"
+  description = "The name of the order application."
+}
+
+variable "procurement_app_name" {
+  type        = string
+  default     = "cnb-procurement"
+  description = "The name of the procurement application."
+}
+
+
+############################################################
+# NAMESPACES
 ############################################################
 variable "order_namespace" {
   type        = string
@@ -131,16 +147,14 @@ variable "procurement_namespace" {
   description = "Namespace used for deploying the Procurement application component. This namespace has to exist and is not provisioned by this submodule."
 }
 
-variable "order_app_name" {
-  type        = string
-  default     = "cnb-order"
-  description = "The name of the order application."
-}
 
-variable "procurement_app_name" {
+############################################################
+# REGISTRIES
+############################################################
+variable "order_registry" {
   type        = string
-  default     = "cnb-procurement"
-  description = "The name of the procurement application."
+  default     = "mimaurer"
+  description = "The registry from which the Order application image are pulled."
 }
 
 
