@@ -79,8 +79,80 @@ resource "kubernetes_role_binding" "orderqueue" {
 }
 
 
+resource "kubernetes_service" "orderqueue_headless" {
+  metadata {
+    name      = "${var.initqueue_name}-rabbitmq-headless"
+    namespace = var.namespace
+  }
+  spec {
+    selector = {
+      tier = var.initqueue_name
+    }
+    
+    cluster_ip = "None"
+    
+    port {
+      name        = "epmd"
+      port        = 4369
+      target_port = "epmd"
+    }
+    port {
+      name        = "amqp"
+      port        = 5672
+      target_port = "amqp"
+    }
+    port {
+      name        = "dist"
+      port        = 25672
+      target_port = "dist"
+    }
+    port {
+      name        = "http-stats"
+      port        = 15672
+      target_port = "stats"
+    }
+  }
+}
+
+
+resource "kubernetes_service" "orderqueue" {
+  metadata {
+    name      = "${var.initqueue_name}-rabbitmq"
+    namespace = var.namespace
+  }
+  spec {
+    selector = {
+      tier = var.initqueue_name
+    }
+    
+    type = "ClusterIP"
+    
+    port {
+      name        = "epmd"
+      port        = 4369
+      target_port = "epmd"
+    }
+    port {
+      name        = "amqp"
+      port        = 5672
+      target_port = "amqp"
+    }
+    port {
+      name        = "dist"
+      port        = 25672
+      target_port = "dist"
+    }
+    port {
+      name        = "http-stats"
+      port        = 15672
+      target_port = "stats"
+    }
+  }
+}
+
+
 resource "helm_release" "orderqueue" {
-  depends_on = [kubernetes_pod_disruption_budget.orderqueue, kubernetes_role_binding.orderqueue]
+  depends_on = [kubernetes_pod_disruption_budget.orderqueue, kubernetes_role_binding.orderqueue, kubernetes_service.orderqueue_headless, kubernetes_service.orderqueue]
   
   name       = "orderqueue"
 
