@@ -383,6 +383,50 @@ resource "kubernetes_role_binding" "mariadb_operator" {
 }
 
 
+resource "kubernetes_cluster_role" "mariadb_operator" {
+  metadata {
+    name = "mariadb-operator-cl-role"
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["nodes", "persistentvolumes", "namespaces"]
+    verbs      = ["get", "list", "watch", "create", "delete"]
+  }
+  
+  rule {
+    api_groups = ["storage.k8s.io"]
+    resources  = ["storageclasses"]
+    verbs      = ["get", "list", "watch", "create", "delete"]
+  }
+  
+  rule {
+    api_groups = ["monitoring.coreos.com"]
+    resources  = ["alertmanagers", "prometheuses", "prometheuses/finalizers", "servicemonitors"]
+    verbs      = ["*"]
+  }
+}
+
+
+resource "kubernetes_cluster_role_binding" "mariadb_operator" {
+  depends_on = [kubernetes_service_account.mariadb_operator, kubernetes_cluster_role.mariadb_operator]
+  
+  metadata {
+    name = "mariadb-operator-cl-binding"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "mariadb-operator-cl-role"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+}
+
+
 resource "kubernetes_persistent_volume_claim" "mariadb" {
   metadata {
     name      = "mariadb-pv-claim"
@@ -401,8 +445,79 @@ resource "kubernetes_persistent_volume_claim" "mariadb" {
 }
 
 
+resource "kubernetes_deployment" "mariadb_operator" {
+  depends_on = [kubernetes_manifest.mariadb, kubernetes_manifest.mariadb_monitors, kubernetes_manifest.mariadb_backups, kubernetes_role_binding.mariadb_operator, kubernetes_cluster_role_binding.mariadb_operator, kubernetes_persistent_volume_claim.mariadb]
+  
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        name = "mariadb-operator"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          name = "mariadb-operator"
+        }
+      }
+
+      spec {
+        service_account_name = "mariadb-operator"
+        
+        container {
+          image = "quay.io/manojdhanorkar/mariadb-operator:v0.0.4"
+          name  = "mariadb-operator"
+          
+          command = ["mariadb-operator"]
+          
+          env {
+            name  = "POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
+          
+          env {
+            name  = "OPERATOR_NAME"
+            value = "mariadb-operator"
+          }
+          
+          env {
+            name  = "WATCH_NAMESPACE"
+            value = var.namespace
+          }
+
+          resources {
+            limits = {
+              cpu    = "50m"
+              memory = "32Mi"
+            }
+            requests = {
+              cpu    = "10m"
+              memory = "32Mi"
+            }
+          }
+          
+          
+        }
+      }
+    }
+  }
+}
+
+
 resource "helm_release" "inventorydb" {
-  depends_on = [kubernetes_manifest.mariadb, kubernetes_manifest.mariadb_monitors, kubernetes_manifest.mariadb_backups, kubernetes_role_binding.mariadb_operator, kubernetes_persistent_volume_claim.mariadb]
+  depends_on = [kubernetes_deployment.mariadb_operator]
   
   name       = "inventorydb"
 
