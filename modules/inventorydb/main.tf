@@ -3,8 +3,8 @@
 ############################################################
 terraform {
   required_providers {
-    helm = {
-      source  = "hashicorp/helm"
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
       version = ">= 2.0.2"
     }
     kubernetes-alpha = {
@@ -525,50 +525,19 @@ resource "kubernetes_manifest" "mariadb" {
     "apiVersion" = "mariadb.persistentsys/v1alpha1"
     "kind" = "MariaDB"
     "metadata" = {
-      "name" = "mariadb"
-      "namespace" = "namespace"
+      "name" = var.inventorydb_name
+      "namespace" = var.namespace
     }
     "spec" = {
       "dataStoragePath" = "/mnt/data"
       "dataStorageSize" = "2Gi"
       "database" = "default"
-      "image" = "image"
+      "image" = "${var.registry}/inventorydb-${var.inventorydb_tech}:${var.inventorydb_version}"
       "password" = "db-user"
       "port" = 30999
       "rootpwd" = "root"
       "size" = 1
       "username" = "db-user"
     }
-  }
-}
-
-
-resource "helm_release" "inventorydb" {
-  depends_on = [kubernetes_deployment.mariadb_operator]
-  
-  name       = "inventorydb"
-
-  chart      = "${path.module}/helm/"
-
-  namespace  = var.namespace
-
-  set {
-    name  = "inventorydb_name"
-    value = var.inventorydb_name
-  }
-  
-  set {
-    name  = "registry"
-    value = var.registry
-  }
-  
-  set {
-    name  = "inventorydb_tech"
-    value = var.inventorydb_tech
-  }
-  
-  set {
-    name  = "inventorydb_version"
-    value = var.inventorydb_version
   }
 }
