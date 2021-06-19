@@ -516,6 +516,33 @@ resource "kubernetes_deployment" "mariadb_operator" {
 }
 
 
+resource "kubernetes_manifest" "mariadb" {
+  depends_on = [kubernetes_deployment.mariadb_operator]
+  
+  provider = kubernetes-alpha
+
+  manifest = {
+    "apiVersion" = "mariadb.persistentsys/v1alpha1"
+    "kind" = "MariaDB"
+    "metadata" = {
+      "name" = "mariadb"
+      "namespace" = "namespace"
+    }
+    "spec" = {
+      "dataStoragePath" = "/mnt/data"
+      "dataStorageSize" = "2Gi"
+      "database" = "default"
+      "image" = "image"
+      "password" = "db-user"
+      "port" = 30999
+      "rootpwd" = "root"
+      "size" = 1
+      "username" = "db-user"
+    }
+  }
+}
+
+
 resource "helm_release" "inventorydb" {
   depends_on = [kubernetes_deployment.mariadb_operator]
   
