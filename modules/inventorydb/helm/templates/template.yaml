@@ -1,0 +1,29 @@
+apiVersion: mariadb.persistentsys/v1alpha1
+kind: MariaDB
+metadata:
+  name: {{ .Values.inventorydb_name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  # Keep this parameter value unchanged.
+  size: 1
+
+  # Root user password
+  rootpwd: root
+
+  # New Database name
+  database: default
+  # Database additional user details (base64 encoded)
+  username: db-user
+  password: db-user
+
+  # Image name with version
+  image: {{ .Values.registry }}/inventorydb-{{ .Values.inventorydb_tech }}:{{ .Values.inventorydb_version }}
+
+  # Database storage Path
+  dataStoragePath: "/mnt/data" 
+
+  # Database storage Size (Ex. 1Gi, 100Mi)
+  dataStorageSize: "2Gi"
+
+  # Port number exposed for Database service
+  port: 30999
