@@ -516,28 +516,32 @@ resource "kubernetes_deployment" "mariadb_operator" {
 }
 
 
-resource "kubernetes_manifest" "mariadb_deployment" {
+resource "helm_release" "inventorydb" {
   depends_on = [kubernetes_deployment.mariadb_operator]
-  
-  provider = kubernetes-alpha
 
-  manifest = {
-    "apiVersion" = "mariadb.persistentsys/v1alpha1"
-    "kind" = "MariaDB"
-    "metadata" = {
-      "name" = var.inventorydb_name
-      "namespace" = var.namespace
-    }
-    "spec" = {
-      "dataStoragePath" = "/mnt/data"
-      "dataStorageSize" = "2Gi"
-      "database" = "default"
-      "image" = "${var.registry}/inventorydb-${var.inventorydb_tech}:${var.inventorydb_version}"
-      "password" = "db-user"
-      "port" = 30999
-      "rootpwd" = "root"
-      "size" = 1
-      "username" = "db-user"
-    }
+  name       = "inventorydb"
+
+  chart      = "${path.module}/helm/"
+
+  namespace  = var.namespace
+
+  set {
+    name  = "inventorydb_name"
+    value = var.inventorydb_name
+  }
+
+  set {
+    name  = "registry"
+    value = var.registry
+  }
+
+  set {
+    name  = "inventorydb_tech"
+    value = var.inventorydb_tech
+  }
+
+  set {
+    name  = "inventorydb_version"
+    value = var.inventorydb_version
   }
 }
