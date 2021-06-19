@@ -1,22 +1,3 @@
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: {{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels: 
-      tier: {{ .Values.initqueue_name }}
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: {{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-secrets:
-  - name: {{ .Values.initqueue_name }}-rabbitmq
----
 apiVersion: v1
 kind: Secret
 metadata:
@@ -53,32 +34,6 @@ data:
     #default_vhost = {{ .Values.appname }}-{{ .Values.initqueue_name }}-vhost
     #disk_free_limit.absolute = 50MB
     #load_definitions = /app/load_definition.json
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: {{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
-  namespace: {{ .Release.Namespace }}
-rules:
-  - apiGroups: [""]
-    resources: ["endpoints"]
-    verbs: ["get"]
-  - apiGroups: [""]
-    resources: ["events"]
-    verbs: ["create"]
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: {{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
-  namespace: {{ .Release.Namespace }}
-subjects:
-  - kind: ServiceAccount
-    name: {{ .Values.initqueue_name }}-rabbitmq
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: {{ .Values.initqueue_name }}-rabbitmq-endpoint-reader
 ---
 apiVersion: v1
 kind: Service
