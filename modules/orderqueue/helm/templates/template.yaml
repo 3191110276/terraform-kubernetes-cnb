@@ -35,56 +35,6 @@ data:
     #disk_free_limit.absolute = 50MB
     #load_definitions = /app/load_definition.json
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.initqueue_name }}-rabbitmq-headless
-  namespace: {{ .Release.Namespace }}
-spec:
-  clusterIP: None
-  ports:
-    - name: epmd
-      port: 4369
-      targetPort: epmd
-    - name: amqp
-      port: 5672
-      targetPort: amqp
-    - name: dist
-      port: 25672
-      targetPort: dist
-    - name: http-stats
-      port: 15672
-      targetPort: stats
-  selector: 
-    tier: {{ .Values.initqueue_name }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.initqueue_name }}-rabbitmq
-  namespace: {{ .Release.Namespace }}
-spec:
-  type: ClusterIP
-  ports:
-    - name: amqp
-      port: 5672
-      targetPort: amqp
-      nodePort: null
-    - name: epmd
-      port: 4369
-      targetPort: epmd
-      nodePort: null
-    - name: dist
-      port: 25672
-      targetPort: dist
-      nodePort: null
-    - name: http-stats
-      port: 15672
-      targetPort: stats
-      nodePort: null
-  selector: 
-    tier: {{ .Values.initqueue_name }}
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
