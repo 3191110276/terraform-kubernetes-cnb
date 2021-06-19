@@ -516,7 +516,7 @@ resource "kubernetes_deployment" "mariadb_operator" {
 }
 
 
-resource "kubernetes_manifest" "mariadb" {
+resource "kubernetes_manifest" "mariadb_deployment" {
   depends_on = [kubernetes_deployment.mariadb_operator]
   
   provider = kubernetes-alpha
