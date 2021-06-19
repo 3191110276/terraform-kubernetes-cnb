@@ -299,8 +299,110 @@ resource "kubernetes_manifest" "mariadb_backups" {
 }
 
 
+resource "kubernetes_service_account" "mariadb_operator" {
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+}
+
+
+resource "kubernetes_role" "mariadb_operator" {
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+
+  rule {
+    api_groups     = [""]
+    resources      = ["pods", "services", "services/finalizers", "endpoints", "persistentvolumeclaims", "events", "configmaps", "secrets"]
+    verbs          = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["deployments", "daemonsets", "replicasets", "statefulsets"]
+    verbs          = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  
+  rule {
+    api_groups     = ["monitoring.coreos.com"]
+    resources      = ["servicemonitors"]
+    verbs          = ["get", "create"]
+  }
+  
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["deployments/finalizers"]
+    resource_names = ["mariadb-operator"]
+    verbs          = ["update"]
+  }
+  
+  rule {
+    api_groups     = [""]
+    resources      = ["pods"]
+    verbs          = ["get"]
+  }
+  
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["replicasets", "deployments"]
+    verbs          = ["get"]
+  }
+  
+  rule {
+    api_groups     = ["mariadb.persistentsys"]
+    resources      = ["*", "backups"]
+    verbs          = ["create", "delete", "get", "list", "patch", "update", "watch"]
+  }
+  
+  rule {
+    api_groups     = ["batch"]
+    resources      = ["cronjobs", "jobs"]
+    verbs          = ["create", "delete", "get", "list", "update", "watch"]
+  }
+}
+
+
+resource "kubernetes_role_binding" "mariadb_operator" {
+  depends_on = [kubernetes_service_account.mariadb_operator, kubernetes_role.mariadb_operator]
+  
+  metadata {
+    name      = "mariadb-operator"
+    namespace = var.namespace
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "mariadb-operator"
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "mariadb-operator"
+  }
+}
+
+
+resource "kubernetes_persistent_volume_claim" "mariadb" {
+  metadata {
+    name      = "mariadb-pv-claim"
+    namespace = var.namespace
+  }
+  spec {
+    storage_class_name = "standard"
+    access_modes       = ["ReadWriteOnce"]
+    
+    resources {
+      requests = {
+        storage = "4Gi"
+      }
+    }
+  }
+}
+
+
 resource "helm_release" "inventorydb" {
-  depends_on = [kubernetes_manifest.mariadb, kubernetes_manifest.mariadb_monitors, kubernetes_manifest.mariadb_backups]
+  depends_on = [kubernetes_manifest.mariadb, kubernetes_manifest.mariadb_monitors, kubernetes_manifest.mariadb_backups, kubernetes_role_binding.mariadb_operator, kubernetes_persistent_volume_claim.mariadb]
   
   name       = "inventorydb"
 
