@@ -108,8 +108,6 @@ module "inventorydb" {
   namespace = var.order_namespace
     
   inventorydb_name = var.inventorydb_name
-    
-  registry = var.order_registry
 }
 
     
@@ -130,8 +128,6 @@ module "fulfilment" {
   memory_request  = var.fulfilment_memory_request
   cpu_limit       = var.fulfilment_cpu_limit
   memory_limit    = var.fulfilment_memory_limit
-    
-  registry = var.order_registry
 }
   
   
@@ -156,8 +152,6 @@ module "extprod" {
   job_min_delay  = var.extprod_job_min_delay
   job_max_delay  = var.extprod_job_max_delay
   production_svc = "${var.production_name}.${var.order_namespace}"
-    
-  registry = var.order_registry
 }
   
 
@@ -178,8 +172,6 @@ module "production" {
   memory_request  = var.production_memory_request
   cpu_limit       = var.production_cpu_limit
   memory_limit    = var.production_memory_limit
-    
-  registry = var.order_registry
 }
 
     
@@ -202,8 +194,6 @@ module "extpayment" {
   min_random_delay    = var.extpayment_min_random_delay
   max_random_delay    = var.extpayment_max_random_delay
   lagspike_percentage = var.extpayment_lagspike_percentage
-  
-  registry = var.order_registry
 }
   
   
@@ -224,8 +214,6 @@ module "payment" {
   memory_request   = var.payment_memory_request
   cpu_limit        = var.payment_cpu_limit
   memory_limit     = var.payment_memory_limit
-    
-  registry = var.order_registry
 }
     
     
@@ -248,8 +236,6 @@ module "notification" {
   memory_limit      = var.notification_memory_limit
   
   initqueue_name = var.orderqueue_name
-    
-  registry = var.order_registry
 }
     
 
@@ -273,8 +259,6 @@ module "prodrequest" {
   
   initqueue_name  = var.orderqueue_name
   production_name = var.production_name
-    
-  registry = var.order_registry
 }
     
 
@@ -295,8 +279,6 @@ module "orderprocessing" {
   memory_request       = var.orderprocessing_memory_request
   cpu_limit            = var.orderprocessing_cpu_limit
   memory_limit         = var.orderprocessing_memory_limit
-    
-  registry = var.order_registry
 }
     
 
@@ -317,8 +299,6 @@ module "apiserver" {
   memory_request = var.order_memory_request
   cpu_limit      = var.order_cpu_limit
   memory_limit   = var.order_memory_limit
-    
-  registry = var.order_registry
 }
 
 
@@ -338,8 +318,6 @@ module "orderfile" {
   memory_request = var.orderfile_memory_request
   cpu_limit      = var.orderfile_cpu_limit
   memory_limit   = var.orderfile_memory_limit
-    
-  registry = var.order_registry
 }
     
 
@@ -359,8 +337,6 @@ module "adminfile" {
   memory_request = var.adminfile_memory_request
   cpu_limit      = var.adminfile_cpu_limit
   memory_limit   = var.adminfile_memory_limit
-    
-  registry = var.order_registry
 }
     
 
@@ -379,8 +355,6 @@ module "trafficgen" {
   trafficgen_max_random_delay    = var.trafficgen_max_random_delay
   trafficgen_lagspike_percentage = var.trafficgen_lagspike_percentage
   trafficgen_app_endpoint        = var.trafficgen_app_endpoint
-    
-  registry = var.order_registry
 }
 
 
